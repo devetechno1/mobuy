@@ -104,12 +104,12 @@ class MenuDrawerState extends State<MenuDrawer> with SingleTickerProviderStateMi
         Get.toNamed(RouteHelper.getLoyaltyRoute());
       }));
     }
-    if(Get.find<SplashController>().configModel!.refEarningStatus == 1) {
-      _menuList.add(Menu(icon: Images.referCode, title: 'refer_and_earn'.tr, onTap: () {
-        Get.back();
-        Get.toNamed(RouteHelper.getReferAndEarnRoute());
-      }));
-    }
+    // if(Get.find<SplashController>().configModel!.refEarningStatus == 1) {
+    //   _menuList.add(Menu(icon: Images.referCode, title: 'refer_and_earn'.tr, onTap: () {
+    //     Get.back();
+    //     Get.toNamed(RouteHelper.getReferAndEarnRoute());
+    //   }));
+    // }
     if(Get.find<SplashController>().configModel!.toggleDmRegistration!) {
       _menuList.add(Menu(
         icon: Images.deliveryManJoin, title: 'join_as_a_delivery_man'.tr,onTap: (){
