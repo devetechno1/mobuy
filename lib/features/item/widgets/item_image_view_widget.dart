@@ -4,7 +4,6 @@ import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
-import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
 
 class ItemImageViewWidget extends StatelessWidget {
@@ -28,9 +27,9 @@ class ItemImageViewWidget extends StatelessWidget {
     }
 
     return GetBuilder<ItemController>(builder: (itemController) {
-
+    
       return Column(mainAxisSize: MainAxisSize.min, children: [
-
+    
           InkWell(
             onTap: isCampaign ? null : () {
               if(!isCampaign) {
@@ -39,7 +38,7 @@ class ItemImageViewWidget extends StatelessWidget {
             },
             child: Stack(children: [
               SizedBox(
-                height: ResponsiveHelper.isDesktop(context)? 350: MediaQuery.of(context).size.width * 0.7,
+                height: ResponsiveHelper.isDesktop(context)? 350: MediaQuery.sizeOf(context).height * 0.3 + 40,
                 child: PageView.builder(
                   controller: _controller,
                   itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
@@ -50,6 +49,7 @@ class ItemImageViewWidget extends StatelessWidget {
                         image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
                         height: 200,
                         width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.contain,
                       ),
                     );
                   },
@@ -60,18 +60,27 @@ class ItemImageViewWidget extends StatelessWidget {
               ),
               Positioned(
                 left: 0, right: 0, bottom: 0,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _indicators(context, itemController, isCampaign ? imageListForCampaign : imageList),
+                child: Align(
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 50),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: _indicators(context, itemController, isCampaign ? imageListForCampaign : imageList),
+                    ),
                   ),
                 ),
               ),
-
+    
             ]),
           ),
-
+    
       ]);
     });
   }

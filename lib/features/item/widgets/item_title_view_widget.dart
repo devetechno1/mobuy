@@ -23,7 +23,8 @@ class ItemTitleViewWidget extends StatelessWidget {
   final bool inStorePage;
   final bool isCampaign;
   final bool inStock;
-  const ItemTitleViewWidget({super.key, required this.item,  this.inStorePage = false, this.isCampaign = false, required this.inStock});
+  final Color? backgroundColor;
+  const ItemTitleViewWidget({super.key, required this.item,  this.inStorePage = false, this.isCampaign = false, required this.inStock, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +193,7 @@ class ItemTitleViewWidget extends StatelessWidget {
 
         ],);
     }) : Container(
-      color: Theme.of(context).cardColor,
+      color: backgroundColor ?? Theme.of(context).cardColor,
       padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
       child: GetBuilder<ItemController>(
         builder: (itemController) {
