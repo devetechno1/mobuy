@@ -26,7 +26,20 @@ class AddFavouriteView extends StatelessWidget {
               showCustomSnackBar('you_are_not_logged_in'.tr);
             }
           },
-          child: Icon(isWished ? Icons.favorite : Icons.favorite_border, color: Theme.of(context).primaryColor, size: 20),
+          borderRadius: BorderRadius.circular(100),
+          child: Container(
+            margin: const EdgeInsets.all(1),
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(spreadRadius: 0.1),
+              ],
+              shape: BoxShape.circle,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+            child: Icon(isWished ? Icons.favorite : Icons.favorite_border, color: Theme.of(context).primaryColor, size: 20),
+          ),
         );
       }),
     );
