@@ -172,6 +172,7 @@ class Images {
   static const String emailIcon = 'assets/image/email_icon.png';
   static const String passwordIcon = 'assets/image/password_icon.png';
   static const String city = 'assets/image/city.png';
+  static const String onlineShopping = 'assets/image/online_shopping.png';
   static const String address = 'assets/image/empty_address.png';
   static const String workIcon = 'assets/image/work_icon.png';
   static const String homeIcon = 'assets/image/home_icon.png';

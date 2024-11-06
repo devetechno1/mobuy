@@ -6,12 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/common/widgets/footer_view.dart';
 
+class ButtonDataEntity{
+  final String text;
+  final Color? textColor;
+  final Color? backgroundColor;
+  final void Function()? onTap;
+
+  ButtonDataEntity({required this.text, required this.onTap, this.backgroundColor, this.textColor});
+}
+
 class NoDataScreen extends StatelessWidget {
   final bool isCart;
   final bool showFooter;
   final String? text;
   final bool fromAddress;
-  const NoDataScreen({super.key, required this.text, this.isCart = false, this.showFooter = false, this.fromAddress = false});
+  final String? image;
+  final String? description;
+  final ButtonDataEntity? button;
+  const NoDataScreen({super.key, required this.text, this.isCart = false, this.showFooter = false, this.fromAddress = false, this.image, this.description, this.button});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +34,7 @@ class NoDataScreen extends StatelessWidget {
 
           Center(
             child: Image.asset(
-              fromAddress ? Images.address : isCart ? Images.emptyCart : Images.noDataFound,
+              image ?? (fromAddress ? Images.address : isCart ? Images.emptyCart : Images.noDataFound),
               width: MediaQuery.of(context).size.height*0.15, height: MediaQuery.of(context).size.height*0.15,
             ),
           ),
@@ -30,7 +42,7 @@ class NoDataScreen extends StatelessWidget {
 
           Text(
             isCart ? 'cart_is_empty'.tr : text!,
-            style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175, color: fromAddress ? Theme.of(context).textTheme.bodyMedium!.color : Theme.of(context).disabledColor),
+            style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0275, color: fromAddress ? Theme.of(context).textTheme.bodyMedium!.color : image == null? Theme.of(context).disabledColor : null , fontWeight: image == null? null : FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: MediaQuery.of(context).size.height*0.03),
@@ -39,7 +51,12 @@ class NoDataScreen extends StatelessWidget {
             'please_add_your_address_for_your_better_experience'.tr,
             style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175, color: Theme.of(context).disabledColor),
             textAlign: TextAlign.center,
-          ) : const SizedBox(),
+          ) : description != null 
+          ? Text(
+            description!,
+            style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175),
+            textAlign: TextAlign.center,
+          ): const SizedBox(),
           SizedBox(height: MediaQuery.of(context).size.height*0.05),
 
           fromAddress ? InkWell(
@@ -58,7 +75,19 @@ class NoDataScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ) : const SizedBox(),
+          ) : button != null 
+          ? InkWell(
+            onTap: button!.onTap,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                color: button!.backgroundColor ?? Theme.of(context).primaryColor,
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(button!.text, style: robotoMedium.copyWith(color: button!.textColor ?? Theme.of(context).cardColor)),
+            ),
+          )
+          : const SizedBox(),
 
         ]),
       ),

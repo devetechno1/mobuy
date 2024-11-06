@@ -23,10 +23,13 @@ class ItemsView extends StatefulWidget {
   final bool inStorePage;
   final bool isFeatured;
   final bool? isFoodOrGrocery;
+  final String? image;
+  final String? description;
+  final ButtonDataEntity? button;
   const ItemsView({super.key, required this.stores, required this.items, required this.isStore, this.isScrollable = false,
     this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeDefault), this.noDataText,
     this.isCampaign = false, this.inStorePage = false, this.isFeatured = false,
-    this.isFoodOrGrocery = true});
+    this.isFoodOrGrocery = true, this.description, this.button, this.image});
 
   @override
   State<ItemsView> createState() => _ItemsViewState();
@@ -79,6 +82,9 @@ class _ItemsViewState extends State<ItemsView> {
           );
         },
       ) : NoDataScreen(
+        description: widget.description,
+        image: widget.image,
+        button: widget.button,
         text: widget.noDataText ?? (widget.isStore ? Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
             ? 'no_restaurant_available'.tr : 'no_store_available'.tr : 'no_item_available'.tr),
       ) : GridView.builder(
