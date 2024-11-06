@@ -137,6 +137,7 @@
   "view_all": "View All",
   "oops": "Oops!",
   "sorry": "Sorry!",
+  "no_items_in_cart_explore_categories":"Look like you have not added anything in your cart. Go ahead and explore top categories",
   "cart_is_empty": "Your cart is empty",
   "no_data_found": "No data found",
   "you_are_not_logged_in": "You are not logged in",

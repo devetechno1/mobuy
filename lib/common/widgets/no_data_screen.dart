@@ -12,18 +12,17 @@ class ButtonDataEntity{
   final Color? backgroundColor;
   final void Function()? onTap;
 
-  ButtonDataEntity({required this.text, required this.onTap, this.backgroundColor, this.textColor});
+  const ButtonDataEntity({required this.text, required this.onTap, this.backgroundColor, this.textColor});
 }
 
 class NoDataScreen extends StatelessWidget {
-  final bool isCart;
   final bool showFooter;
   final String? text;
   final bool fromAddress;
   final String? image;
   final String? description;
   final ButtonDataEntity? button;
-  const NoDataScreen({super.key, required this.text, this.isCart = false, this.showFooter = false, this.fromAddress = false, this.image, this.description, this.button});
+  const NoDataScreen({super.key, required this.text, this.showFooter = false, this.fromAddress = false, this.image, this.description, this.button});
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +33,14 @@ class NoDataScreen extends StatelessWidget {
 
           Center(
             child: Image.asset(
-              image ?? (fromAddress ? Images.address : isCart ? Images.emptyCart : Images.noDataFound),
+              image ?? (fromAddress ? Images.address : Images.noDataFound),
               width: MediaQuery.of(context).size.height*0.15, height: MediaQuery.of(context).size.height*0.15,
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height*0.03),
 
           Text(
-            isCart ? 'cart_is_empty'.tr : text!,
+            text!,
             style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0275, color: fromAddress ? Theme.of(context).textTheme.bodyMedium!.color : image == null? Theme.of(context).disabledColor : null , fontWeight: image == null? null : FontWeight.bold),
             textAlign: TextAlign.center,
           ),

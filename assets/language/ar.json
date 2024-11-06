@@ -306,6 +306,7 @@
   "no_category_item_found": "لم يتم العثور على منتج فئة",
   "no_category_found": "لم يتم العثور على فئة",
   "no_coupon_found": "لم يتم العثور على قسيمة",
+  "no_items_in_cart_explore_categories":"يبدو أنك لم تضف أي شيء إلى سلتك. اذهب لاستكشاف الفئات الأعلى.",
   "explore_categories": "استكشف الفئات",
   "tap_heart_saving_your_favorite_items": "اضغط على زر القلب لبدء حفظ العناصر المفضلة لديك.",
   "no_wish_data_found": "لم يتم العثور على بيانات مفضلة",

@@ -35,6 +35,8 @@ import 'package:sixam_mart/features/cart/widgets/web_suggested_item_view_widget.
 import 'package:sixam_mart/features/home/screens/home_screen.dart';
 import 'package:sixam_mart/features/store/screens/store_screen.dart';
 
+import '../../favourite/widgets/fav_item_view_widget.dart';
+
 class CartScreen extends StatefulWidget {
   final bool fromNav;
   const CartScreen({super.key, required this.fromNav});
@@ -312,7 +314,13 @@ class _CartScreenState extends State<CartScreen> {
 
             ResponsiveHelper.isDesktop(context) ? const SizedBox.shrink() : CheckoutButton(cartController: cartController, availableList: cartController.availableList),
 
-          ]) : const NoDataScreen(isCart: true, text: '', showFooter: true);
+          ]) : NoDataScreen(
+            text: 'cart_is_empty'.tr, 
+            description: "no_items_in_cart_explore_categories".tr,
+            image: Images.emptyCart,
+            showFooter: true,
+            button: goToHomeButtonData,
+          );
         });
       }),
     );
