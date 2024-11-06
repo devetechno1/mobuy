@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
-import 'package:sixam_mart/util/styles.dart';
 
 void showCartSnackBar() {
-  ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-    dismissDirection: DismissDirection.horizontal,
-    margin: EdgeInsets.only(
-      right: ResponsiveHelper.isDesktop(Get.context) ? Get.context!.width*0.7 : Dimensions.paddingSizeSmall,
-      top: Dimensions.paddingSizeSmall, bottom: Dimensions.paddingSizeSmall, left: Dimensions.paddingSizeSmall,
-    ),
-    duration: const Duration(seconds: 3),
+  bool isPressed = false;
+  Get.showSnackbar(GetSnackBar(
     backgroundColor: Colors.green,
-    behavior: SnackBarBehavior.floating,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
-    content: Text('item_added_to_cart'.tr, style: robotoMedium.copyWith(color: Colors.white)),
-    action: SnackBarAction(label: 'view_cart'.tr, onPressed: () => Get.toNamed(RouteHelper.getCartRoute()), textColor: Colors.white),
+    message: 'item_added_to_cart'.tr,
+    snackPosition: SnackPosition.TOP,
+    maxWidth: Get.width * 0.8,
+    duration: const Duration(seconds: 3),
+    snackStyle: SnackStyle.FLOATING,
+    margin: const EdgeInsets.only(
+      top: 100,
+      left: Dimensions.paddingSizeSmall,
+      right: Dimensions.paddingSizeSmall,
+      bottom: 100,
+    ),
+    borderRadius: Dimensions.radiusSmall,
+    isDismissible: true,
+    dismissDirection: DismissDirection.horizontal,
+    mainButton: SnackBarAction(
+      label: 'view_cart'.tr,
+      onPressed: () {
+        if (isPressed) return;
+        Get.closeCurrentSnackbar();
+        Get.toNamed(RouteHelper.getCartRoute());
+        isPressed = true;
+      },
+      textColor: Colors.white,
+    ),
   ));
 }

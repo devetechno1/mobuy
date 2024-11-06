@@ -52,7 +52,7 @@ class FavItemViewWidget extends StatelessWidget {
   }
 }
 
-ButtonDataEntity goToHomeButtonData = ButtonDataEntity(
+ButtonDataEntity get goToHomeButtonData => ButtonDataEntity(
   text: "explore_categories".tr,
   backgroundColor: Colors.black,
   onTap: () => Get.offAll(() => const DashboardScreen(pageIndex: 0)),
