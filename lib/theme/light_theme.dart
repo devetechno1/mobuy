@@ -11,7 +11,7 @@ ThemeData light({Color color = const Color(0xFF039D55)}) => ThemeData(
   cardColor: Colors.white,
   shadowColor: Colors.black.withOpacity(0.03),
   textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(foregroundColor: color)),
-  colorScheme: ColorScheme.light(primary: color, secondary: color).copyWith(
+  colorScheme: ColorScheme.light(primary: color, secondary: const Color(0xFF329F93)).copyWith(
       surface: const Color(0xFFFCFCFC)).copyWith(error: const Color(0xFFE84D4F)),
   popupMenuTheme: const PopupMenuThemeData(color: Colors.white, surfaceTintColor: Colors.white),
   dialogTheme: const DialogTheme(surfaceTintColor: Colors.white),

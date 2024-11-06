@@ -43,14 +43,11 @@ class ItemImageViewWidget extends StatelessWidget {
                   controller: _controller,
                   itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
                   itemBuilder: (context, index) {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: CustomImage(
-                        image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
-                        height: 200,
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.contain,
-                      ),
+                    return CustomImage(
+                      image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.contain,
                     );
                   },
                   onPageChanged: (index) {

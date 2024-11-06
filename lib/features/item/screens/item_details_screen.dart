@@ -42,13 +42,12 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   @override
   void initState() {
     super.initState();
-
     Get.find<ItemController>().getProductDetails(widget.item!);
-    Get.find<ItemController>().setSelect(0, false);
   }
 
   @override
   Widget build(BuildContext context) {
+    Get.find<ItemController>().setSelect(0, false);
     return GetBuilder<CartController>(
       builder: (cartController) {
         return GetBuilder<ItemController>(
