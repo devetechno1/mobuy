@@ -15,6 +15,8 @@ import 'package:sixam_mart/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/filter_cat_widget.dart';
+
 class CategoryItemScreen extends StatefulWidget {
   final String? categoryID;
   final String categoryName;
@@ -110,8 +112,8 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             title: catController.isSearching ? TextField(
               autofocus: true,
               textInputAction: TextInputAction.search,
-              decoration: const InputDecoration(
-                hintText: 'Search...',
+              decoration: InputDecoration(
+                hintText: 'search_'.tr,
                 border: InputBorder.none,
               ),
               style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge),
@@ -145,6 +147,27 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                 icon: Icon(
                   catController.isSearching ? Icons.close_sharp : Icons.search,
                   color: Theme.of(context).textTheme.bodyLarge!.color,
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                width: catController.isSearching ? 50 : 0,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: IconButton(
+                    onPressed: () {
+                      List<double?> prices = [];
+                      if(!catController.isStore) {
+                        for (var product in catController.categoryItemList!) {
+                          prices.add(product.price);
+                        }
+                        prices.sort();
+                      }
+                      double? maxValue = prices.isNotEmpty ? prices[prices.length-1] : 1000;
+                      Get.dialog(FilterCatWidget(maxValue: maxValue, isStore:catController.isStore));
+                    },
+                    icon: const Icon(Icons.filter_list),
+                  ),
                 ),
               ),
               IconButton(
