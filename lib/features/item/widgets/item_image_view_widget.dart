@@ -47,7 +47,7 @@ class ItemImageViewWidget extends StatelessWidget {
                       image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
                       height: 200,
                       width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                     );
                   },
                   onPageChanged: (index) {
