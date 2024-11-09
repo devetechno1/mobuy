@@ -9,7 +9,7 @@ class AppConstants {
 
   ///Flutter Version: 3.24.3
 
-  static const String fontFamily = 'Roboto';
+  static const String fontFamily = 'Rubik';
   static const bool payInWevView = false;
   static const int balanceInputLen = 10;
   static const String webHostedUrl = 'https://gomla.devetechno.co.uk';
