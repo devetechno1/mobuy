@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:get/get.dart';
 
+import '../../../../common/widgets/title_widget.dart';
+
 class CategoryView extends StatelessWidget {
   const CategoryView({super.key});
 
@@ -27,16 +29,10 @@ class CategoryView extends StatelessWidget {
             children: [
               if(categoryController.categoryList != null)
                 Padding(
-                  padding: const EdgeInsetsDirectional.only(top: Dimensions.paddingSizeDefault,start: Dimensions.paddingSizeDefault, end: Dimensions.paddingSizeExtraSmall),
-                  child: Row(
-                    children: [
-                      Text('categories'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () => Get.toNamed(RouteHelper.getCategoryRoute()),
-                        child: Text('see_all'.tr),
-                      ),
-                    ],
+                  padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+                  child: TitleWidget(
+                    title: 'categories'.tr,
+                    onTap: () => Get.toNamed(RouteHelper.getCategoryRoute()),
                   ),
                 ),
               ConstrainedBox(
