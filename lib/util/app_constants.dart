@@ -279,6 +279,7 @@ class AppConstants {
 
   ///settings deve
   static const bool subcatimg = true;
+  static const bool makeCatInGrid = true;
 
   static List<LanguageModel> languages = [
     LanguageModel(
