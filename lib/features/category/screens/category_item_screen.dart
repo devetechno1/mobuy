@@ -170,26 +170,20 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                   color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
-                width: catController.isSearching ? 50 : 0,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: IconButton(
-                    onPressed: () {
-                      List<double?> prices = [];
-                      if(!catController.isStore) {
-                        for (var product in catController.categoryItemList!) {
-                          prices.add(product.price);
-                        }
-                        prices.sort();
-                      }
-                      double? maxValue = prices.isNotEmpty ? prices[prices.length-1] : 1000;
-                      Get.dialog(FilterCatWidget(maxValue: maxValue, isStore:catController.isStore));
-                    },
-                    icon: const Icon(Icons.filter_list),
-                  ),
-                ),
+              IconButton(
+                onPressed: () {
+                  if(!catController.isSearching) catController.toggleSearch();
+                  List<double?> prices = [];
+                  if(!catController.isStore) {
+                    for (var product in catController.categoryItemList!) {
+                      prices.add(product.price);
+                    }
+                    prices.sort();
+                  }
+                  double? maxValue = prices.isNotEmpty ? prices[prices.length-1] : 1000;
+                  Get.dialog(FilterCatWidget(maxValue: maxValue, isStore:catController.isStore));
+                },
+                icon: const Icon(Icons.filter_list),
               ),
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
