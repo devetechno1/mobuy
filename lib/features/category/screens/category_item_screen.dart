@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
@@ -15,7 +18,12 @@ import 'package:sixam_mart/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common/widgets/custom_image.dart';
+import '../../../util/app_constants.dart';
+import 'package:http/http.dart' as http;
+
 import '../widgets/filter_cat_widget.dart';
+
 
 class CategoryItemScreen extends StatefulWidget {
   final String? categoryID;
@@ -31,7 +39,10 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
   final ScrollController storeScrollController = ScrollController();
   TabController? _tabController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  var brand_category_ids = [];
+  int index_category = 0;
+  int index_brand = -1;
+  int pageindex = 0;
   @override
   void initState() {
     super.initState();
@@ -51,7 +62,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
           Get.find<CategoryController>().getCategoryItemList(
             Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
                 : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,'${ brand_category_ids.isEmpty ||  index_brand == -1 ? "" :brand_category_ids[index_brand]['id']}'
           );
         }
       }
@@ -97,16 +108,32 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
           stores.addAll(catController.categoryStoreList!);
         }
       }
+      getBrandByCategoryList(String? categoryID ) async {
+        // '${AppConstants.brandCategoryUri}/$categoryID'
+        String url = "${AppConstants.baseUrl}${AppConstants.brandCategoryUri}/$categoryID";
+        print("response categoryID1 =========> ${ categoryID }");
+        final  response = await http.get(Uri.parse(url));
+        print("response.statusCode =========> ${ response.statusCode }");
 
-      return PopScope(
-        canPop: true,
-        onPopInvokedWithResult: (didPop, result) async {
-          if(catController.isSearching) {
-            catController.toggleSearch();
-          }else {
-            return;
+        if (response.statusCode == 200) {
+          var sub_cat = jsonDecode(response.body);
+          print("response 2222 =========> ${ sub_cat }");
+          if(sub_cat['brands'] == 0){
+            brand_category_ids = [];
+          }else{
+            print("brand_category_ids =========> ${ brand_category_ids }");
+            setState(() {
+              brand_category_ids = sub_cat['brands'];
+            });
+
           }
-        },
+          print("response 1111 =========> ${ sub_cat['brands'] }");
+        }
+
+      }
+      return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop,_)  => backMethod(catController),
         child: Scaffold(
           appBar: (ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : AppBar(
             title: catController.isSearching ? TextField(
@@ -127,17 +154,11 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             ) : Text(widget.categoryName, style: robotoRegular.copyWith(
               fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color,
             )),
-            centerTitle: false,
+            centerTitle: true,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios),
               color: Theme.of(context).textTheme.bodyLarge!.color,
-              onPressed: () {
-                if(catController.isSearching) {
-                  catController.toggleSearch();
-                }else {
-                  Get.back();
-                }
-              },
+              onPressed: () => backMethod(catController),
             ),
             backgroundColor: Theme.of(context).cardColor,
             elevation: 0,
@@ -190,13 +211,11 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                   }else {
                     catController.getCategoryItemList(
                       catController.subCategoryIndex == 0 ? widget.categoryID
-                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, type, true,
+                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, type, true,""
                     );
                   }
                 }
               }),
-
-              const SizedBox(width: Dimensions.paddingSizeSmall),
             ],
           )),
           endDrawer: const MenuDrawer(),endDrawerEnableOpenDragGesture: false,
@@ -204,8 +223,166 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             width: Dimensions.webMaxWidth,
             child: Column(children: [
 
-              (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
-                height: 40, width: Dimensions.webMaxWidth, color: Theme.of(context).cardColor,
+              (catController.subCategoryList != null && !catController.isSearching && AppConstants.subcatimg && pageindex ==0 ) ? Center(child: Container(
+              //  height: 40,
+                width: Dimensions.webMaxWidth,
+                color: Theme.of(context).cardColor,
+                padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+                child:
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing:5,
+                    crossAxisSpacing: 0,
+                  ),
+                  // physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  // scrollDirection: Axis.vertical,
+                  itemCount: catController.subCategoryList!.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          index_category = index;
+                          index_brand = -1;
+                          pageindex = 1;
+                        });
+
+                        // if(index == 0){
+                        //   brand_category_ids = [];
+                        // }
+                        print("sub img ========> ${index}");
+                        var subcat = catController.GetsetSubCategoryIndex(index, widget.categoryID);
+
+                        print("sub cat id ========> ${subcat}");
+                       // Get.toNamed(RouteHelper.getBrandsItemScreenCat(454, "سسس","$subcat"));
+                         catController.setSubCategoryIndex(index, widget.categoryID,"");
+                        getBrandByCategoryList(subcat);
+                         print("catController.setSubCategory ====> ${catController.GetsetSubCategoryIndex(index, widget.categoryID)}");
+
+
+                      },
+                      child:  Container(
+                        //width: 100,
+                        //height: 100,
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                        margin: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                          color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+                        ),
+                        child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+
+                              // image
+                              catController.subCategoryList![index].name != "all".tr? Expanded(
+                                //flex: 1,
+                                child: CustomImage(
+                                  image: '${catController.subCategoryList![index].imageFullUrl}',
+                                  //height: 90,
+                                   //width: 75,
+                                  // fit: BoxFit.cover,
+                                ),
+                              ) : Container(
+
+                                  //child: Image.asset('assets/image/all_products.png'),
+                              ),
+
+                              catController.subCategoryList![index].name != "all".tr? Flexible(
+                                flex: 1,
+                                child: Text(
+                                  catController.subCategoryList![index].name!,
+                                  textAlign: TextAlign.center,
+                                  style: index == catController.subCategoryIndex
+                                      ? robotoMedium.copyWith(fontSize: Dimensions.paddingSizeSmall, color: Theme.of(context).primaryColor)
+                                      : robotoRegular.copyWith(fontSize: Dimensions.paddingSizeSmall),
+                                ),
+                              ) : const SizedBox(),
+
+                            ]),
+                      )
+                    );
+
+                  },
+                )
+              )) : const SizedBox(),
+
+              // brand_category_ids.length ==0 ?  Row(
+              //   children: [
+              //     const SizedBox(width: 8,),
+              //     Container(child: const Text("الشركات"),),
+              //   ],
+              // ): Container(),
+
+              brand_category_ids.length !=0 ?  Center(child: Container(
+                height: 100,
+                width: Dimensions.webMaxWidth,
+                color: Theme.of(context).cardColor,
+                padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 5,),
+                    InkWell(
+                      onTap: (){
+                        catController.setSubCategoryIndex(index_category, widget.categoryID,"");
+                        index_brand = -1;
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Theme.of(context).primaryColor),
+                              borderRadius: const BorderRadius.all(Radius.circular(50))
+                          ),
+                          width: 60, height: 60,child:  Text( "allCompanies".tr,textAlign:TextAlign.center,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 12),)),
+                    ),
+                    const SizedBox(width: 5,),
+                    Expanded(
+                      child: ListView.builder(
+                        key: scaffoldKey,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: brand_category_ids.length,
+                        padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              catController.setSubCategoryIndex(index_category, widget.categoryID,'${brand_category_ids[index]['id']}');
+                              index_brand = index;
+                            }
+                            ,child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                              margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                color: index == index_brand ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+                              ),
+                              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                  child: CustomImage(
+                                    image: '${AppConstants.baseUrl}/storage/app/public/brand/${brand_category_ids[index]['image']}',
+                                    height: 40, width: 60, fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Text(
+                                  '${brand_category_ids[index]['name']}',
+                                  style: index == index_brand
+                                      ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+                                      : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
+                                ),
+                              ]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )): Container(),
+              (catController.subCategoryList != null && !catController.isSearching && AppConstants.subcatimg == false ) ? Center(child: Container(
+                height: 40,
+                width: Dimensions.webMaxWidth,
+                color: Theme.of(context).cardColor,
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
                 child: ListView.builder(
                   key: scaffoldKey,
@@ -215,7 +392,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
+                      onTap: () => catController.setSubCategoryIndex(index, widget.categoryID,""),
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                         margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
@@ -236,25 +413,24 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                   },
                 ),
               )) : const SizedBox(),
-
-              Center(child: Container(
-                width: Dimensions.webMaxWidth,
-                color: Theme.of(context).cardColor,
-                child: TabBar(
-                  controller: _tabController,
-                  indicatorColor: Theme.of(context).primaryColor,
-                  indicatorWeight: 3,
-                  labelColor: Theme.of(context).primaryColor,
-                  unselectedLabelColor: Theme.of(context).disabledColor,
-                  unselectedLabelStyle: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                  labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
-                  tabs: [
-                    Tab(text: 'item'.tr),
-                    Tab(text: Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
-                        ? 'restaurants'.tr : 'stores'.tr),
-                  ],
-                ),
-              )),
+              // Center(child: Container(
+              //   width: Dimensions.webMaxWidth,
+              //   color: Theme.of(context).cardColor,
+              //   child: TabBar(
+              //     controller: _tabController,
+              //     indicatorColor: Theme.of(context).primaryColor,
+              //     indicatorWeight: 3,
+              //     labelColor: Theme.of(context).primaryColor,
+              //     unselectedLabelColor: Theme.of(context).disabledColor,
+              //     unselectedLabelStyle: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
+              //     labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+              //     tabs: [
+              //       Tab(text: 'item'.tr),
+              //       Tab(text: Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
+              //           ? 'restaurants'.tr : 'stores'.tr),
+              //     ],
+              //   ),
+              // )),
 
 
               Expanded(child: NotificationListener(
@@ -278,7 +454,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                           catController.getCategoryItemList(
                             catController.subCategoryIndex == 0 ? widget.categoryID
                                 : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
-                            1, catController.type, false,
+                            1, catController.type, false,'${brand_category_ids[index_brand]['id']}'
                           );
                         }
                       }
@@ -305,7 +481,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                     ),
                   ],
                 ),
-              )),
+              )) ,
 
               catController.isLoading ? Center(child: Padding(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
@@ -317,5 +493,19 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
         ),
       );
     });
+  }
+
+  void backMethod(CategoryController catController) {
+    if(catController.isSearching) {
+      catController.toggleSearch();
+    }else if(pageindex == 1){
+      setState(() {
+        pageindex = 0;
+        brand_category_ids = [];
+      });
+    }
+    else  {
+      Get.back();
+    }
   }
 }

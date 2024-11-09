@@ -167,6 +167,9 @@ class AppConstants {
   static const String searchPopularCategoriesUri = '/api/v1/categories/popular';
   static const String firebaseAuthVerify = '/api/v1/auth/firebase-verify-token';
 
+
+  static const String brandCategoryUri = '/api/v1/brand/brands-by-category';
+
   ///Subscription
   static const String businessPlanUri = '/api/v1/vendor/business_plan';
   static const String businessPlanPaymentUri =
@@ -273,6 +276,9 @@ class AppConstants {
   static const String food = 'food';
   static const String ecommerce = 'ecommerce';
   static const String grocery = 'grocery';
+
+  ///settings deve
+  static const bool subcatimg = true;
 
   static List<LanguageModel> languages = [
     LanguageModel(

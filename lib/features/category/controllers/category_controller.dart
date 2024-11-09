@@ -83,22 +83,31 @@ class CategoryController extends GetxController implements GetxService {
     List<CategoryModel>? subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
     if (subCategoryList != null) {
       _subCategoryList= [];
-      _subCategoryList!.add(CategoryModel(id: int.parse(categoryID!), name: 'all'.tr));
+      //_subCategoryList!.add(CategoryModel(id: int.parse(categoryID!), name: 'all'.tr));
       _subCategoryList!.addAll(subCategoryList);
-      getCategoryItemList(categoryID, 1, 'all', false);
+      getCategoryItemList(categoryID, 1, 'all', false, "");
     }
   }
 
-  void setSubCategoryIndex(int index, String? categoryID) {
+  void setSubCategoryIndex(int index, String? categoryID, String? brand_id_deve) {
     _subCategoryIndex = index;
     if(_isStore) {
       getCategoryStoreList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true);
     }else {
-      getCategoryItemList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true);
+       getCategoryItemList( _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
+      //getCategoryItemList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
+
     }
   }
-
-  void getCategoryItemList(String? categoryID, int offset, String type, bool notify) async {
+  GetsetSubCategoryIndex(int index, String? categoryID) {
+    _subCategoryIndex = index;
+    if(_isStore) {
+      return _subCategoryList![index].id.toString() ;
+    }else {
+      return _subCategoryList![index].id.toString() ;
+    }
+  }
+  void getCategoryItemList(String? categoryID, int offset, String type, bool notify, String brand_id_deve) async {
     _offset = offset;
     if(offset == 1) {
       if(_type == type) {
@@ -110,7 +119,7 @@ class CategoryController extends GetxController implements GetxService {
       }
       _categoryItemList = null;
     }
-    ItemModel? categoryItem = await categoryServiceInterface.getCategoryItemList(categoryID, offset, type);
+    ItemModel? categoryItem = await categoryServiceInterface.getCategoryItemList(categoryID, offset, type, brand_id_deve);
     if (categoryItem != null) {
       if (offset == 1) {
         _categoryItemList = [];

@@ -13,13 +13,13 @@ class CategoryRepository implements CategoryRepositoryInterface {
 
   @override
   Future getList({int? offset, bool categoryList = false, bool subCategoryList = false, bool categoryItemList = false, bool categoryStoreList = false,
-    bool? allCategory, String? id, String? type}) async {
+    bool? allCategory, String? id, String? type , String? brand_id_deve}) async {
     if (categoryList) {
       return await _getCategoryList(allCategory!);
     } else if (subCategoryList) {
       return await _getSubCategoryList(id);
     } else if (categoryItemList) {
-      return await _getCategoryItemList(id, offset!, type!);
+      return await _getCategoryItemList(id, offset!, type!, brand_id_deve! );
     } else if (categoryStoreList) {
       return await _getCategoryStoreList(id, offset!, type!);
     }
@@ -49,9 +49,9 @@ class CategoryRepository implements CategoryRepositoryInterface {
     return subCategoryList;
   }
 
-  Future<ItemModel?> _getCategoryItemList(String? categoryID, int offset, String type) async {
+  Future<ItemModel?> _getCategoryItemList(String? categoryID, int offset, String type, String brand_id_deve) async {
     ItemModel? categoryItem;
-    Response response = await apiClient.getData('${AppConstants.categoryItemUri}$categoryID?limit=10&offset=$offset&type=$type');
+    Response response = await apiClient.getData('${AppConstants.categoryItemUri}$categoryID?limit=10&offset=$offset&type=$type&brand_id=$brand_id_deve');
     if (response.statusCode == 200) {
       categoryItem = ItemModel.fromJson(response.body);
     }
