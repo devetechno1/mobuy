@@ -302,7 +302,7 @@ class ItemWidget extends StatelessWidget {
 
         if(!isStore)
           PositionedDirectional(
-            bottom: 9, end: 0,
+            bottom: 10, end: 0,
             child: CartCountView(
               item: item!,
               index: index,
