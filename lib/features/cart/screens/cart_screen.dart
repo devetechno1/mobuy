@@ -136,7 +136,10 @@ class _CartScreenState extends State<CartScreen> {
                     }
                   },
                   child: Container(
-                    color: Theme.of(context).cardColor,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
+                    ),
                     child: Container(
                       constraints: const BoxConstraints.expand(height: 30),
                       decoration: BoxDecoration(
@@ -252,7 +255,7 @@ class _CartScreenState extends State<CartScreen> {
                   key: _widgetKey,
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
+                    // borderRadius: const BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
                   ),
                   child: Column(children: [
                     Container(
@@ -312,7 +315,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
 
-            ResponsiveHelper.isDesktop(context) ? const SizedBox.shrink() : CheckoutButton(cartController: cartController, availableList: cartController.availableList),
+            ResponsiveHelper.isDesktop(context) ? const SizedBox.shrink() : CheckoutButton(cartController: cartController, availableList: cartController.availableList, fromNav: widget.fromNav),
 
           ]) : NoDataScreen(
             text: 'cart_is_empty'.tr, 
@@ -457,7 +460,7 @@ class _CartScreenState extends State<CartScreen> {
               ]),
             ) : const SizedBox(),
 
-            ResponsiveHelper.isDesktop(context) ? CheckoutButton(cartController: cartController, availableList: cartController.availableList) : const SizedBox.shrink(),
+            ResponsiveHelper.isDesktop(context) ? CheckoutButton(cartController: cartController, availableList: cartController.availableList, fromNav: widget.fromNav) : const SizedBox.shrink(),
 
           ]);
         }
@@ -536,7 +539,8 @@ class _CartScreenState extends State<CartScreen> {
 class CheckoutButton extends StatelessWidget {
   final CartController cartController;
   final List<bool> availableList;
-  const CheckoutButton({super.key, required this.cartController, required this.availableList});
+  final bool fromNav;
+  const CheckoutButton({super.key, required this.cartController, required this.availableList, required this.fromNav});
 
   @override
   Widget build(BuildContext context) {
@@ -544,7 +548,7 @@ class CheckoutButton extends StatelessWidget {
 
     return Container(
       width: Dimensions.webMaxWidth,
-      padding:  const EdgeInsets.all(Dimensions.paddingSizeSmall),
+      padding:  const EdgeInsets.all(Dimensions.paddingSizeSmall).copyWith(bottom:fromNav?70:null),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(ResponsiveHelper.isDesktop(context) ? Dimensions.radiusDefault : 0),

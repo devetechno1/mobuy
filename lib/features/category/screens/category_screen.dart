@@ -34,7 +34,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: CustomAppBar(title: 'categories'.tr),
+      appBar: CustomAppBar(title: 'categories'.tr,backButton: Navigator.canPop(context)),
       endDrawer: const MenuDrawer(),endDrawerEnableOpenDragGesture: false,
       body: SafeArea(child: SingleChildScrollView(
         controller: scrollController, child: FooterView(child: Column(

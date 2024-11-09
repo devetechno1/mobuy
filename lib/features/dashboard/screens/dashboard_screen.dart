@@ -16,10 +16,8 @@ import 'package:sixam_mart/features/parcel/controllers/parcel_controller.dart';
 import 'package:sixam_mart/features/store/controllers/store_controller.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
-import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
-import 'package:sixam_mart/common/widgets/cart_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_dialog.dart';
 import 'package:sixam_mart/features/checkout/widgets/congratulation_dialogue.dart';
 import 'package:sixam_mart/features/dashboard/widgets/address_bottom_sheet_widget.dart';
@@ -27,10 +25,11 @@ import 'package:sixam_mart/features/dashboard/widgets/parcel_bottom_sheet_widget
 import 'package:sixam_mart/features/favourite/screens/favourite_screen.dart';
 import 'package:sixam_mart/features/home/screens/home_screen.dart';
 import 'package:sixam_mart/features/menu/screens/menu_screen.dart';
-import 'package:sixam_mart/features/order/screens/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../cart/screens/cart_screen.dart';
+import '../../category/screens/category_screen.dart';
 import '../widgets/running_order_view_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -78,9 +77,9 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     _screens = [
       const HomeScreen(),
+      const CategoryScreen(),
+      const CartScreen(fromNav: true),
       const FavouriteScreen(),
-      const SizedBox(),
-      const OrderScreen(),
       const MenuScreen()
     ];
 
@@ -190,9 +189,9 @@ class DashboardScreenState extends State<DashboardScreen> {
 
                             _screens = [
                               const HomeScreen(),
+                              const CategoryScreen(),
+                              const CartScreen(fromNav: true),
                               isParcel ? const AddressScreen(fromDashboard: true) : const FavouriteScreen(),
-                              const SizedBox(),
-                              const OrderScreen(),
                               const MenuScreen()
                             ];
                             return Container(
@@ -203,35 +202,6 @@ class DashboardScreenState extends State<DashboardScreen> {
                                   boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
                               ),
                               child: Stack(children: [
-
-                                Center(
-                                  heightFactor: 0.6,
-                                  child: ResponsiveHelper.isDesktop(context) ? null : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? null
-                                    : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty && _isLogin) ? const SizedBox() : Container(
-                                      width: 60, height: 60,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Theme.of(context).cardColor, width: 5),
-                                        borderRadius: BorderRadius.circular(30),
-                                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
-                                      ),
-                                      child: FloatingActionButton(
-                                        backgroundColor: Theme.of(context).primaryColor,
-                                        onPressed: () {
-                                          if(isParcel) {
-                                            showModalBottomSheet(
-                                              context: context, isScrollControlled: true, backgroundColor: Colors.transparent,
-                                              builder: (con) => ParcelBottomSheetWidget(parcelCategoryList: Get.find<ParcelController>().parcelCategoryList),
-                                            );
-                                          } else {
-                                            Get.toNamed(RouteHelper.getCartRoute());
-                                          }
-                                        },
-                                        elevation: 0,
-                                        child: isParcel ? Icon(CupertinoIcons.add, size: 34, color: Theme.of(context).cardColor) : CartWidget(color: Theme.of(context).cardColor, size: 22),
-                                      ),
-                                  ),
-                                ),
-
                                 ResponsiveHelper.isDesktop(context) ? const SizedBox() : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? const SizedBox()
                                 : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty && _isLogin) ? const SizedBox() : Center(
                                   child: SizedBox(
@@ -243,18 +213,35 @@ class DashboardScreenState extends State<DashboardScreen> {
                                           onTap: () => _setPage(0),
                                         ),
                                         BottomNavItemWidget(
+                                          title: 'categories'.tr ,
+                                          selectedIcon: Images.categorySelect,
+                                          unSelectedIcon: Images.categoryUnSelect,
+                                          isSelected: _pageIndex == 1, onTap: () => _setPage(1),
+                                        ),
+                                        if(isParcel)
+                                          FloatingActionButton(onPressed: (){
+                                            showModalBottomSheet(
+                                              context: context, isScrollControlled: true, backgroundColor: Colors.transparent,
+                                              builder: (con) => ParcelBottomSheetWidget(parcelCategoryList: Get.find<ParcelController>().parcelCategoryList),
+                                            );
+                                          },
+                                          child: Icon(CupertinoIcons.add, size: 34, color: Theme.of(context).cardColor),)
+                                        else
+                                          BottomNavItemWidget(
+                                            title: 'my_cart'.tr ,
+                                            selectedIcon: Images.shoppingCartSelected,
+                                            unSelectedIcon: Images.shoppingCart,
+                                            isSelected: _pageIndex == 2, 
+                                            onTap: () =>_setPage(2),
+                                          ),
+                                        BottomNavItemWidget(
                                           title: isParcel ? 'address'.tr : 'favourite'.tr,
                                           selectedIcon: isParcel ? Images.addressSelect : Images.favouriteSelect,
                                           unSelectedIcon: isParcel ? Images.addressUnselect : Images.favouriteUnselect,
-                                          isSelected: _pageIndex == 1, onTap: () => _setPage(1),
-                                        ),
-                                        Container(width: size.width * 0.2),
-                                        BottomNavItemWidget(
-                                          title: 'orders'.tr, selectedIcon: Images.orderSelect, unSelectedIcon: Images.orderUnselect,
                                           isSelected: _pageIndex == 3, onTap: () => _setPage(3),
                                         ),
                                         BottomNavItemWidget(
-                                          title: 'menu'.tr, selectedIcon: Images.menu, unSelectedIcon: Images.menu,
+                                          title: 'profile'.tr, selectedIcon: Images.profileSelect, unSelectedIcon: Images.profileUnSelect,
                                           isSelected: _pageIndex == 4, onTap: () => _setPage(4),
                                         ),
                                       ]),
