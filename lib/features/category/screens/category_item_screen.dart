@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
-import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/store/domain/models/store_model.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
@@ -456,25 +455,32 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                   }
                   return false;
                 },
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    SingleChildScrollView(
+                child: SingleChildScrollView(
                       controller: scrollController,
                       child: ItemsView(
                         isStore: false, items: item, stores: null, noDataText: 'no_category_item_found'.tr,
                       ),
                     ),
-                    SingleChildScrollView(
-                      controller: storeScrollController,
-                      child: ItemsView(
-                        isStore: true, items: null, stores: stores,
-                        noDataText: Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
-                            ? 'no_category_restaurant_found'.tr : 'no_category_store_found'.tr,
-                      ),
-                    ),
-                  ],
-                ),
+
+                // TabBarView(
+                //   controller: _tabController,
+                //   children: [
+                //     SingleChildScrollView(
+                //       controller: scrollController,
+                //       child: ItemsView(
+                //         isStore: false, items: item, stores: null, noDataText: 'no_category_item_found'.tr,
+                //       ),
+                //     ),
+                //     SingleChildScrollView(
+                //       controller: storeScrollController,
+                //       child: ItemsView(
+                //         isStore: true, items: null, stores: stores,
+                //         noDataText: Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
+                //             ? 'no_category_restaurant_found'.tr : 'no_category_store_found'.tr,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               )) ,
 
               catController.isLoading ? Center(child: Padding(
