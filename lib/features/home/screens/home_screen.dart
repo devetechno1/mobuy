@@ -249,6 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   /// App Bar
                   SliverAppBar(
                     floating: true,
+                    pinned: true,
                     elevation: 0,
                     automaticallyImplyLeading: false,
                     surfaceTintColor: Theme.of(context).colorScheme.surface,
@@ -264,52 +265,70 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Image.asset(Images.moduleIcon, height: 25, width: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
                         ) : const SizedBox(),
                         SizedBox(width: (splashController.module != null && splashController.configModel!.module == null && splashController.moduleList != null && splashController.moduleList!.length != 1) ? Dimensions.paddingSizeSmall : 0),
-
-                        Expanded(child: InkWell(
-                          onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: Dimensions.paddingSizeSmall,
-                              horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
-                            ),
-                            child: GetBuilder<LocationController>(builder: (locationController) {
-                              return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                Text(
-                                  AuthHelper.isLoggedIn() ? AddressHelper.getUserAddressFromSharedPref()!.addressType!.tr : 'your_location'.tr,
-                                  style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeDefault),
-                                  maxLines: 1, overflow: TextOverflow.ellipsis,
-                                ),
-
-                                Row(children: [
-                                  Flexible(
-                                    child: Text(
-                                      AddressHelper.getUserAddressFromSharedPref()!.address!,
-                                      style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: 50, width: Dimensions.webMaxWidth,
+                                  color: searchBgShow ? Get.find<ThemeController>().darkTheme ? Theme.of(context).colorScheme.surface : Theme.of(context).cardColor : null,
+                                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                                  child: InkWell(
+                                    onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                                      margin: const EdgeInsets.symmetric(vertical: 3),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 1),
+                                        borderRadius: BorderRadius.circular(25),
+                                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+                                      ),
+                                      child: Row(children: [
+                                        Icon(
+                                          CupertinoIcons.search, size: 25,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                                        Expanded(child: Text(
+                                          Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'search_food_or_restaurant'.tr : 'search_item_or_store'.tr,
+                                          style: robotoRegular.copyWith(
+                                            fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor,
+                                          ),
+                                        )),
+                                      ]),
                                     ),
                                   ),
-
-                                  Icon(Icons.expand_more, color: Theme.of(context).disabledColor, size: 18),
-
-                                ]),
-
-                              ]);
-                            }),
-                          ),
-                        )),
-                        InkWell(
-                          child: GetBuilder<NotificationController>(builder: (notificationController) {
-                            return Stack(children: [
-                              Icon(CupertinoIcons.bell, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
-                              notificationController.hasNotification ? Positioned(top: 0, right: 0, child: Container(
-                                height: 10, width: 10, decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor, shape: BoxShape.circle,
-                                border: Border.all(width: 1, color: Theme.of(context).cardColor),
+                                ),
                               ),
-                              )) : const SizedBox(),
-                            ]);
-                          }),
-                          onTap: () => Get.toNamed(RouteHelper.getNotificationRoute()),
+                              InkWell(
+                                onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: Dimensions.paddingSizeSmall,
+                                    horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
+                                  ),
+                                  child: 
+                                    Icon(CupertinoIcons.location, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+                                ),
+                              ),
+                              SizedBox(width: Dimensions.paddingSizeSmall),
+                              InkWell(
+                                child: GetBuilder<NotificationController>(builder: (notificationController) {
+                                  return Stack(children: [
+                                    Icon(CupertinoIcons.bell, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+                                    notificationController.hasNotification ? Positioned(top: 0, right: 0, child: Container(
+                                      height: 10, width: 10, decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor, shape: BoxShape.circle,
+                                      border: Border.all(width: 1, color: Theme.of(context).cardColor),
+                                    ),
+                                    )) : const SizedBox(),
+                                  ]);
+                                }),
+                                onTap: () => Get.toNamed(RouteHelper.getNotificationRoute()),
+                              ),
+                            ],
+                          ),
                         ),
                       ]),
                     )),
@@ -317,40 +336,71 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   /// Search Button
-                  !showMobileModule ? SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverDelegate(callback: (val){}, child: Center(child: Container(
-                      height: 50, width: Dimensions.webMaxWidth,
-                      color: searchBgShow ? Get.find<ThemeController>().darkTheme ? Theme.of(context).colorScheme.surface : Theme.of(context).cardColor : null,
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                      child: InkWell(
-                        onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                          margin: const EdgeInsets.symmetric(vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 1),
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
-                          ),
-                          child: Row(children: [
-                            Icon(
-                              CupertinoIcons.search, size: 25,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                            Expanded(child: Text(
-                              Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'search_food_or_restaurant'.tr : 'search_item_or_store'.tr,
-                              style: robotoRegular.copyWith(
-                                fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor,
-                              ),
-                            )),
-                          ]),
-                        ),
-                      ),
-                    ))),
-                  ) : const SliverToBoxAdapter(),
+                  // !showMobileModule ? SliverPersistentHeader(
+                  //   pinned: true,
+                  //   delegate: SliverDelegate(callback: (val){}, child: Center(child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: Container(
+                  //           height: 50, width: Dimensions.webMaxWidth,
+                  //           color: searchBgShow ? Get.find<ThemeController>().darkTheme ? Theme.of(context).colorScheme.surface : Theme.of(context).cardColor : null,
+                  //           padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                  //           child: InkWell(
+                  //             onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                  //             child: Container(
+                  //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                  //               margin: const EdgeInsets.symmetric(vertical: 3),
+                  //               decoration: BoxDecoration(
+                  //                 color: Theme.of(context).cardColor,
+                  //                 border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 1),
+                  //                 borderRadius: BorderRadius.circular(25),
+                  //                 boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+                  //               ),
+                  //               child: Row(children: [
+                  //                 Icon(
+                  //                   CupertinoIcons.search, size: 25,
+                  //                   color: Theme.of(context).primaryColor,
+                  //                 ),
+                  //                 const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                  //                 Expanded(child: Text(
+                  //                   Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'search_food_or_restaurant'.tr : 'search_item_or_store'.tr,
+                  //                   style: robotoRegular.copyWith(
+                  //                     fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor,
+                  //                   ),
+                  //                 )),
+                  //               ]),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       InkWell(
+                  //         onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
+                  //         child: Padding(
+                  //           padding: EdgeInsets.symmetric(
+                  //             vertical: Dimensions.paddingSizeSmall,
+                  //             horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
+                  //           ),
+                  //           child: 
+                  //             Icon(CupertinoIcons.location, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+                  //         ),
+                  //       ),
+                  //       InkWell(
+                  //         child: GetBuilder<NotificationController>(builder: (notificationController) {
+                  //           return Stack(children: [
+                  //             Icon(CupertinoIcons.bell, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+                  //             notificationController.hasNotification ? Positioned(top: 0, right: 0, child: Container(
+                  //               height: 10, width: 10, decoration: BoxDecoration(
+                  //               color: Theme.of(context).primaryColor, shape: BoxShape.circle,
+                  //               border: Border.all(width: 1, color: Theme.of(context).cardColor),
+                  //             ),
+                  //             )) : const SizedBox(),
+                  //           ]);
+                  //         }),
+                  //         onTap: () => Get.toNamed(RouteHelper.getNotificationRoute()),
+                  //       ),
+                  //     ],
+                  //   ))),
+                  // ) : const SliverToBoxAdapter(),
 
                   SliverToBoxAdapter(
                     child: Center(child: SizedBox(
