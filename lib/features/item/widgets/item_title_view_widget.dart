@@ -194,7 +194,7 @@ class ItemTitleViewWidget extends StatelessWidget {
         ],);
     }) : Container(
       color: backgroundColor ?? Theme.of(context).cardColor,
-      padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+      // padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
       child: GetBuilder<ItemController>(
         builder: (itemController) {
           return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -254,23 +254,23 @@ class ItemTitleViewWidget extends StatelessWidget {
               ],
             ) : const SizedBox(),
 
-            InkWell(
-              onTap: () {
-                if(inStorePage) {
-                  Get.back();
-                }else {
-                  Get.offNamed(RouteHelper.getStoreRoute(id: item!.storeId, page: 'item'));
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                child: Text(
-                  item!.storeName!,
-                  style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
-                ),
-              ),
-            ),
-            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+            // InkWell(
+            //   onTap: () {
+            //     if(inStorePage) {
+            //       Get.back();
+            //     }else {
+            //       Get.offNamed(RouteHelper.getStoreRoute(id: item!.storeId, page: 'item'));
+            //     }
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+            //     child: Text(
+            //       item!.storeName!,
+            //       style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

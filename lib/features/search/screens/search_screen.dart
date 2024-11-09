@@ -31,9 +31,7 @@ class SearchScreen extends StatefulWidget {
   SearchScreenState createState() => SearchScreenState();
 }
 
-class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixin {
-  TabController? _tabController;
-
+class SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   late bool _isLoggedIn;
 
@@ -43,7 +41,6 @@ class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixi
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     _isLoggedIn = AuthHelper.isLoggedIn();
     Get.find<search.SearchController>().setSearchMode(true, canUpdate: false);
     Get.find<search.SearchController>().getPopularCategories();
@@ -135,28 +132,8 @@ class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixi
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 200,
-                                color: Colors.transparent,
-                                child: TabBar(
-                                  tabAlignment: TabAlignment.start,
-                                  controller: _tabController,
-                                  indicatorColor: Theme.of(context).primaryColor,
-                                  indicatorWeight: 3,
-                                  labelColor: Theme.of(context).primaryColor,
-                                  unselectedLabelColor: Theme.of(context).disabledColor,
-                                  unselectedLabelStyle: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                                  labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
-                                  labelPadding: const EdgeInsets.symmetric(horizontal: Dimensions.radiusDefault, vertical: 0 ),
-                                  isScrollable: true,
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  tabs: [
-                                    Tab(text: 'item'.tr),
-                                    Tab(text: Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants'.tr : 'stores'.tr),
-                                  ],
-                                ),
-                              ),
-                              
+                              Tab(text: 'item'.tr),
+                            
                               InkWell(
                                 onTap: () {
                                   _actionSearch(false, _searchController.text.trim(), false);
@@ -399,7 +376,7 @@ class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixi
 
                   ])),
                 ),
-                ) : SearchResultWidget(searchText: _searchController.text.trim(), tabController: ResponsiveHelper.isDesktop(context) ? _tabController : null)),
+                ) : SearchResultWidget(searchText: _searchController.text.trim())),
             ]);
           }),
         )),

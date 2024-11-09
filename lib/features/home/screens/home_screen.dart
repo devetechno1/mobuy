@@ -5,7 +5,7 @@ import 'package:sixam_mart/features/banner/controllers/banner_controller.dart';
 import 'package:sixam_mart/features/brands/controllers/brands_controller.dart';
 import 'package:sixam_mart/features/home/controllers/advertisement_controller.dart';
 import 'package:sixam_mart/features/home/controllers/home_controller.dart';
-import 'package:sixam_mart/features/home/widgets/all_store_filter_widget.dart';
+// import 'package:sixam_mart/features/home/widgets/all_store_filter_widget.dart';
 import 'package:sixam_mart/features/home/widgets/cashback_logo_widget.dart';
 import 'package:sixam_mart/features/home/widgets/cashback_dialog_widget.dart';
 import 'package:sixam_mart/features/home/widgets/refer_bottom_sheet_widget.dart';
@@ -34,9 +34,9 @@ import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
-import 'package:sixam_mart/common/widgets/item_view.dart';
+// import 'package:sixam_mart/common/widgets/item_view.dart';
 import 'package:sixam_mart/common/widgets/menu_drawer.dart';
-import 'package:sixam_mart/common/widgets/paginated_list_view.dart';
+// import 'package:sixam_mart/common/widgets/paginated_list_view.dart';
 import 'package:sixam_mart/common/widgets/web_menu_bar.dart';
 import 'package:sixam_mart/features/home/screens/web_new_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +109,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   bool searchBgShow = false;
-  final GlobalKey _headerKey = GlobalKey();
+  // final GlobalKey _headerKey = GlobalKey();
 
   @override
   void initState() {
@@ -367,37 +367,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
                   ),
 
-                  !showMobileModule ? SliverPersistentHeader(
-                    key: _headerKey,
-                    pinned: true,
-                    delegate: SliverDelegate(
-                      height: 85,
-                      callback: (val) {
-                        searchBgShow = val;
-                      },
-                      child: const AllStoreFilterWidget(),
-                    ),
-                  ) : const SliverToBoxAdapter(),
+                  // !showMobileModule ? SliverPersistentHeader(
+                  //   key: _headerKey,
+                  //   pinned: true,
+                  //   delegate: SliverDelegate(
+                  //     height: 85,
+                  //     callback: (val) {
+                  //       searchBgShow = val;
+                  //     },
+                  //     child: const AllStoreFilterWidget(),
+                  //   ),
+                  // ) : const SliverToBoxAdapter(),
 
                   SliverToBoxAdapter(child: !showMobileModule ? Center(child: GetBuilder<StoreController>(builder: (storeController) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: ResponsiveHelper.isDesktop(context) ? 0 : 100),
-                      child: PaginatedListView(
-                        scrollController: _scrollController,
-                        totalSize: storeController.storeModel?.totalSize,
-                        offset: storeController.storeModel?.offset,
-                        onPaginate: (int? offset) async => await storeController.getStoreList(offset!, false),
-                        itemView: ItemsView(
-                          isStore: true,
-                          items: null,
-                          isFoodOrGrocery: (isFood || isGrocery),
-                          stores: storeController.storeModel?.stores,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,
-                            vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeDefault,
-                          ),
-                        ),
-                      ),
+                      child: const SizedBox(),
+                      // PaginatedListView(
+                      //   scrollController: _scrollController,
+                      //   totalSize: storeController.storeModel?.totalSize,
+                      //   offset: storeController.storeModel?.offset,
+                      //   onPaginate: (int? offset) async => await storeController.getStoreList(offset!, false),
+                      //   itemView: ItemsView(
+                      //     isStore: true,
+                      //     items: null,
+                      //     isFoodOrGrocery: (isFood || isGrocery),
+                      //     stores: storeController.storeModel?.stores,
+                      //     padding: EdgeInsets.symmetric(
+                      //       horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,
+                      //       vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeDefault,
+                      //     ),
+                      //   ),
+                      // ),
                     );
                   }),) : const SizedBox()),
 

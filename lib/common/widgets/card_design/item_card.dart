@@ -127,13 +127,14 @@ class ItemCard extends StatelessWidget {
                           crossAxisAlignment: isPopularItem ? CrossAxisAlignment.center : CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
                           const SizedBox(width: double.maxFinite),
                           
-                          (isFood || isShop) ? Text(item.storeName ?? '', style: robotoRegular.copyWith(color: Theme.of(context).disabledColor))
+                          (isFood || isShop) ? const SizedBox()
+                          // Text(item.storeName ?? '', style: robotoRegular.copyWith(color: Theme.of(context).disabledColor))
                               : Text(item.name ?? '', style: robotoBold, maxLines: 1, overflow: TextOverflow.ellipsis),
                       
                           (isFood || isShop) ? Flexible(
                             child: Text(
                               item.name ?? '',
-                              style: robotoBold, maxLines: 1, overflow: TextOverflow.ellipsis,
+                              style: robotoBold, maxLines: 2, overflow: TextOverflow.ellipsis,
                             ),
                           ) : item.ratingCount! > 0 ? Row(mainAxisAlignment: isPopularItem ? MainAxisAlignment.center : MainAxisAlignment.start, children: [
                             Icon(Icons.star, size: 14, color: Theme.of(context).primaryColor),

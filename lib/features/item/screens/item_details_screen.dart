@@ -142,6 +142,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
+                            boxShadow: const [BoxShadow()]
                           ),
                           child: Column(
                             children: [
@@ -160,6 +161,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                                       ),
                                   ),
                                 ),
+                              const SizedBox(height: Dimensions.paddingSizeSmall),
                               Builder(
                                 builder: (context) {
                                   return ItemTitleViewWidget(
@@ -414,7 +416,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     if(title == null) return const SizedBox();
 
     return Container(
-      margin:const  EdgeInsetsDirectional.only(start: Dimensions.paddingSizeSmall),
+      margin:const  EdgeInsetsDirectional.only(end: Dimensions.paddingSizeSmall),
       padding: const EdgeInsets.symmetric(vertical: 2, horizontal:6),
       decoration: BoxDecoration(
         color: background,

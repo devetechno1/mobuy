@@ -9,7 +9,8 @@ class CartCountView extends StatelessWidget {
   final Item item;
   final Widget? child;
   final int? index;
-  const CartCountView({super.key, required this.item, this.child, this.index = -1});
+  final bool makeBottomPadding;
+  const CartCountView({super.key, required this.item, this.child, this.index = -1, this.makeBottomPadding = true});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class CartCountView extends StatelessWidget {
       return cartQty != 0 ? Center(
         child: Container(
           width: 100,
+          margin: cartController.cartList[cartIndex].quantity! >= 1 && makeBottomPadding? const EdgeInsets.only(bottom: 15) : null,
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
