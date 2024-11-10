@@ -94,7 +94,7 @@ class CategoryController extends GetxController implements GetxService {
     if(_isStore) {
       getCategoryStoreList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true);
     }else {
-       getCategoryItemList( _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
+       getCategoryItemList( _subCategoryList?.isNotEmpty != true? categoryID : _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
       //getCategoryItemList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
 
     }

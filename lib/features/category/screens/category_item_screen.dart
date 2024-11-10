@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sixam_mart/api/api_client.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/store/domain/models/store_model.dart';
@@ -19,8 +18,8 @@ import 'package:get/get.dart';
 
 import '../../../common/widgets/custom_image.dart';
 import '../../../util/app_constants.dart';
-import 'package:http/http.dart' as http;
 
+import '../../brands/domain/models/brands_model.dart';
 import '../widgets/filter_cat_widget.dart';
 
 
@@ -38,16 +37,17 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
   final ScrollController storeScrollController = ScrollController();
   TabController? _tabController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  var brand_category_ids = [];
+  List<BrandModel> brandsList = [];
   int index_category = 0;
   int index_brand = -1;
-  int pageindex = 0;
+  int pageIndex = 0;
   @override
   void initState() {
     super.initState();
 
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    getBrandByCategoryList(widget.categoryID);
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent
           && Get.find<CategoryController>().categoryItemList != null
@@ -61,7 +61,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
           Get.find<CategoryController>().getCategoryItemList(
             Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
                 : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,'${ brand_category_ids.isEmpty ||  index_brand == -1 ? "" :brand_category_ids[index_brand]['id']}'
+            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,'${ brandsList.isEmpty ||  index_brand == -1 ? "" :brandsList[index_brand].id}'
           );
         }
       }
@@ -86,6 +86,21 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
     });
   }
 
+  getBrandByCategoryList(String? categoryID) async {
+    final ApiClient api = Get.find<ApiClient>();
+    final  response = await api.getData("${AppConstants.brandCategoryUri}/$categoryID");
+    if (response.statusCode == 200) {
+      if(response.body['brands'] == 0){
+        brandsList = [];
+      }else{
+        setState(() {
+          brandsList = [];
+          response.body['brands'].forEach((brand) => brandsList.add(BrandModel.fromJson(brand)));
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(builder: (catController) {
@@ -107,29 +122,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
           stores.addAll(catController.categoryStoreList!);
         }
       }
-      getBrandByCategoryList(String? categoryID ) async {
-        // '${AppConstants.brandCategoryUri}/$categoryID'
-        String url = "${AppConstants.baseUrl}${AppConstants.brandCategoryUri}/$categoryID";
-        print("response categoryID1 =========> ${ categoryID }");
-        final  response = await http.get(Uri.parse(url));
-        print("response.statusCode =========> ${ response.statusCode }");
 
-        if (response.statusCode == 200) {
-          var sub_cat = jsonDecode(response.body);
-          print("response 2222 =========> ${ sub_cat }");
-          if(sub_cat['brands'] == 0){
-            brand_category_ids = [];
-          }else{
-            print("brand_category_ids =========> ${ brand_category_ids }");
-            setState(() {
-              brand_category_ids = sub_cat['brands'];
-            });
-
-          }
-          print("response 1111 =========> ${ sub_cat['brands'] }");
-        }
-
-      }
       return PopScope(
         canPop: false,
         onPopInvokedWithResult: (didPop,_)  => backMethod(catController),
@@ -216,21 +209,15 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             width: Dimensions.webMaxWidth,
             child: Column(children: [
 
-              (catController.subCategoryList != null && !catController.isSearching && AppConstants.subcatimg && pageindex ==0 ) ? Center(child: Container(
-              //  height: 40,
+              (catController.subCategoryList != null && !catController.isSearching && AppConstants.subcatimg && pageIndex ==0 ) ? Center(child: Container(
+               height: 120,
                 width: Dimensions.webMaxWidth,
                 color: Theme.of(context).cardColor,
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
                 child:
-                GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing:5,
-                    crossAxisSpacing: 0,
-                  ),
-                  // physics: NeverScrollableScrollPhysics(),
+                ListView.builder(
                   padding: EdgeInsets.zero,
-                  // scrollDirection: Axis.vertical,
+                  scrollDirection: Axis.horizontal,
                   itemCount: catController.subCategoryList!.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
@@ -239,7 +226,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                         setState(() {
                           index_category = index;
                           index_brand = -1;
-                          pageindex = 1;
+                          pageIndex = 1;
                         });
 
                         // if(index == 0){
@@ -257,7 +244,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
 
                       },
                       child:  Container(
-                        //width: 100,
+                        // width: 150,
                         //height: 100,
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                         margin: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
@@ -270,7 +257,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
 
                               // image
                               catController.subCategoryList![index].name != "all".tr? Expanded(
-                                //flex: 1,
+                                flex: 3,
                                 child: CustomImage(
                                   image: '${catController.subCategoryList![index].imageFullUrl}',
                                   //height: 90,
@@ -287,6 +274,8 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                                 child: Text(
                                   catController.subCategoryList![index].name!,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: index == catController.subCategoryIndex
                                       ? robotoMedium.copyWith(fontSize: Dimensions.paddingSizeSmall, color: Theme.of(context).primaryColor)
                                       : robotoRegular.copyWith(fontSize: Dimensions.paddingSizeSmall),
@@ -308,38 +297,39 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
               //   ],
               // ): Container(),
 
-              brand_category_ids.length !=0 ?  Center(child: Container(
+              brandsList.isNotEmpty && (pageIndex == 1  || catController.subCategoryList?.isNotEmpty != true)?  Center(child: Container(
                 height: 100,
                 width: Dimensions.webMaxWidth,
                 color: Theme.of(context).cardColor,
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
                 child: Row(
                   children: [
-                    const SizedBox(width: 5,),
+                    const SizedBox(width: 15),
                     InkWell(
-                      onTap: (){
+                      onTap: index_brand == -1 ? null : (){
                         catController.setSubCategoryIndex(index_category, widget.categoryID,"");
                         index_brand = -1;
                       },
                       child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(index_brand == -1 ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Theme.of(context).primaryColor),
+                              border: Border.all(color: index_brand == -1 ? Theme.of(context).primaryColor : const Color(0xFF000000)),
                               borderRadius: const BorderRadius.all(Radius.circular(50))
                           ),
-                          width: 60, height: 60,child:  Text( "allCompanies".tr,textAlign:TextAlign.center,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 12),)),
+                          width: 80, height: 80,child:  Text( "allCompanies".tr,textAlign:TextAlign.center,style: index_brand == -1 ? TextStyle(color: Theme.of(context).primaryColor,fontSize: 12 ):const TextStyle(fontSize: 10),)),
                     ),
-                    const SizedBox(width: 5,),
                     Expanded(
                       child: ListView.builder(
                         key: scaffoldKey,
                         scrollDirection: Axis.horizontal,
-                        itemCount: brand_category_ids.length,
-                        padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                        itemCount: brandsList.length,
+                        padding: const EdgeInsetsDirectional.only(start: Dimensions.paddingSizeSmall),
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return InkWell(
-                            onTap: () {
-                              catController.setSubCategoryIndex(index_category, widget.categoryID,'${brand_category_ids[index]['id']}');
+                            onTap: index_brand == index ? null : () {
+                              catController.setSubCategoryIndex(index_category, widget.categoryID,'${brandsList[index].id}');
                               index_brand = index;
                             }
                             ,child: Container(
@@ -353,12 +343,12 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                                   child: CustomImage(
-                                    image: '${AppConstants.baseUrl}/storage/app/public/brand/${brand_category_ids[index]['image']}',
-                                    height: 40, width: 60, fit: BoxFit.cover,
+                                    image: '${brandsList[index].imageFullUrl}',
+                                    height: 60, width: 60, fit: BoxFit.cover,
                                   ),
                                 ),
                                 Text(
-                                  '${brand_category_ids[index]['name']}',
+                                  '${brandsList[index].name}',
                                   style: index == index_brand
                                       ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
                                       : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
@@ -447,7 +437,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                           catController.getCategoryItemList(
                             catController.subCategoryIndex == 0 ? widget.categoryID
                                 : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
-                            1, catController.type, false,'${brand_category_ids[index_brand]['id']}'
+                            1, catController.type, false,'${brandsList[index_brand].id}'
                           );
                         }
                       }
@@ -498,10 +488,10 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
   void backMethod(CategoryController catController) {
     if(catController.isSearching) {
       catController.toggleSearch();
-    }else if(pageindex == 1){
+    }else if(pageIndex == 1){
       setState(() {
-        pageindex = 0;
-        brand_category_ids = [];
+        pageIndex = 0;
+        brandsList = [];
       });
     }
     else  {
