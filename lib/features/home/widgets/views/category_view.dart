@@ -36,18 +36,18 @@ class CategoryView extends StatelessWidget {
                   ),
                 ),
               ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: AppConstants.makeCatInGrid ? 800 : 158,minHeight: 158),
+                constraints: const BoxConstraints(maxHeight: AppConstants.makeCatInGrid ? 1000 : 158,minHeight: 158),
                 child: categoryController.categoryList != null ? 
                 GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: AppConstants.makeCatInGrid ? 0.65 : 1.3,
                     crossAxisCount: AppConstants.makeCatInGrid ? 4 : 1,
-                    childAspectRatio: AppConstants.makeCatInGrid ? 0.72 : 1.3
-                    
+                    crossAxisSpacing: 13, mainAxisSpacing: 13,                   
                   ),
                   controller: scrollController,
                   shrinkWrap: true,
                   itemCount: categoryController.categoryList!.length > 10 ? 10 : categoryController.categoryList!.length,
-                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeDefault),
+                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
                   physics: AppConstants.makeCatInGrid ? const NeverScrollableScrollPhysics() : const BouncingScrollPhysics(),
                   scrollDirection: AppConstants.makeCatInGrid ? Axis.vertical : Axis.horizontal,
                   itemBuilder: (context, index) {
@@ -332,9 +332,9 @@ class CategoryShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: AppConstants.makeCatInGrid ? 0.65 : 1.3,
         crossAxisCount: AppConstants.makeCatInGrid ? 4 : 1,
-        childAspectRatio: AppConstants.makeCatInGrid ? 0.8 : 1.3
-        
+        crossAxisSpacing: 13, mainAxisSpacing: 13,             
       ),
       scrollDirection: AppConstants.makeCatInGrid ? Axis.vertical : Axis.horizontal,
       itemCount: 8,
