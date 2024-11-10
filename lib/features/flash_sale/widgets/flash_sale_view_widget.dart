@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/features/flash_sale/controllers/flash_sale_controller.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
@@ -45,97 +44,96 @@ class _FlashSaleViewWidgetState extends State<FlashSaleViewWidget> {
           color: Theme.of(context).primaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
         ),
-        child: Column(children: [
-
-          Padding(
-            padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-            child: FittedBox(
-              child: CustomInkWell(
-                onTap: () => Get.toNamed(RouteHelper.getFlashSaleDetailsScreen(flashSaleController.flashSaleModel!.activeProducts![0].flashSaleId!)),
-                radius: Dimensions.paddingSizeSmall,
+        child: InkWell(
+          onTap: () => Get.toNamed(RouteHelper.getFlashSaleDetailsScreen(flashSaleController.flashSaleModel!.activeProducts![0].flashSaleId!)),
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+          child: Column(children: [
+          
+            Padding(
+              padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+              child: FittedBox(
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text('flash_sale'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
                     const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
                     Text('limited_time_offer'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor)),
                   ]),
-
+                  const SizedBox(width: Dimensions.paddingSizeDefault),
                   FlashSaleTimerView(eventDuration: flashSaleController.duration)
                 ]),
               ),
             ),
-          ),
-
-          flashSaleController.flashSaleModel!.activeProducts != null
-            ? FlashSaleCard(
-            activeProducts: flashSaleController.flashSaleModel!.activeProducts!,
-            soldOut: remaining == 0,
-          ) : const SizedBox(),
-
-          SizedBox(
-            width: Get.width * 0.7,
-            child: Text("${item!.name}", style: robotoRegular, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
-          ),
-          const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-          (Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! && item.unitType != null) ? Text(
-            '(${ item.unitType ?? ''})',
-            style: robotoRegular.copyWith(color: Theme.of(context).disabledColor),
-          ) : const SizedBox(),
-          const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-
-            item.discount != null && item.discount! > 0  ? Flexible(child: Text(
-              PriceConverter.convertPrice(Get.find<ItemController>().getStartingPrice(item)),
-              style: robotoMedium.copyWith(
-                fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor,
-                decoration: TextDecoration.lineThrough,
-              ), textDirection: TextDirection.ltr,
-            )) : const SizedBox(),
-            SizedBox(width: item.discount != null && item.discount! > 0 ? Dimensions.paddingSizeExtraSmall : 0),
-
-            Flexible(child: Text(
-              PriceConverter.convertPrice(
-                Get.find<ItemController>().getStartingPrice(item), discount: item.discount,
-                discountType: item.discountType,
-              ),
-              textDirection: TextDirection.ltr, style: robotoMedium,
-            )),
-
-          ]),
-          const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-          SizedBox(
-            width: Get.width * 0.7,
-            child: Stack(
-              children: [
-                Builder(
-                  builder: (context) {
-                    bool bothZero = remaining == 0 && stock == 0;
-                    return LinearProgressIndicator(
-                      borderRadius: const BorderRadius.all(Radius.circular(Dimensions.radiusDefault)),
-                      minHeight: 15,
-                      value: bothZero ? 0 : remaining / stock,
-                      valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.25),
-                    );
-                  }
-                ),
-
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    '${'sold'.tr} $sold/$stock',
-                    style: robotoMedium.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall),
-                  ),
-                ),
-              ],
+          
+            flashSaleController.flashSaleModel!.activeProducts != null
+              ? FlashSaleCard(
+              activeProducts: flashSaleController.flashSaleModel!.activeProducts!,
+              soldOut: remaining == 0,
+            ) : const SizedBox(),
+          
+            SizedBox(
+              width: Get.width * 0.7,
+              child: Text("${item!.name}", style: robotoRegular, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
             ),
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+          
+            (Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! && item.unitType != null) ? Text(
+              '(${ item.unitType ?? ''})',
+              style: robotoRegular.copyWith(color: Theme.of(context).disabledColor),
+            ) : const SizedBox(),
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+          
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          
+              item.discount != null && item.discount! > 0  ? Flexible(child: Text(
+                PriceConverter.convertPrice(Get.find<ItemController>().getStartingPrice(item)),
+                style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor,
+                  decoration: TextDecoration.lineThrough,
+                ), textDirection: TextDirection.ltr,
+              )) : const SizedBox(),
+              SizedBox(width: item.discount != null && item.discount! > 0 ? Dimensions.paddingSizeExtraSmall : 0),
+          
+              Flexible(child: Text(
+                PriceConverter.convertPrice(
+                  Get.find<ItemController>().getStartingPrice(item), discount: item.discount,
+                  discountType: item.discountType,
+                ),
+                textDirection: TextDirection.ltr, style: robotoMedium,
+              )),
+          
+            ]),
+            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+          
+            SizedBox(
+              width: Get.width * 0.7,
+              child: Stack(
+                children: [
+                  Builder(
+                    builder: (context) {
+                      bool bothZero = remaining == 0 && stock == 0;
+                      return LinearProgressIndicator(
+                        borderRadius: const BorderRadius.all(Radius.circular(Dimensions.radiusDefault)),
+                        minHeight: 15,
+                        value: bothZero ? 0 : remaining / stock,
+                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                        backgroundColor: Theme.of(context).primaryColor.withOpacity(0.25),
+                      );
+                    }
+                  ),
+          
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      '${'sold'.tr} $sold/$stock',
+                      style: robotoMedium.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: Dimensions.paddingSizeDefault),
+            ],
           ),
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-          ],
         ),
       ) : const SizedBox() : const FlashSaleShimmerView();
     });
