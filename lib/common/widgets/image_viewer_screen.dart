@@ -9,15 +9,16 @@ import 'package:sixam_mart/common/widgets/custom_app_bar.dart';
 class ImageViewerScreen extends StatelessWidget {
   final Item item;
   final bool isCampaign;
-  const ImageViewerScreen({super.key, required this.item, this.isCampaign = false});
+  final int initIndex;
+  const ImageViewerScreen({super.key, required this.item, this.isCampaign = false, this.initIndex = 0});
 
   @override
   Widget build(BuildContext context) {
-    Get.find<ItemController>().setImageIndex(0, false);
+    Get.find<ItemController>().setImageIndex(initIndex, false);
     List<String?> imageList = [];
     imageList.add(item.imageFullUrl);
     imageList.addAll(item.imagesFullUrl!);
-    final PageController pageController = PageController();
+    final PageController pageController = PageController(initialPage: initIndex);
 
     return Scaffold(
       appBar: CustomAppBar(title: 'product_images'.tr),

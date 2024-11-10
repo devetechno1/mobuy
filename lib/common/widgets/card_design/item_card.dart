@@ -57,10 +57,13 @@ class ItemCard extends StatelessWidget {
                         bottomLeft: Radius.circular(isPopularItem ? Dimensions.radiusLarge : 0),
                         bottomRight: Radius.circular(isPopularItem ? Dimensions.radiusLarge : 0),
                       ),
-                      child: CustomImage(
-                        placeholder: Images.placeholder,
-                        image: '${item.imageFullUrl}',
-                        fit: BoxFit.contain, width: double.infinity, height: double.infinity,
+                      child: AspectRatio(
+                        aspectRatio: 200/128,
+                        child: CustomImage(
+                          placeholder: Images.placeholder,
+                          image: '${item.imageFullUrl}',
+                          fit: BoxFit.cover, width: double.infinity, height: double.infinity,
+                        ),
                       ),
                     ),
                   ),

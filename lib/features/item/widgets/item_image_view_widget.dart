@@ -33,7 +33,7 @@ class ItemImageViewWidget extends StatelessWidget {
           InkWell(
             onTap: isCampaign ? null : () {
               if(!isCampaign) {
-                Navigator.of(context).pushNamed(RouteHelper.getItemImagesRoute(item!), arguments: ItemImageViewWidget(item: item));
+                Navigator.of(context).pushNamed(RouteHelper.getItemImagesRoute(item!,itemController.imageSliderIndex), arguments: ItemImageViewWidget(item: item));
               }
             },
             child: Stack(children: [

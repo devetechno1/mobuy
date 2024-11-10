@@ -43,6 +43,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   void initState() {
     super.initState();
     Get.find<ItemController>().getProductDetails(widget.item!);
+    Get.find<ItemController>().setImageSliderIndex(0,false);
   }
 
   @override

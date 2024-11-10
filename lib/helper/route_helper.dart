@@ -236,9 +236,9 @@ class RouteHelper {
     return '$storeReview?storeID=$storeID&storeName=$storeName&store=$data';
   }
   static String getAllStoreRoute(String page, {bool isNearbyStore = false}) => '$allStores?page=$page${isNearbyStore ? '&nearby=${isNearbyStore.toString()}' : ''}';
-  static String getItemImagesRoute(Item item) {
+  static String getItemImagesRoute(Item item,[int? initIndex]) {
     String data = base64Url.encode(utf8.encode(jsonEncode(item.toJson())));
-    return '$itemImages?item=$data';
+    return '$itemImages?item=$data&initIndex=$initIndex';
   }
   static String getParcelCategoryRoute() => parcelCategory;
   static String getParcelLocationRoute(ParcelCategoryModel category) {
@@ -466,6 +466,7 @@ class RouteHelper {
     ))),
     GetPage(name: itemImages, page: () => getRoute(ImageViewerScreen(
       item: Item.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['item']!.replaceAll(' ', '+'))))),
+      initIndex: int.tryParse(Get.parameters['initIndex'] ?? "0") ?? 0,
     ))),
     GetPage(name: parcelCategory, page: () => getRoute(const ParcelCategoryScreen())),
     GetPage(name: parcelLocation, page: () => getRoute(ParcelLocationScreen(

@@ -415,9 +415,9 @@ class ItemController extends GetxController implements GetxService {
     }
   }
 
-  void setImageSliderIndex(int index) {
+  void setImageSliderIndex(int index, [bool updateUI = true]) {
     _imageSliderIndex = index;
-    update();
+    if(updateUI) update();
   }
 
   double? getStartingPrice(Item item) {
