@@ -301,19 +301,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
-                              InkWell(
+                              AppBarAction(
+                                icon: CupertinoIcons.location,
                                 onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Dimensions.paddingSizeSmall,
-                                    horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
-                                  ),
-                                  child: 
-                                    Icon(CupertinoIcons.location, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
-                                ),
                               ),
-                              SizedBox(width: Dimensions.paddingSizeSmall),
-                              InkWell(
+                              const SizedBox(width: Dimensions.paddingSizeSmall),
+                              AppBarAction(
                                 child: GetBuilder<NotificationController>(builder: (notificationController) {
                                   return Stack(children: [
                                     Icon(CupertinoIcons.bell, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
@@ -469,6 +462,44 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       });
     });
+  }
+}
+
+class AppBarAction extends StatelessWidget {
+  const AppBarAction({
+    super.key, 
+    this.icon, 
+    this.child, 
+    this.onTap,
+  });
+  final IconData? icon;
+  final Widget? child;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          vertical: Dimensions.paddingSizeSmall,
+          horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
+        ),
+        padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+        height: 40,
+        width: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.onPrimary,
+          boxShadow: const [BoxShadow(spreadRadius: 0.1)],
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault)
+        ),
+        child: FittedBox(
+          child: child ??
+            Icon(icon, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+        ),
+      ),
+    );
   }
 }
 
