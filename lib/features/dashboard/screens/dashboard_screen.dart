@@ -16,6 +16,7 @@ import 'package:sixam_mart/features/parcel/controllers/parcel_controller.dart';
 import 'package:sixam_mart/features/store/controllers/store_controller.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
+import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/common/widgets/custom_dialog.dart';
@@ -281,7 +282,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                       }
                     },
                     child: RunningOrderViewWidget(reversOrder: reversOrder, onOrderTap: () {
-                      _setPage(3);
+                      Get.toNamed(RouteHelper.getOrderRoute());
                       if(orderController.showBottomSheet){
                         orderController.showRunningOrders();
                       }
