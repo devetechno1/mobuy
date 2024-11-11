@@ -25,7 +25,7 @@
     </queries>
 
     <application
-        android:label="Devetechno App"
+        android:label="MOBUY EG"
         android:name="${applicationName}"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"

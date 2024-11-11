@@ -4,7 +4,7 @@ import 'package:sixam_mart/features/language/domain/models/language_model.dart';
 import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
-  static const String appName = 'Devetechno App';
+  static const String appName = 'MOBUY EG';
   static const double appVersion = 2.10;
 
   ///Flutter Version: 3.24.3
@@ -166,7 +166,6 @@ class AppConstants {
       '/api/v1/items/item-or-store-search';
   static const String searchPopularCategoriesUri = '/api/v1/categories/popular';
   static const String firebaseAuthVerify = '/api/v1/auth/firebase-verify-token';
-
 
   static const String brandCategoryUri = '/api/v1/brand/brands-by-category';
 
