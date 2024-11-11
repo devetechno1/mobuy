@@ -45,7 +45,7 @@ class DetailsAppBarWidgetState extends State<DetailsAppBarWidget> with SingleTic
 
     return AppBar(
       leading: IconButton(icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyLarge!.color), onPressed: () => Navigator.pop(context)),
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       title: Text(
         'item_details'.tr,

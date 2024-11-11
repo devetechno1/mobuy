@@ -117,9 +117,12 @@ class ItemWidget extends StatelessWidget {
                   child: Stack(children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                      child: CustomImage(
-                        image: '${isStore ? store != null ? store!.logoFullUrl : '' : item!.imageFullUrl}',
-                        height: imageHeight ?? (desktop ? 120 : length == null ? 100 : 90), width: imageWidth ?? (desktop ? 120 : 90), fit: BoxFit.cover,
+                      child: AspectRatio(
+                        aspectRatio: 200/128,
+                        child: CustomImage(
+                          image: '${isStore ? store != null ? store!.logoFullUrl : '' : item!.imageFullUrl}',
+                          height: imageHeight ?? (desktop ? 120 : length == null ? 100 : 90), width: imageWidth ?? (desktop ? 120 : 90), fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                                 

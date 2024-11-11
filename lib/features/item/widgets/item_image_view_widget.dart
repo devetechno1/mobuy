@@ -38,16 +38,22 @@ class ItemImageViewWidget extends StatelessWidget {
             },
             child: Stack(children: [
               SizedBox(
+                width: double.infinity,
                 height: ResponsiveHelper.isDesktop(context)? 350: MediaQuery.sizeOf(context).height * 0.3 + 40,
                 child: PageView.builder(
                   controller: _controller,
                   itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
                   itemBuilder: (context, index) {
-                    return CustomImage(
-                      image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.cover,
+                    return Align(
+                      alignment: Alignment.bottomCenter,
+                      child: AspectRatio(
+                        aspectRatio: 200/128,
+                        child: CustomImage(
+                          image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     );
                   },
                   onPageChanged: (index) {
