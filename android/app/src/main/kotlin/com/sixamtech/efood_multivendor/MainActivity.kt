@@ -1,4 +1,4 @@
-package com.devetechno.master
+package com.mobuyeg
 
 import io.flutter.embedding.android.FlutterActivity
 
