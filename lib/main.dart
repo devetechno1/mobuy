@@ -51,19 +51,19 @@ Future<void> main() async {
   if(GetPlatform.isWeb){
     await Firebase.initializeApp(options: const FirebaseOptions(
         apiKey: "AIzaSyDFN-73p8zKVZbA0i5DtO215XzAb-xuGSE",
-        authDomain: "ammart-8885e.firebaseapp.com",
-        projectId: "ammart-8885e",
-        storageBucket: "ammart-8885e.appspot.com",
-        messagingSenderId: "1000163153346",
+        authDomain: "mobuy-eg.firebaseapp.com",
+        projectId: "mobuy-eg",
+        storageBucket: "mobuy-eg.appspot.com",
+        messagingSenderId: "118132498712",
         appId: "1:1000163153346:web:4f702a4b5adbd5c906b25b",
     ));
   } else if(GetPlatform.isAndroid) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyCic6Mw3RRPFcimXhwGidwhCN0tXY7HFFc",
-        appId: "1:1000163153346:android:9d8caf29b912e11606b25b",
-        messagingSenderId: "1000163153346",
-        projectId: "ammart-8885e",
+        apiKey: "AIzaSyBPI1q_s1cib9Utl95OZdJl51ZYZ09Najk",
+        appId: "1:118132498712:android:dfa610a0cdb2f86cbbbe6d",
+        messagingSenderId: "118132498712",
+        projectId: "mobuy-eg",
       ),
     );
   } else {
