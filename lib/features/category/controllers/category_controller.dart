@@ -45,7 +45,7 @@ class CategoryController extends GetxController implements GetxService {
   bool _isSearching = false;
   bool get isSearching => _isSearching;
 
-  int _subCategoryIndex = 0;
+  int _subCategoryIndex = -1;
   int get subCategoryIndex => _subCategoryIndex;
 
   String _type = 'all';
@@ -77,7 +77,7 @@ class CategoryController extends GetxController implements GetxService {
   }
 
   void getSubCategoryList(String? categoryID) async {
-    _subCategoryIndex = 0;
+    _subCategoryIndex = -1;
     _subCategoryList = null;
     _categoryItemList = null;
     List<CategoryModel>? subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
@@ -94,7 +94,7 @@ class CategoryController extends GetxController implements GetxService {
     if(_isStore) {
       getCategoryStoreList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true);
     }else {
-       getCategoryItemList( _subCategoryList?.isNotEmpty != true? categoryID : _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
+       getCategoryItemList( _subCategoryList?.isNotEmpty != true || index == -1? categoryID : _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
       //getCategoryItemList(_subCategoryIndex == 0 ? categoryID : _subCategoryList![index].id.toString(), 1, _type, true, brand_id_deve!);
 
     }

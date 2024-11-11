@@ -16,7 +16,7 @@ class CustomImage extends StatelessWidget {
 
     return CachedNetworkImage(
       imageUrl: image, height: height, width: width, fit: fit,
-      placeholder: (context, url) => Image.asset(placeholder.isNotEmpty ? placeholder : isNotification ? Images.notificationPlaceholder : Images.placeholder, height: height, width: width, fit: fit),
+      placeholder: (context, url) => Image.asset(placeholder.isNotEmpty ? placeholder : isNotification ? Images.notificationPlaceholder : Images.placeholder, height: height ?? 50, width: width ?? 50, fit: fit),
       errorWidget: (context, url, error) => Image.asset(placeholder.isNotEmpty ? placeholder : isNotification ? Images.notificationPlaceholder : Images.placeholder, height: height, width: width, fit: fit),
     );
   }
