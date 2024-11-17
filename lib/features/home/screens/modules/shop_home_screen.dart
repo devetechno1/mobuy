@@ -46,21 +46,17 @@ class ShopHomeScreen extends StatelessWidget {
       ),
 
       const CategoryView(),
-      // isLoggedIn ? const VisitAgainView() : const SizedBox(),
       const MostPopularItemView(isFood: false, isShop: true),
+      const PromotionalBannerView(),
       const FlashSaleViewWidget(),
+      const FeaturedCategoriesView(),
+      const JustForYouView(),
       const MiddleSectionBannerView(),
       const HighlightWidget(),
-      // const PopularStoreView(),
       const BrandsViewWidget(),
       const SpecialOfferView(isFood: false, isShop: true),
       const ProductWithCategoriesView(fromShop: true),
-      const JustForYouView(),
-      const FeaturedCategoriesView(),
-      // const StoreWiseBannerView(),
       const ItemThatYouLoveView(forShop: true,),
-      // const NewOnMartView(isShop: true,isPharmacy: false),
-      const PromotionalBannerView(),
     ]);
   }
 }
