@@ -38,7 +38,7 @@ class AddFavouriteView extends StatelessWidget {
               shape: BoxShape.circle,
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-            child: Icon(isWished ? Icons.favorite : Icons.favorite_border, color: Theme.of(context).primaryColor, size: 20),
+            child: isWished? Icon(Icons.favorite, color: Theme.of(context).primaryColor, size: 20): const Icon(Icons.favorite_border, size: 20),
           ),
         );
       }),
