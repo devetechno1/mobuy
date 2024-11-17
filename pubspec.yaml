@@ -82,45 +82,14 @@ flutter:
     - assets/map/
 
   fonts:
-    - family: Roboto
+    - family: bukra
       fonts:
-        - asset: assets/font/Roboto-Regular.ttf
+        - asset: assets/font/29ltbukrabold.ttf
+          weight: 700
+        - asset: assets/font/29ltbukrabolditalic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/font/29ltbukraregular.ttf
           weight: 400
-        - asset: assets/font/Roboto-Medium.ttf
-          weight: 500
-        - asset: assets/font/Roboto-Bold.ttf
-          weight: 700
-        - asset: assets/font/Roboto-Black.ttf
-          weight: 900
-
-    - family: Rubik
-      fonts:
-        - asset: assets/font/Rubik/Rubik-Black.ttf
-          weight: 900
-        - asset: assets/font/Rubik/Rubik-BlackItalic.ttf
-          style: italic
-          weight: 900
-        - asset: assets/font/Rubik/Rubik-Bold.ttf
-          weight: 700
-        - asset: assets/font/Rubik/Rubik-BoldItalic.ttf
-          style: italic
-          weight: 700
-        - asset: assets/font/Rubik/Rubik-ExtraBold.ttf
-          weight: 800
-        - asset: assets/font/Rubik/Rubik-ExtraBoldItalic.ttf
-          weight: 800
-        - asset: assets/font/Rubik/Rubik-Italic.ttf
-          style: italic
-        - asset: assets/font/Rubik/Rubik-Light.ttf
+        - asset: assets/font/29ltbukralight.ttf
           weight: 300
-        - asset: assets/font/Rubik/Rubik-LightItalic.ttf
-          style: italic
-          weight: 300
-        - asset: assets/font/Rubik/Rubik-Medium.ttf
-          weight: 500
-        - asset: assets/font/Rubik/Rubik-MediumItalic.ttf
-          weight: 500
-        - asset: assets/font/Rubik/Rubik-SemiBold.ttf
-          weight: 600
-        - asset: assets/font/Rubik/Rubik-SemiBoldItalic.ttf
-          weight: 600
