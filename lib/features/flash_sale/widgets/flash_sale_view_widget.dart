@@ -125,7 +125,7 @@ class _FlashSaleViewWidgetState extends State<FlashSaleViewWidget> {
                     alignment: Alignment.topCenter,
                     child: Text(
                       '${'sold'.tr} $sold/$stock',
-                      style: robotoMedium.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall),
+                      style: robotoMedium.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeSmall),
                     ),
                   ),
                 ],

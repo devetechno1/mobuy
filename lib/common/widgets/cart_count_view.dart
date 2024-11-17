@@ -44,18 +44,16 @@ class CartCountView extends StatelessWidget {
                   border: Border.all(color: Theme.of(context).primaryColor),
                 ),
                 padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                child: Icon(
-                  Icons.remove, size: 16, color: Theme.of(context).primaryColor,
-                ),
+                child: const Icon(Icons.remove, size: 16),
               ),
             ),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
               child: cartController.isLoading && cartController.directAddCartItemIndex == index
-                  ? SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Theme.of(context).cardColor))
+                  ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.black))
                   : Text(cartQty.toString(),
-                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.black),
               ) ,
             ),
 
@@ -72,9 +70,7 @@ class CartCountView extends StatelessWidget {
                   border: Border.all(color: Theme.of(context).primaryColor),
                 ),
                 padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                child: Icon(
-                  Icons.add, size: 16, color: Theme.of(context).primaryColor,
-                ),
+                child: const Icon(Icons.add, size: 16),
               ),
             ),
           ]),

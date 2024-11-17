@@ -20,10 +20,10 @@ class TimerWidget extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
           ),
-          child: Text(timeCount > 9 ? timeCount.toString() : '0${timeCount.toString()}' , style: robotoBold.copyWith(color: Colors.white)),
+          child: Text(timeCount > 9 ? timeCount.toString() : '0${timeCount.toString()}' , style: robotoMedium.copyWith(color: Colors.black)),
         ),
         const SizedBox(height: Dimensions.paddingSizeSmall),
-        Text(timeUnit, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500)),
+        Text(timeUnit, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, fontWeight: FontWeight.w500)),
       ],
     );
   }

@@ -64,6 +64,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   padding: const EdgeInsets.all(1),
                   child: ClipOval(child: CustomImage(
                     placeholder: Images.guestIconLight,
+                    color: Colors.black,
                     image: '${(profileController.userInfoModel != null && isLoggedIn) ? profileController.userInfoModel!.imageFullUrl : ''}',
                     height: 70, width: 70, fit: BoxFit.cover,
                   )),
@@ -74,13 +75,13 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(
                       isLoggedIn ? '${profileController.userInfoModel?.fName} ${profileController.userInfoModel?.lName ?? ''}' : 'guest_user'.tr,
-                      style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Theme.of(context).cardColor),
+                      style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.black),
                     ),
                     const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
                     isLoggedIn ? Text(
                       profileController.userInfoModel != null ? DateConverter.containTAndZToUTCFormat(profileController.userInfoModel!.createdAt!) : '',
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.black),
                     ) : InkWell(
                       onTap: () async {
                         if(!ResponsiveHelper.isDesktop(context)) {
@@ -94,7 +95,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       },
                       child: Text(
                         'login_to_view_all_feature'.tr,
-                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.black),
                       ),
                     ) ,
 
@@ -116,7 +117,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                     child: Text(
                       'general'.tr,
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
                     ),
                   ),
 
@@ -143,7 +144,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                     child: Text(
                       'promotional_activity'.tr,
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
                     ),
                   ),
 
@@ -219,7 +220,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                     child: Text(
                       'help_and_support'.tr,
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
                     ),
                   ),
 

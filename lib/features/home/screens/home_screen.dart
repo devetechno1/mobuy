@@ -287,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Row(children: [
                                         Icon(
                                           CupertinoIcons.search, size: 25,
-                                          color: Theme.of(context).primaryColor,
+                                          color: Theme.of(context).hintColor,
                                         ),
                                         const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                                         Expanded(child: Text(

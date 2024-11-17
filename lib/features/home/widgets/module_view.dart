@@ -17,7 +17,6 @@ import 'package:sixam_mart/common/widgets/title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/home/widgets/banner_view.dart';
-import 'package:sixam_mart/features/home/widgets/popular_store_view.dart';
 
 class ModuleView extends StatelessWidget {
   final SplashController splashController;
@@ -135,7 +134,7 @@ class ModuleView extends StatelessWidget {
         ) : const SizedBox() : AddressShimmer(isEnabled: AuthHelper.isLoggedIn() && locationController.addressList == null);
       }),
 
-      const PopularStoreView(isPopular: false, isFeatured: true),
+      // const PopularStoreView(isPopular: false, isFeatured: true),
 
       const SizedBox(height: 120),
 

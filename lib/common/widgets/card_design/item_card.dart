@@ -202,7 +202,7 @@ class ItemCard extends StatelessWidget {
                               bottomStart: Radius.circular(Dimensions.radiusLarge),
                             ),
                           ),
-                          child: Icon(isPopularItemCart ? Icons.add_shopping_cart : Icons.add, color: Theme.of(context).cardColor, size: 20),
+                          child: Icon(isPopularItemCart ? Icons.add_shopping_cart : Icons.add, color: Colors.black, size: 20),
                         ),
                       ),
                     ) : const SizedBox(),

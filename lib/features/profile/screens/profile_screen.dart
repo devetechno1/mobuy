@@ -84,6 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           ClipOval(child: CustomImage(
                             placeholder: Images.guestIcon,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
                             image: '${(profileController.userInfoModel != null && isLoggedIn) ? profileController.userInfoModel!.imageFullUrl : ''}',
                             height: 70, width: 70, fit: BoxFit.cover,
                           )),
@@ -99,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                               isLoggedIn ? Text(
                                 '${'joined'.tr} ${DateConverter.containTAndZToUTCFormat(profileController.userInfoModel!.createdAt!)}',
-                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
                               ) : InkWell(
                                 onTap: () async {
                                   if(!ResponsiveHelper.isDesktop(context)) {
@@ -114,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 },
                                 child: Text(
                                   'login_to_view_all_feature'.tr,
-                                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
                                 ),
                               ),
                             ]),
@@ -129,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.05), blurRadius: 5, spreadRadius: 1, offset: const Offset(3, 3))]
                               ),
                               padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                              child: const Icon(Icons.edit_outlined, size: 24, color: Colors.blue),
+                              child: Icon(Icons.edit_outlined, size: 24, color: Theme.of(context).primaryColor),
                             ),
                           ) : InkWell(
                             onTap: () async {
@@ -149,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall, horizontal: Dimensions.paddingSizeLarge),
                               child: Text(
-                                'login'.tr, style: robotoMedium.copyWith(color: Theme.of(context).cardColor),
+                                'login'.tr, style: robotoMedium.copyWith(color: Colors.black),
                               ),
                             ),
                           )

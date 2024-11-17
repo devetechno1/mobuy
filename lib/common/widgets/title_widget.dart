@@ -30,7 +30,7 @@ class TitleWidget extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(ltr ? 10 : 0, 5, ltr ? 0 : 10, 5),
           child: Text(
             'see_all'.tr,
-            style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor, decoration: TextDecoration.underline),
+            style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, decoration: TextDecoration.underline),
           ),
         ),
       ) : const SizedBox(),
