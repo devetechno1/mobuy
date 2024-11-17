@@ -118,9 +118,9 @@ class ItemCard extends StatelessWidget {
               ),
 
               Expanded(
-                flex: 5,
+                flex: 7,
                 child: Padding(
-                  padding: EdgeInsets.only(right: isShop ? 0 : Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall, bottom: isShop ? 0 : Dimensions.paddingSizeSmall),
+                  padding: EdgeInsets.only(right: isShop ? 0 : Dimensions.paddingSizeSmall, top: 0, bottom: isShop ? 0 : Dimensions.paddingSizeSmall),
                   child: Stack(clipBehavior: Clip.none, children: [
 
                     Padding(
@@ -135,12 +135,24 @@ class ItemCard extends StatelessWidget {
                           // Text(item.storeName ?? '', style: robotoRegular.copyWith(color: Theme.of(context).disabledColor))
                               : Text(item.name ?? '', style: robotoBold, maxLines: 1, overflow: TextOverflow.ellipsis),
                       
-                          (isFood || isShop) ? Flexible(
-                            child: Text(
-                              item.name ?? '',
-                              style: robotoBold, maxLines: 2, overflow: TextOverflow.ellipsis,
-                            ),
-                          ) : item.ratingCount! > 0 ? Row(mainAxisAlignment: isPopularItem ? MainAxisAlignment.center : MainAxisAlignment.start, children: [
+                          if(isFood || isShop) ...[
+                              Flexible(
+                                child: Text(
+                                  item.name ?? '',
+                                  style: robotoBold, maxLines: 2, overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(height: Dimensions.paddingSizeSmall),
+                              if(item.description != null)...[
+                                Flexible(
+                                  child: Text(
+                                    item.description!,
+                                    style: robotoRegular, maxLines: 2, overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(height: Dimensions.paddingSizeSmall),
+                              ]
+                            ] else item.ratingCount! > 0 ? Row(mainAxisAlignment: isPopularItem ? MainAxisAlignment.center : MainAxisAlignment.start, children: [
                             Icon(Icons.star, size: 14, color: Theme.of(context).primaryColor),
                             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                       
@@ -180,9 +192,9 @@ class ItemCard extends StatelessWidget {
                               discountType: discountType,
                             ),
                             textDirection: TextDirection.ltr, style: robotoMedium,
-                          ),
+                          ),                      
                       
-                          const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                          const SizedBox(height: Dimensions.paddingSizeExtremeLarge),
                       
                         ]),
                       ),
