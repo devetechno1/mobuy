@@ -39,6 +39,7 @@ class ItemCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
             color: Theme.of(context).cardColor,
+            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
           ),
           child: CustomInkWell(
             onTap: () => Get.find<ItemController>().navigateToItemPage(item, context),
