@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   final bool isLoading;
   final bool isBold;
   const CustomButton({super.key, this.onPressed, required this.buttonText, this.transparent = false, this.margin, this.width, this.height,
-    this.fontSize, this.radius = 10, this.icon, this.color, this.textColor, this.isLoading = false, this.isBold = true});
+    this.fontSize, this.radius = 10, this.icon, this.color, this.textColor, this.isLoading = false, this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +57,10 @@ class CustomButton extends StatelessWidget {
           ) : const SizedBox(),
           Flexible(
             child: Text(buttonText, textAlign: TextAlign.center, style: isBold ? robotoBold.copyWith(
-              color: textColor ?? (transparent ? Theme.of(context).primaryColor : Colors.white),
+              color: textColor ?? (transparent ? Theme.of(context).primaryColor : Colors.black),
               fontSize: fontSize ?? Dimensions.fontSizeLarge,
             ) : robotoRegular.copyWith(
-              color: textColor ?? (transparent ? Theme.of(context).primaryColor : Colors.white),
+              color: textColor ?? (transparent ? Theme.of(context).primaryColor : Colors.black),
               fontSize: fontSize ?? Dimensions.fontSizeLarge,
             )),
           ),

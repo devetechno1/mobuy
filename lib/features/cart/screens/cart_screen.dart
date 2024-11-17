@@ -5,6 +5,7 @@ import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/cart/widgets/extra_packaging_widget.dart';
 import 'package:sixam_mart/features/cart/widgets/not_available_bottom_sheet_widget.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
+import 'package:sixam_mart/features/dashboard/screens/dashboard_screen.dart';
 import 'package:sixam_mart/features/profile/controllers/profile_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/store/controllers/store_controller.dart';
@@ -33,7 +34,6 @@ import 'package:get/get.dart';
 import 'package:sixam_mart/features/cart/widgets/web_cart_items_widget.dart';
 import 'package:sixam_mart/features/cart/widgets/web_suggested_item_view_widget.dart';
 import 'package:sixam_mart/features/home/screens/home_screen.dart';
-import 'package:sixam_mart/features/store/screens/store_screen.dart';
 
 import '../../favourite/widgets/fav_item_view_widget.dart';
 
@@ -192,14 +192,15 @@ class _CartScreenState extends State<CartScreen> {
                                           padding: const EdgeInsets.only(left: Dimensions.paddingSizeExtraSmall),
                                           child: TextButton.icon(
                                             onPressed: (){
-                                              cartController.forcefullySetModule(cartController.cartList[0].item!.moduleId!);
-                                              Get.toNamed(
-                                                RouteHelper.getStoreRoute(id: cartController.cartList[0].item!.storeId, page: 'item'),
-                                                arguments: StoreScreen(store: Store(id: cartController.cartList[0].item!.storeId), fromModule: false),
-                                              );
+                                              Get.offAll(() => const DashboardScreen(pageIndex: 0));
+                                              // cartController.forcefullySetModule(cartController.cartList[0].item!.moduleId!);
+                                              // Get.toNamed(
+                                              //   RouteHelper.getStoreRoute(id: cartController.cartList[0].item!.storeId, page: 'item'),
+                                              //   arguments: StoreScreen(store: Store(id: cartController.cartList[0].item!.storeId), fromModule: false),
+                                              // );
                                             },
-                                            icon: Icon(Icons.add_circle_outline_sharp, color: Theme.of(context).primaryColor),
-                                            label: Text('add_more_items'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeDefault)),
+                                            icon: Icon(Icons.add_circle_outline_sharp, color: Theme.of(context).textTheme.bodyLarge?.color),
+                                            label: Text('add_more_items'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge?.color, fontSize: Dimensions.fontSizeDefault)),
                                           ),
                                         ),
 
@@ -592,8 +593,8 @@ class CheckoutButton extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('subtotal'.tr, style: robotoMedium.copyWith(color:  ResponsiveHelper.isDesktop(context) ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).primaryColor)),
-                    PriceConverter.convertAnimationPrice(cartController.subTotal, textStyle: robotoRegular.copyWith(color: Theme.of(context).primaryColor)),
+                    Text('subtotal'.tr, style: robotoMedium.copyWith(color:  Theme.of(context).textTheme.bodyLarge!.color)),
+                    PriceConverter.convertAnimationPrice(cartController.subTotal, textStyle: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
                     // Text(
                     //   PriceConverter.convertPrice(cartController.subTotal),
                     //   style: robotoMedium.copyWith(color: ResponsiveHelper.isDesktop(context) ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).primaryColor), textDirection: TextDirection.ltr,
@@ -679,7 +680,6 @@ class CheckoutButton extends StatelessWidget {
                 child: CustomButton(
                   buttonText: 'confirm_delivery_details'.tr,
                   fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeLarge,
-                  isBold:  ResponsiveHelper.isDesktop(context) ? false : true,
                   radius: ResponsiveHelper.isDesktop(context) ? Dimensions.radiusSmall : Dimensions.radiusDefault,
                   onPressed: () {
                   if(!cartController.cartList.first.item!.scheduleOrder! && availableList.contains(false)) {

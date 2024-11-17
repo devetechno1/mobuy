@@ -26,7 +26,7 @@ class QuantityButton extends StatelessWidget {
           showRemoveIcon ? Icons.delete_outline_outlined : isIncrement ? Icons.add : Icons.remove,
           size: 15,
           color: showRemoveIcon ? Theme.of(context).colorScheme.error
-              : isIncrement ? Theme.of(context).cardColor
+              : isIncrement ? Colors.black
               : Theme.of(context).disabledColor,
         ),
       ),
