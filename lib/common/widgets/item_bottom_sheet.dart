@@ -165,28 +165,34 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                         //Product
                         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
 
-                          InkWell(
-                            onTap: widget.isCampaign ? null : () {
-                              if(!widget.isCampaign) {
-                                Get.toNamed(RouteHelper.getItemImagesRoute(widget.item!));
-                              }
-                            },
-                            child: Stack(children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                child: CustomImage(
-                                  image: '${widget.item!.imageFullUrl}',
-                                  width: ResponsiveHelper.isMobile(context) ? 100 : 140,
-                                  height: ResponsiveHelper.isMobile(context) ? 100 : 140,
-                                  fit: BoxFit.cover,
+                          Expanded(
+                            child: InkWell(
+                              onTap: widget.isCampaign ? null : () {
+                                if(!widget.isCampaign) {
+                                  Get.toNamed(RouteHelper.getItemImagesRoute(widget.item!));
+                                }
+                              },
+                              child: Stack(children: [
+                                AspectRatio(
+                                  aspectRatio: 200/128,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                    child: CustomImage(
+                                      image: '${widget.item!.imageFullUrl}',
+                                      width: ResponsiveHelper.isMobile(context) ? 100 : 140,
+                                      height: ResponsiveHelper.isMobile(context) ? 100 : 140,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              DiscountTag(discount: initialDiscount, discountType: discountType, fromTop: 20),
-                            ]),
+                                DiscountTag(discount: initialDiscount, discountType: discountType, fromTop: 20),
+                              ]),
+                            ),
                           ),
                           const SizedBox(width: 10),
 
                           Expanded(
+                            flex: 2,
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                               Text(
                                 widget.item!.name!, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),

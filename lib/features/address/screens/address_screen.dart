@@ -54,7 +54,7 @@ class _AddressScreenState extends State<AddressScreen> {
           && addressController.addressList!.isEmpty) ? null : FloatingActionButton(
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () => Get.toNamed(RouteHelper.getAddAddressRoute(false, false, 0, isNavbar: true)),
-            child: Icon(Icons.add, color: Theme.of(context).cardColor),
+            child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
           ),
           floatingActionButtonLocation: ResponsiveHelper.isDesktop(context) ? FloatingActionButtonLocation.centerFloat : null,
           body: Container(

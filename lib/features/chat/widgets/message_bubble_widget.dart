@@ -127,7 +127,7 @@ class MessageBubbleWidget extends StatelessWidget {
                     ),
                     child: Container(
                       padding: EdgeInsets.all(message.message != null ? Dimensions.paddingSizeDefault : 0),
-                      child: Text(message.message ?? '', style: robotoRegular.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall),),
+                      child: Text(message.message ?? '', style: robotoRegular.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontSize: Dimensions.fontSizeSmall),),
                     ),
                   ),
                 ) : const SizedBox(),
@@ -234,7 +234,7 @@ class MessageBubbleWidget extends StatelessWidget {
                   Text('#${order.id}', style: robotoBold),
                 ]),
 
-                Text('${'total'.tr}: ${PriceConverter.convertPrice(order.orderAmount ?? 0)}', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                Text('${'total'.tr}: ${PriceConverter.convertPrice(order.orderAmount ?? 0)}', style: robotoMedium.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold)),
 
               ]),
             ),

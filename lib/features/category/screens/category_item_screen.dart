@@ -261,15 +261,11 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                               // if(index == 0){
                               //   brand_category_ids = [];
                               // }
-                              print("sub img ========> ${index}");
                               var subcat = catController.GetsetSubCategoryIndex(index, widget.categoryID);
                       
-                              print("sub cat id ========> ${subcat}");
                              // Get.toNamed(RouteHelper.getBrandsItemScreenCat(454, "سسس","$subcat"));
                                catController.setSubCategoryIndex(index, widget.categoryID,"");
-                              getBrandByCategoryList(subcat);
-                               print("catController.setSubCategory ====> ${catController.GetsetSubCategoryIndex(index, widget.categoryID)}");
-                      
+                              getBrandByCategoryList(subcat);                      
                       
                             },
                             child:  Container(
@@ -306,7 +302,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: index == catController.subCategoryIndex
-                                            ? robotoMedium.copyWith(fontSize: Dimensions.paddingSizeSmall, color: Theme.of(context).primaryColor)
+                                            ? robotoMedium.copyWith(fontSize: Dimensions.paddingSizeSmall, color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold)
                                             : robotoRegular.copyWith(fontSize: Dimensions.paddingSizeSmall),
                                       ),
                                     ) : const SizedBox(),
@@ -382,7 +378,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                               Text(
                                 '${brandsList[index].name}',
                                 style: index == index_brand
-                                    ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+                                    ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold)
                                     : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
                               ),
                             ]),

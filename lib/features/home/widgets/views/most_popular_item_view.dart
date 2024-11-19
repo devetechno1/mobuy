@@ -5,6 +5,7 @@ import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/home/widgets/views/special_offer_view.dart';
+import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
@@ -36,7 +37,7 @@ class MostPopularItemView extends StatelessWidget {
             ),
           
             SizedBox(
-              height: 380, width: Get.width,
+              height: ResponsiveHelper.isMobile(context)? MediaQuery.sizeOf(context).width * 0.85 : 380, width: double.maxFinite,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
@@ -49,6 +50,7 @@ class MostPopularItemView extends StatelessWidget {
                       isPopularItem: isShop ? false : true,
                       isPopularItemCart: true,
                       index: index,
+                      width:  ResponsiveHelper.isMobile(context)? MediaQuery.sizeOf(context).width * 0.5 - Dimensions.paddingSizeLarge: null,
                       item: itemList[index],
                       isShop: isShop,
                       isFood: isFood,

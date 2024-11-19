@@ -136,210 +136,221 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                       alignment: AlignmentDirectional.topStart,
                       children: [
                         ItemImageViewWidget(item: itemController.item, isCampaign: widget.isCampaign ?? false),
-                        Container(
-                          margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.3),
-                          padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
-                            boxShadow: const [BoxShadow()]
-                          ),
-                          child: Column(
-                            children: [
-                              if(widget.item != null && widget.item!.categoryIds?.isNotEmpty == true)
-                                Align(
-                                  alignment: AlignmentDirectional.centerStart,
-                                  child: Wrap(
-                                    children: List.generate(
-                                        widget.item!.categoryIds!.length,
-                                        (i) {
-                                          return catNameContainer(
-                                            widget.item!.categoryIds![i].name, 
-                                            i.isEven? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary
+                        Column(
+                          children: [
+                            const SizedBox(
+                              width: double.maxFinite,
+                              child: AspectRatio(
+                                aspectRatio: 200/110,
+                                child: SizedBox(),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).scaffoldBackgroundColor,
+                                borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
+                                boxShadow: const [BoxShadow()]
+                              ),
+                              child: Column(
+                                children: [
+                                  if(widget.item != null && widget.item!.categoryIds?.isNotEmpty == true)
+                                    Align(
+                                      alignment: AlignmentDirectional.centerStart,
+                                      child: Wrap(
+                                        children: List.generate(
+                                            widget.item!.categoryIds!.length,
+                                            (i) {
+                                              return catNameContainer(
+                                                widget.item!.categoryIds![i].name, 
+                                                i.isEven? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,
+                                                i.isEven? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSecondary
+                                              );
+                                            },
+                                          ),
+                                      ),
+                                    ),
+                                  const SizedBox(height: Dimensions.paddingSizeSmall),
+                                  Builder(
+                                    builder: (context) {
+                                      return ItemTitleViewWidget(
+                                        backgroundColor: Colors.transparent,
+                                        item: itemController.item, inStorePage: widget.inStorePage, isCampaign: itemController.item!.availableDateStarts != null,
+                                        inStock: (Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && stock! <= 0),
+                                      );
+                                    }
+                                ),
+                                const Divider(height: 20, thickness: 2),
+                            
+                                // Variation
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: itemController.item!.choiceOptions!.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Text(itemController.item!.choiceOptions![index].title!, style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                                      const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                                      GridView.builder(
+                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 10,
+                                          childAspectRatio: (1 / 0.25),
+                                        ),
+                                        shrinkWrap: true,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: itemController.item!.choiceOptions![index].options!.length,
+                                        itemBuilder: (context, i) {
+                                          return InkWell(
+                                            onTap: () {
+                                              itemController.setCartVariationIndex(index, i, itemController.item);
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
+                                              decoration: BoxDecoration(
+                                                color: itemController.variationIndex![index] != i ? Theme.of(context).disabledColor : Theme.of(context).primaryColor,
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: itemController.variationIndex![index] != i ? Border.all(color: Theme.of(context).disabledColor, width: 2) : null,
+                                              ),
+                                              child: Text(
+                                                itemController.item!.choiceOptions![index].options![i].trim(), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                style:robotoRegular.copyWith(
+                                                  color: itemController.variationIndex![index] != i ? Colors.black : Theme.of(context).colorScheme.onPrimary,
+                                                ),
+                                              ),
+                                            ),
                                           );
                                         },
                                       ),
-                                  ),
+                                      SizedBox(height: index != itemController.item!.choiceOptions!.length-1 ? Dimensions.paddingSizeLarge : 0),
+                                    ]);
+                                  },
                                 ),
-                              const SizedBox(height: Dimensions.paddingSizeSmall),
-                              Builder(
-                                builder: (context) {
-                                  return ItemTitleViewWidget(
-                                    backgroundColor: Colors.transparent,
-                                    item: itemController.item, inStorePage: widget.inStorePage, isCampaign: itemController.item!.availableDateStarts != null,
-                                    inStock: (Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && stock! <= 0),
-                                  );
-                                }
-                            ),
-                            const Divider(height: 20, thickness: 2),
-                        
-                            // Variation
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: itemController.item!.choiceOptions!.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Text(itemController.item!.choiceOptions![index].title!, style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                                  const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                                  GridView.builder(
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: (1 / 0.25),
-                                    ),
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: itemController.item!.choiceOptions![index].options!.length,
-                                    itemBuilder: (context, i) {
-                                      return InkWell(
-                                        onTap: () {
-                                          itemController.setCartVariationIndex(index, i, itemController.item);
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
-                                          decoration: BoxDecoration(
-                                            color: itemController.variationIndex![index] != i ? Theme.of(context).disabledColor : Theme.of(context).primaryColor,
-                                            borderRadius: BorderRadius.circular(5),
-                                            border: itemController.variationIndex![index] != i ? Border.all(color: Theme.of(context).disabledColor, width: 2) : null,
-                                          ),
-                                          child: Text(
-                                            itemController.item!.choiceOptions![index].options![i].trim(), maxLines: 1, overflow: TextOverflow.ellipsis,
-                                            style:robotoRegular.copyWith(
-                                              color: itemController.variationIndex![index] != i ? Colors.black : Colors.white,
+                                itemController.item!.choiceOptions!.isNotEmpty ? const SizedBox(height: Dimensions.paddingSizeLarge) : const SizedBox(),
+                            
+                                // Quantity
+                                GetBuilder<CartController>(
+                                  builder: (cartController) {
+                                    return Row(children: [
+                                      Text('quantity'.tr, style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                                      const Expanded(child: SizedBox()),
+                                      Container(
+                                        decoration: BoxDecoration(color: Theme.of(context).disabledColor, borderRadius: BorderRadius.circular(5)),
+                                        child: Row(children: [
+                                          InkWell(
+                                            onTap: cartController.isLoading ? null : () {
+                                              if(itemController.cartIndex != -1) {
+                                                if(cartController.cartList[itemController.cartIndex].quantity! > 1) {
+                                                  cartController.setQuantity(false, itemController.cartIndex, stock, cartController.cartList[itemController.cartIndex].quantity);
+                                                }
+                                              }else {
+                                                if(itemController.quantity! > 1) {
+                                                  itemController.setQuantity(false, stock, itemController.item!.quantityLimit);
+                                                }
+                                              }
+                                            },
+                                            child: const Padding(
+                                              padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                                              child: Icon(Icons.remove, size: 20),
                                             ),
                                           ),
-                                        ),
+                            
+                                          Text(
+                                            itemController.cartIndex != -1 ? cartController.cartList[itemController.cartIndex].quantity.toString()
+                                                : itemController.quantity.toString(),
+                                            style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
+                                          ),
+                            
+                                          InkWell(
+                                            onTap: cartController.isLoading ? null : () => itemController.cartIndex != -1
+                                                ? cartController.setQuantity(true, itemController.cartIndex, stock, cartController.cartList[itemController.cartIndex].quantityLimit)
+                                                : itemController.setQuantity(true, stock, itemController.item!.quantityLimit),
+                                            child: const Padding(
+                                              padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                                              child: Icon(Icons.add, size: 20),
+                                            ),
+                                          ),
+                                        ]),
+                                      ),
+                                    ]);
+                                  }
+                                ),
+                                const SizedBox(height: Dimensions.paddingSizeLarge),
+                            
+                                Row(children: [
+                                  Text('${'total_amount'.tr}:', style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                                  const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                            
+                                  Text(
+                                    PriceConverter.convertPrice(itemController.cartIndex != -1
+                                        ? _getItemDetailsDiscountPrice(cart: Get.find<CartController>().cartList[itemController.cartIndex])
+                                        : priceWithAddons), textDirection: TextDirection.ltr,
+                                    style:robotoBold.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold, fontSize: Dimensions.fontSizeLarge),
+                                  ),
+                                ]),
+                                const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                            
+                                itemController.item!.isPrescriptionRequired! ? Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                                  margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.error.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                  ),
+                                  child: Text(
+                                    '* ${'prescription_required'.tr}',
+                                    style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).colorScheme.error),
+                                  ),
+                                ) : const SizedBox(),
+                            
+                                (itemController.item!.description != null && itemController.item!.description!.isNotEmpty) ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('description'.tr, style: robotoMedium),
+                                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                                    Text(itemController.item!.description!, style: robotoRegular),
+                                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                                  ],
+                                ) : const SizedBox(),
+                            
+                                (widget.item!.nutritionsName != null && widget.item!.nutritionsName!.isNotEmpty) ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('nutrition_details'.tr, style: robotoMedium),
+                                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                            
+                                    Wrap(children: List.generate(widget.item!.nutritionsName!.length, (index) {
+                                      return Text(
+                                        '${widget.item!.nutritionsName![index]}${widget.item!.nutritionsName!.length-1 == index ? '.' : ', '}',
+                                        style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color?.withOpacity(0.5)),
                                       );
-                                    },
-                                  ),
-                                  SizedBox(height: index != itemController.item!.choiceOptions!.length-1 ? Dimensions.paddingSizeLarge : 0),
-                                ]);
-                              },
+                                    })),
+                                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                                  ],
+                                ) : const SizedBox(),
+                            
+                                (widget.item!.allergiesName != null && widget.item!.allergiesName!.isNotEmpty) ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('allergic_ingredients'.tr, style: robotoMedium),
+                                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                            
+                                    Wrap(children: List.generate(widget.item!.allergiesName!.length, (index) {
+                                      return Text(
+                                        '${widget.item!.allergiesName![index]}${widget.item!.allergiesName!.length-1 == index ? '.' : ', '}',
+                                        style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color?.withOpacity(0.5)),
+                                      );
+                                    })),
+                                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                                  ],
+                                ) : const SizedBox(),
+                                ],
+                              ),
                             ),
-                            itemController.item!.choiceOptions!.isNotEmpty ? const SizedBox(height: Dimensions.paddingSizeLarge) : const SizedBox(),
-                        
-                            // Quantity
-                            GetBuilder<CartController>(
-                              builder: (cartController) {
-                                return Row(children: [
-                                  Text('quantity'.tr, style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                                  const Expanded(child: SizedBox()),
-                                  Container(
-                                    decoration: BoxDecoration(color: Theme.of(context).disabledColor, borderRadius: BorderRadius.circular(5)),
-                                    child: Row(children: [
-                                      InkWell(
-                                        onTap: cartController.isLoading ? null : () {
-                                          if(itemController.cartIndex != -1) {
-                                            if(cartController.cartList[itemController.cartIndex].quantity! > 1) {
-                                              cartController.setQuantity(false, itemController.cartIndex, stock, cartController.cartList[itemController.cartIndex].quantity);
-                                            }
-                                          }else {
-                                            if(itemController.quantity! > 1) {
-                                              itemController.setQuantity(false, stock, itemController.item!.quantityLimit);
-                                            }
-                                          }
-                                        },
-                                        child: const Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                                          child: Icon(Icons.remove, size: 20),
-                                        ),
-                                      ),
-                        
-                                      Text(
-                                        itemController.cartIndex != -1 ? cartController.cartList[itemController.cartIndex].quantity.toString()
-                                            : itemController.quantity.toString(),
-                                        style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
-                                      ),
-                        
-                                      InkWell(
-                                        onTap: cartController.isLoading ? null : () => itemController.cartIndex != -1
-                                            ? cartController.setQuantity(true, itemController.cartIndex, stock, cartController.cartList[itemController.cartIndex].quantityLimit)
-                                            : itemController.setQuantity(true, stock, itemController.item!.quantityLimit),
-                                        child: const Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                                          child: Icon(Icons.add, size: 20),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                ]);
-                              }
-                            ),
-                            const SizedBox(height: Dimensions.paddingSizeLarge),
-                        
-                            Row(children: [
-                              Text('${'total_amount'.tr}:', style:robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                              const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                        
-                              Text(
-                                PriceConverter.convertPrice(itemController.cartIndex != -1
-                                    ? _getItemDetailsDiscountPrice(cart: Get.find<CartController>().cartList[itemController.cartIndex])
-                                    : priceWithAddons), textDirection: TextDirection.ltr,
-                                style:robotoBold.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeLarge),
-                              ),
-                            ]),
-                            const SizedBox(height: Dimensions.paddingSizeExtraLarge),
-                        
-                            itemController.item!.isPrescriptionRequired! ? Container(
-                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                              margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.error.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                              ),
-                              child: Text(
-                                '* ${'prescription_required'.tr}',
-                                style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).colorScheme.error),
-                              ),
-                            ) : const SizedBox(),
-                        
-                            (itemController.item!.description != null && itemController.item!.description!.isNotEmpty) ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('description'.tr, style: robotoMedium),
-                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                                Text(itemController.item!.description!, style: robotoRegular),
-                                const SizedBox(height: Dimensions.paddingSizeLarge),
-                              ],
-                            ) : const SizedBox(),
-                        
-                            (widget.item!.nutritionsName != null && widget.item!.nutritionsName!.isNotEmpty) ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('nutrition_details'.tr, style: robotoMedium),
-                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                        
-                                Wrap(children: List.generate(widget.item!.nutritionsName!.length, (index) {
-                                  return Text(
-                                    '${widget.item!.nutritionsName![index]}${widget.item!.nutritionsName!.length-1 == index ? '.' : ', '}',
-                                    style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color?.withOpacity(0.5)),
-                                  );
-                                })),
-                                const SizedBox(height: Dimensions.paddingSizeLarge),
-                              ],
-                            ) : const SizedBox(),
-                        
-                            (widget.item!.allergiesName != null && widget.item!.allergiesName!.isNotEmpty) ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('allergic_ingredients'.tr, style: robotoMedium),
-                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                        
-                                Wrap(children: List.generate(widget.item!.allergiesName!.length, (index) {
-                                  return Text(
-                                    '${widget.item!.allergiesName![index]}${widget.item!.allergiesName!.length-1 == index ? '.' : ', '}',
-                                    style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color?.withOpacity(0.5)),
-                                  );
-                                })),
-                                const SizedBox(height: Dimensions.paddingSizeLarge),
-                              ],
-                            ) : const SizedBox(),
-                            ],
-                          ),
+                          ],
                         ),
                       ],
                     ))))),
@@ -413,7 +424,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     );
   }
 
-  Widget catNameContainer(String? title,Color background) {
+  Widget catNameContainer(String? title,Color background, Color textColor) {
     if(title == null) return const SizedBox();
 
     return Container(
@@ -423,7 +434,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
         color: background,
         borderRadius: BorderRadius.circular(5)
       ),
-      child: Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white)),
+      child: Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor)),
     );
   }
 

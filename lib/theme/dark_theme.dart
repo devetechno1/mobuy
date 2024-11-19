@@ -12,7 +12,7 @@ ThemeData dark({Color color = const Color(0xFFF0E517)}) => ThemeData(
   shadowColor: Colors.white.withOpacity(0.03),
   textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.white70)),
   textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(foregroundColor: color)),
-  colorScheme: ColorScheme.dark(primary: color, secondary: const Color(0xFF1A1A1A)).copyWith(surface: const Color(0xFF191A26)).copyWith(error: const Color(0xFFdd3135)),
+  colorScheme: ColorScheme.dark(primary: color, secondary: const Color(0xFF1A1A1A)).copyWith(surface: const Color(0xFF191A26),onSecondary: const Color(0xFFFFFFFF), onPrimary: const Color(0xFF1A1A1A),).copyWith(error: const Color(0xFFdd3135)),
   popupMenuTheme: const PopupMenuThemeData(color: Color(0xFF29292D), surfaceTintColor: Color(0xFF29292D)),
   dialogTheme: const DialogTheme(surfaceTintColor: Colors.white10),
   floatingActionButtonTheme: FloatingActionButtonThemeData(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(500))),

@@ -277,7 +277,7 @@ class ItemTitleViewWidget extends StatelessWidget {
                 Text(
                   '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType)}'
                       '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: discount, discountType: discountType)}' : ''}',
-                  style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
+                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge,fontWeight: FontWeight.bold), textDirection: TextDirection.ltr,
                 ),
                 const SizedBox(height: 5),
 
@@ -312,7 +312,7 @@ class ItemTitleViewWidget extends StatelessWidget {
                   child: Text(
                     Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! ? item!.unitType ?? ''
                         : item!.veg == 0 ? 'non_veg'.tr : 'veg'.tr,
-                    style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
+                    style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall),
                   ),
                 ) : const SizedBox(),
                 const SizedBox(height: Dimensions.paddingSizeDefault),

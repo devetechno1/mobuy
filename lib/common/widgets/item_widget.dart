@@ -282,7 +282,7 @@ class ItemWidget extends StatelessWidget {
                                 bottomEnd: Radius.circular(Dimensions.radiusLarge),
                               ),
                             ),
-                            child: Icon(Icons.add_shopping_cart, color: Theme.of(context).cardColor, size: 20),
+                            child: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.onPrimary, size: 20),
                           ),
                         )
                                   

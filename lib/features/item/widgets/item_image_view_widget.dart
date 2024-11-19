@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
-import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
 
@@ -37,28 +36,33 @@ class ItemImageViewWidget extends StatelessWidget {
               }
             },
             child: Stack(children: [
-              SizedBox(
-                width: double.infinity,
-                height: ResponsiveHelper.isDesktop(context)? 350: MediaQuery.sizeOf(context).height * 0.3 + 40,
-                child: PageView.builder(
-                  controller: _controller,
-                  itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
-                  itemBuilder: (context, index) {
-                    return Align(
-                      alignment: Alignment.bottomCenter,
-                      child: AspectRatio(
-                        aspectRatio: 200/128,
-                        child: CustomImage(
-                          image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
-                          width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                  onPageChanged: (index) {
-                    itemController.setImageSliderIndex(index);
-                  },
+              Container(
+                color: Colors.red,
+                child: AspectRatio(
+                  aspectRatio: 200/128,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: PageView.builder(
+                      controller: _controller,
+                      itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
+                      itemBuilder: (context, index) {
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: AspectRatio(
+                            aspectRatio: 200/128,
+                            child: CustomImage(
+                              image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                      onPageChanged: (index) {
+                        itemController.setImageSliderIndex(index);
+                      },
+                    ),
+                  ),
                 ),
               ),
               Positioned(

@@ -24,7 +24,8 @@ class ItemCard extends StatelessWidget {
   final bool isShop;
   final bool isPopularItemCart;
   final int? index;
-  const ItemCard({super.key, required this.item, this.isPopularItem = false, required this.isFood, required this.isShop, this.isPopularItemCart = false, this.index});
+  final double? width;
+  const ItemCard({super.key, required this.item, this.isPopularItem = false, required this.isFood, required this.isShop, this.isPopularItemCart = false, this.index, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class ItemCard extends StatelessWidget {
       isItem: true,
       child: Stack(children: [
         Container(
-          width: 200,
+          width: width ?? 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
             color: Theme.of(context).cardColor,

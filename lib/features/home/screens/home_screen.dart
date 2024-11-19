@@ -492,7 +492,7 @@ class AppBarAction extends StatelessWidget {
           width: 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).cardColor,
             boxShadow: const [BoxShadow()],
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault)
           ),
