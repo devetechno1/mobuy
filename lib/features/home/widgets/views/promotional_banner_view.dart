@@ -15,7 +15,7 @@ class PromotionalBannerView extends StatelessWidget {
         height: 90, width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault, horizontal: Dimensions.paddingSizeDefault),
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
+          // color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
         ),
         child: ClipRRect(

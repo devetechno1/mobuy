@@ -53,10 +53,10 @@ class ShopHomeScreen extends StatelessWidget {
       const JustForYouView(),
       const MiddleSectionBannerView(),
       const HighlightWidget(),
-      const BrandsViewWidget(),
       const SpecialOfferView(isFood: false, isShop: true),
       const ProductWithCategoriesView(fromShop: true),
       const ItemThatYouLoveView(forShop: true,),
+      const BrandsViewWidget(),
     ]);
   }
 }

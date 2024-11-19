@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
@@ -280,9 +282,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       margin: const EdgeInsets.symmetric(vertical: 3),
                                       decoration: BoxDecoration(
                                         color: Theme.of(context).cardColor,
-                                        border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 1),
-                                        borderRadius: BorderRadius.circular(25),
-                                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: const [BoxShadow(color: Colors.black12)],
                                       ),
                                       child: Row(children: [
                                         Icon(
@@ -478,25 +479,27 @@ class AppBarAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          vertical: Dimensions.paddingSizeSmall,
-          horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
-        ),
-        padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-        height: 40,
-        width: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onPrimary,
-          boxShadow: const [BoxShadow(spreadRadius: 0.1)],
-          borderRadius: BorderRadius.circular(Dimensions.radiusDefault)
-        ),
-        child: FittedBox(
-          child: child ??
-            Icon(icon, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+    return Align(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          margin: EdgeInsets.symmetric(
+            vertical: Dimensions.paddingSizeSmall,
+            horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
+          ),
+          padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+          height: 40,
+          width: 40,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.onPrimary,
+            boxShadow: const [BoxShadow()],
+            borderRadius: BorderRadius.circular(Dimensions.radiusDefault)
+          ),
+          child: FittedBox(
+            child: child ??
+              Icon(icon, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+          ),
         ),
       ),
     );

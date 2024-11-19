@@ -21,36 +21,33 @@ class SpecialOfferView extends StatelessWidget {
 
       return discountedItemList != null ? discountedItemList.isNotEmpty ? Padding(
         padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
-        child: Container(
-          color: Theme.of(context).disabledColor.withOpacity(0.1),
-          child: Column(children: [
-
-            Padding(
-              padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
-              child: TitleWidget(
-                title: 'special_offer'.tr,
-                image: Images.discountOfferIcon,
-                onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
-              ),
+        child: Column(children: [
+        
+          Padding(
+            padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+            child: TitleWidget(
+              title: 'special_offer'.tr,
+              image: Images.discountOfferIcon,
+              onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
             ),
-
-            SizedBox(
-              height: 285, width: Get.width,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
-                itemCount: discountedItemList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault),
-                    child: ItemCard(item: discountedItemList[index], isPopularItem: false, isFood: isFood, isShop: isShop, index: index),
-                  );
-                  },
-              ),
+          ),
+        
+          SizedBox(
+            height: 380, width: Get.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
+              itemCount: discountedItemList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault),
+                  child: ItemCard(item: discountedItemList[index], isPopularItem: false, isFood: isFood, isShop: isShop, index: index),
+                );
+                },
             ),
-          ]),
-        ),
+          ),
+        ]),
       ) : const SizedBox() : const ItemShimmerView(isPopularItem: false);
     });
   }
