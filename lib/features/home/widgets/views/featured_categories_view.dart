@@ -84,7 +84,7 @@ class FeaturedCategoriesView extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: Dimensions.paddingSizeDefault,
                   mainAxisSpacing: Dimensions.paddingSizeDefault,
-                  mainAxisExtent: 257,
+                  mainAxisExtent: 320,
                 ),
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeDefault),

@@ -47,17 +47,20 @@ class ReviewItemCard extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Stack(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall, left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(Dimensions.radiusDefault)),
-                    child: CustomImage(
-                      placeholder: Images.placeholder,
-                      image: '${item!.imageFullUrl}',
-                      fit: BoxFit.cover, width: double.infinity, height: double.infinity,
+                ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(Dimensions.radiusLarge),
+                      topRight: Radius.circular(Dimensions.radiusLarge),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 200/128,
+                      child: CustomImage(
+                        placeholder: Images.placeholder,
+                        image: '${item!.imageFullUrl}',
+                        fit: BoxFit.cover, width: double.infinity, height: double.infinity,
+                      ),
                     ),
                   ),
-                ),
 
                 AddFavouriteView(
                   item: item!,
@@ -73,17 +76,26 @@ class ReviewItemCard extends StatelessWidget {
             ),
 
             Expanded(
-              flex: 4,
+              flex: 7,
               child: Padding(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                 child: Column(
                   crossAxisAlignment: isFeatured ? CrossAxisAlignment.start : CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text(
-                    item!.storeName!, maxLines: 1, overflow: TextOverflow.ellipsis,
-                    style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                  ),
+                  // Text(
+                  //   item!.storeName!, maxLines: 1, overflow: TextOverflow.ellipsis,
+                  //   style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
+                  // ),
 
                   Text(item!.name!, maxLines: 1, overflow: TextOverflow.ellipsis, style: robotoBold),
+                  if(item?.description != null)...[
+                    Flexible(
+                      child: Text(
+                        item!.description!,
+                        style: robotoRegular, maxLines: 2, overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
+                  ],
 
                   item!.ratingCount! > 0 ? Row(mainAxisAlignment: isFeatured ? MainAxisAlignment.start : MainAxisAlignment.center, children: [
                     Icon(Icons.star, size: 14, color: Theme.of(context).primaryColor),
