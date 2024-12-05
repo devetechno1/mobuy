@@ -117,7 +117,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                     child: Text(
                       'general'.tr,
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault,fontWeight: FontWeight.bold),
                     ),
                   ),
 
@@ -144,7 +144,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                     child: Text(
                       'promotional_activity'.tr,
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault,fontWeight: FontWeight.bold),
                     ),
                   ),
 
@@ -220,7 +220,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                     child: Text(
                       'help_and_support'.tr,
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault,fontWeight: FontWeight.bold),
                     ),
                   ),
 
