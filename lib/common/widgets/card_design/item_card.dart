@@ -215,7 +215,7 @@ class ItemCard extends StatelessWidget {
                               bottomStart: Radius.circular(Dimensions.radiusLarge),
                             ),
                           ),
-                          child: Icon(isPopularItemCart ? Icons.add_shopping_cart : Icons.add, color: Colors.black, size: 20),
+                          child: const Icon(Icons.add_shopping_cart, color: Colors.black, size: 20),
                         ),
                       ),
                     ) : const SizedBox(),

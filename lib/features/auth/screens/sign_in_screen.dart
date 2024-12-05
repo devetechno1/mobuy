@@ -200,7 +200,7 @@ class SignInScreenState extends State<SignInScreen> {
                                   ),
                                   TextButton(
                                     onPressed: () => Get.toNamed(RouteHelper.getForgotPassRoute(false, null)),
-                                    child: Text('${'forgot_password'.tr}?', style: robotoRegular.copyWith(color: Theme.of(context).primaryColor)),
+                                    child: Text('forgot_password_q'.tr, style: robotoRegular.copyWith(color: Get.textTheme.bodyLarge?.color)),
                                   ),
                                 ]),
                                 const SizedBox(height: Dimensions.paddingSizeLarge),
@@ -238,7 +238,7 @@ class SignInScreenState extends State<SignInScreen> {
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                      child: Text('sign_up'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                                      child: Text('sign_up'.tr, style: robotoMedium),
                                     ),
                                   ),
                                 ]),
@@ -262,7 +262,7 @@ class SignInScreenState extends State<SignInScreen> {
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                      child: Text('sign_up'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                                      child: Text('sign_up'.tr, style: robotoMedium),
                                     ),
                                   ),
                                 ]) :  const SizedBox(),

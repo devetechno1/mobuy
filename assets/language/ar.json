@@ -21,6 +21,7 @@
   "password": "كلمه السر",
   "confirm_password": "تأكيد كلمة المرور",
   "remember_me": "تذكرنى",
+  "forgot_password_q": "هل نسيت كلمة السر؟",
   "forgot_password": "هل نسيت كلمة السر",
   "first_name": "الاسم الأول",
   "last_name": "الكنية",

@@ -40,7 +40,7 @@ class ConditionCheckBoxWidget extends StatelessWidget {
             TextSpan(
               recognizer: TapGestureRecognizer()..onTap = () => Get.toNamed(RouteHelper.getHtmlRoute('terms-and-condition')),
               text: 'terms_conditions'.tr,
-              style: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
+              style: robotoMedium.copyWith(color: Get.textTheme.bodyLarge?.color),
             ),
           ]),
         ),
