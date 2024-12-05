@@ -12,10 +12,10 @@ class AppConstants {
   static const String fontFamily = 'bukra';
   static const bool payInWevView = false;
   static const int balanceInputLen = 10;
-  static const String webHostedUrl = 'https://gomla.devetechno.co.uk';
+  static const String webHostedUrl = 'https://mobuy.org';
   static const bool useReactWebsite = false;
 
-  static const String baseUrl = 'https://gomla.devetechno.co.uk';
+  static const String baseUrl = 'https://mobuy.org';
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String storeItemUri = '/api/v1/items/latest';

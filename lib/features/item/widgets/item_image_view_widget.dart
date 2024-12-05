@@ -66,10 +66,10 @@ class ItemImageViewWidget extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 0, right: 0, bottom: 0,
+                left: 0, right: 0, bottom: MediaQuery.sizeOf(context).width * 0.12,
                 child: Align(
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 50),
+                    // margin: const EdgeInsets.only(bottom: 50),
                     decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(10),
