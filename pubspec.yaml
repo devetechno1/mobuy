@@ -62,6 +62,7 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   chewie: ^1.8.4
   location: ^7.0.0
+  app_links: ^6.3.2
 
 dependency_overrides:
   collection: ^1.19.0

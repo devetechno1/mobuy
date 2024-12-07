@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
+import 'package:app_links/app_links.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
@@ -35,6 +36,10 @@ Future<void> main() async {
   }
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+
+  AppLinks().getInitialLink().then((value) {
+    print("----------- ----- ----- value ${value}");
+  },);
 
   /*///Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = (errorDetails) {
