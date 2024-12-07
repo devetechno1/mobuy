@@ -41,7 +41,7 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
     _isLoggedIn = AuthHelper.isLoggedIn();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: CustomAppBar(title: 'my_orders'.tr, backButton: ResponsiveHelper.isDesktop(context)),
+      appBar: CustomAppBar(title: 'my_orders'.tr),
       endDrawer: const MenuDrawer(), endDrawerEnableOpenDragGesture: false,
       body:  GetBuilder<OrderController>(
         builder: (orderController) {
@@ -65,12 +65,12 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
                         color: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).cardColor,
                         child: TabBar(
                           controller: _tabController,
-                          indicatorColor: Theme.of(context).primaryColor,
+                          indicatorColor: Theme.of(context).textTheme.bodyMedium!.color,
                           indicatorWeight: 3,
-                          labelColor: Theme.of(context).primaryColor,
+                          labelColor: Theme.of(context).textTheme.bodyMedium!.color,
                           unselectedLabelColor: Theme.of(context).disabledColor,
                           unselectedLabelStyle: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                          labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                          labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyMedium!.color),
                           tabs: [
                             Tab(text: 'running'.tr),
                             Tab(text: 'history'.tr),

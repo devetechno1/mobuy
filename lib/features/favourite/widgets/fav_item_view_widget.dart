@@ -40,7 +40,7 @@ class FavItemViewWidget extends StatelessWidget {
                     stores: favouriteController.wishStoreList,
                     noDataText: 'no_wish_data_found'.tr,
                     isFeatured: true,
-                    button: goToHomeButtonData,
+                    button: goToHomeButtonData(context),
                   ),
                 ),
               ),
@@ -52,8 +52,9 @@ class FavItemViewWidget extends StatelessWidget {
   }
 }
 
-ButtonDataEntity get goToHomeButtonData => ButtonDataEntity(
+ButtonDataEntity goToHomeButtonData(BuildContext context) => ButtonDataEntity(
   text: "explore_categories".tr,
-  backgroundColor: Colors.black,
+  backgroundColor: Theme.of(context).primaryColor,
+  textColor: Colors.black,
   onTap: () => Get.offAll(() => const DashboardScreen(pageIndex: 0)),
 );

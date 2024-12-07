@@ -31,7 +31,7 @@ class CheckoutCondition extends StatelessWidget {
             style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),
           ),
           TextSpan(
-            text: 'privacy_policy'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
+            text: 'privacy_policy'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color,decoration: TextDecoration.underline),
             recognizer: TapGestureRecognizer()
               ..onTap = () => Get.toNamed(RouteHelper.getHtmlRoute('privacy-policy')),
           ),
@@ -43,14 +43,14 @@ class CheckoutCondition extends StatelessWidget {
             style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),
           ),
           TextSpan(
-            text: 'terms_conditions'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
+            text: 'terms_conditions'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color,decoration: TextDecoration.underline),
             recognizer: TapGestureRecognizer()
               ..onTap = () => Get.toNamed(RouteHelper.getHtmlRoute('terms-and-condition')),
           ),
           !isParcel && activeRefund ? TextSpan(text: ' ${'and'.tr} ', style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color)) : const TextSpan(),
 
           !isParcel && activeRefund ? TextSpan(
-            text: 'refund_policy'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
+            text: 'refund_policy'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color,decoration: TextDecoration.underline),
             recognizer: TapGestureRecognizer()
               ..onTap = () => Get.toNamed(RouteHelper.getHtmlRoute('refund-policy')),
           ) : const TextSpan(),

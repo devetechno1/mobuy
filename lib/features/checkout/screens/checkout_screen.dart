@@ -347,11 +347,11 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         Text(
                           checkoutController.isPartialPay ? 'due_payment'.tr : 'total_amount'.tr,
-                          style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
+                          style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
                         ),
                         PriceConverter.convertAnimationPrice(
                           checkoutController.viewTotalPrice,
-                          textStyle: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
+                          textStyle: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
                         ),
                       ]),
                     ),

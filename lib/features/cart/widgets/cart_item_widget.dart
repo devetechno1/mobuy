@@ -140,7 +140,7 @@ class CartItemWidget extends StatelessWidget {
                           ),
                           child: Text(
                             cart.item!.unitType ?? '',
-                            style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
+                            style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall),
                           ),
                         ) : const SizedBox(),
 

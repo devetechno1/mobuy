@@ -159,7 +159,7 @@ class OrderViewWidget extends StatelessWidget {
                                           color: Theme.of(context).primaryColor.withOpacity(0.1),
                                         ),
                                         child: Text(paginatedOrderModel.orders![index].orderStatus!.tr, style: robotoMedium.copyWith(
-                                          fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor,
+                                          fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).textTheme.bodyMedium!.color,
                                         )),
                                       ),
                                     ) : const SizedBox(),
@@ -177,10 +177,10 @@ class OrderViewWidget extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                      color: Theme.of(context).primaryColor.withOpacity(0.5),
                                     ),
                                     child: Text(paginatedOrderModel.orders![index].orderStatus!.tr, style: robotoMedium.copyWith(
-                                      fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor,
+                                      fontSize: Dimensions.fontSizeExtraSmall, color: Colors.black,
                                     )),
                                   ) : const SizedBox(),
                                   const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -194,13 +194,13 @@ class OrderViewWidget extends StatelessWidget {
                                         color: Theme.of(context).primaryColor,
                                       ) : BoxDecoration(
                                         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                        border: Border.all(width: 1, color: Theme.of(context).primaryColor),
+                                        border: Border.all(width: 1, color: Theme.of(context).textTheme.bodyMedium!.color!),
                                       ),
                                       child: Row(children: [
-                                        Image.asset(Images.tracking, height: 15, width: 15, color: ResponsiveHelper.isDesktop(context) ? Colors.white : Theme.of(context).primaryColor),
+                                        Image.asset(Images.tracking, height: 15, width: 15, color: ResponsiveHelper.isDesktop(context) ? Colors.white : Theme.of(context).textTheme.bodyMedium!.color),
                                         const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                                         Text(isParcel ? 'track_delivery'.tr : 'track_order'.tr, style: robotoMedium.copyWith(
-                                          fontSize: Dimensions.fontSizeExtraSmall, color: ResponsiveHelper.isDesktop(context) ? Colors.white : Theme.of(context).primaryColor,
+                                          fontSize: Dimensions.fontSizeExtraSmall, color: ResponsiveHelper.isDesktop(context) ? Colors.white : Theme.of(context).textTheme.bodyMedium!.color,
                                         )),
                                       ]),
                                     ),

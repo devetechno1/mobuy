@@ -100,7 +100,7 @@ class RunningOrderViewWidget extends StatelessWidget {
                               Row( mainAxisAlignment: isFirstOrder ? MainAxisAlignment.center : MainAxisAlignment.start, children: [
 
                                 Text('${'your_order_is'.tr} ', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                                Text(reversOrder[index].orderStatus!.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor)),
+                                Text(reversOrder[index].orderStatus!.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color,fontWeight: FontWeight.bold)),
                               ]) ,
                               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
@@ -137,11 +137,11 @@ class RunningOrderViewWidget extends StatelessWidget {
                         child: isFirstOrder ? !(reversOrder.length < 2) ? InkWell(
                           onTap: () => onOrderTap(),
                           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Text('+${reversOrder.length - 1}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
-                                Text('more'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor)),
+                                Text('+${reversOrder.length - 1}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyMedium!.color)),
+                                Text('more'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).textTheme.bodyMedium!.color)),
                               ]),
-                            ) : Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor)
-                            : Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor),
+                            ) : const Icon(Icons.arrow_forward, size: 18)
+                            : const Icon(Icons.arrow_forward, size: 18),
                       ),
 
                     ]),

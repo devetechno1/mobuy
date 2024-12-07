@@ -58,8 +58,8 @@ class DeliverySection extends StatelessWidget {
                   checkoutController.floorController.text = address.floor ?? '';
                 }
               },
-              icon: const Icon(Icons.add, size: 20),
-              label: Text('add_new'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall)),
+              icon: Icon(Icons.add, size: 20,color: Theme.of(context).textTheme.bodyMedium!.color),
+              label: Text('add_new'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).textTheme.bodyMedium!.color)),
             ),
           ]),
 

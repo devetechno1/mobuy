@@ -98,7 +98,7 @@ class BottomSection extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text( 'total_amount'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
+                      Text( 'total_amount'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyMedium!.color)),
                       storeId == null ? const SizedBox()
                           : Text(
                           'Once_your_order_is_confirmed_you_will_receive'.tr,

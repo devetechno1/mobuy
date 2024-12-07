@@ -235,11 +235,11 @@ class OrderCalculationWidget extends StatelessWidget {
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text('total_amount'.tr, style: robotoMedium.copyWith(
-                        fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor,
+                        fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color,
                       )),
                       Text(
                         PriceConverter.convertPrice(total), textDirection: TextDirection.ltr,
-                        style: robotoMedium.copyWith(fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor),
+                        style: robotoMedium.copyWith(fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color),
                       ),
                     ]),
                     const SizedBox(height: 10),
@@ -271,11 +271,11 @@ class OrderCalculationWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text('total_amount'.tr, style: robotoMedium.copyWith(
-                  fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor,
+                  fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color,
                 )),
                 Text(
                   PriceConverter.convertPrice(total), textDirection: TextDirection.ltr,
-                  style: robotoMedium.copyWith(fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor),
+                  style: robotoMedium.copyWith(fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color),
                 ),
               ]),
             ),

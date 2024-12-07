@@ -323,7 +323,7 @@ class _CartScreenState extends State<CartScreen> {
             description: "no_items_in_cart_explore_categories".tr,
             image: Images.shoppingCart,
             showFooter: true,
-            button: goToHomeButtonData,
+            button: goToHomeButtonData(context),
           );
         });
       }),

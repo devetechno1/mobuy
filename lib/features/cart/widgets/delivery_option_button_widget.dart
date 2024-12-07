@@ -84,7 +84,7 @@ class _DeliveryOptionButtonWidgetState extends State<DeliveryOptionButtonWidget>
                 const SizedBox(width: Dimensions.paddingSizeSmall),
 
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(widget.title, style: robotoMedium.copyWith(color: select ? Theme.of(context).primaryColor : Theme.of(context).textTheme.bodyMedium!.color)),
+                  Text(widget.title, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color)),
 
                   Row(children: [
                     Text(widget.value == 'delivery' ? '${'charge'.tr}: +${widget.deliveryChargeForView}' : 'free'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyMedium!.color)),

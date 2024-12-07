@@ -4,6 +4,7 @@ import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/order/domain/models/order_details_model.dart';
 import 'package:sixam_mart/features/order/domain/models/order_model.dart';
 import 'package:sixam_mart/helper/price_converter.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
@@ -53,17 +54,23 @@ class OrderItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.05), blurRadius: 10)],
+        boxShadow: [AppConstants.myCustomShadow(context)],
       ),
       padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
       margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-            child: CustomImage(
-              height: 50, width: 50, fit: BoxFit.cover,
-              image: '${orderDetails.imageFullUrl}',
+          SizedBox(
+            height: 50,
+            child: AspectRatio(
+              aspectRatio: 200/128,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                child: CustomImage(
+                  fit: BoxFit.cover,
+                  image: '${orderDetails.imageFullUrl}',
+                ),
+              ),
             ),
           ),
           const SizedBox(width: Dimensions.paddingSizeSmall),
@@ -78,7 +85,7 @@ class OrderItemWidget extends StatelessWidget {
                 Text('${'quantity'.tr}:', style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)),
                 Text(
                   orderDetails.quantity.toString(),
-                  style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeSmall),
+                  style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color, fontSize: Dimensions.fontSizeSmall),
                 ),
               ]),
               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
@@ -101,7 +108,7 @@ class OrderItemWidget extends StatelessWidget {
                   ),
                   child: Text(
                     orderDetails.itemDetails!.unitType ?? '',
-                    style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
+                    style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
                 ) : const SizedBox(),
 
