@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/common/models/choose_us_model.dart';
 import 'package:sixam_mart/features/language/domain/models/language_model.dart';
@@ -279,6 +280,8 @@ class AppConstants {
   ///settings deve
   static const bool subcatimg = true;
   static const bool makeCatInGrid = true;
+
+  static BoxShadow myCustomShadow(BuildContext context) => BoxShadow(color: context.isDarkMode ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.black12, spreadRadius: 1, blurRadius: 5);
 
   static List<LanguageModel> languages = [
     LanguageModel(

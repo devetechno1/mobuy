@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/styles.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class ProfileButtonWidget extends StatelessWidget {
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
           border: Border.all(color: Theme.of(context).primaryColor, width: 0.1),
-          boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), spreadRadius: 1, blurRadius: 5)],
+          boxShadow: [AppConstants.myCustomShadow(context)],
         ),
         child: Row(children: [
           iconImage != null ? Image.asset(iconImage!, height: 18, width: 25) : Icon(icon, size: 25, color: color ?? Theme.of(context).textTheme.bodyMedium!.color),
@@ -46,4 +47,5 @@ class ProfileButtonWidget extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -1,4 +1,5 @@
 import 'package:sixam_mart/helper/responsive_helper.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/styles.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class ProfileCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
         color: Theme.of(context).cardColor,
         border: Border.all(color: Theme.of(context).primaryColor, width: 0.1),
-        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 5, spreadRadius: 1)],
+        boxShadow: [AppConstants.myCustomShadow(context)],
       ),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Image.asset(image, height: 30, width: 30),
