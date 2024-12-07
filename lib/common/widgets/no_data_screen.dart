@@ -34,6 +34,7 @@ class NoDataScreen extends StatelessWidget {
           Center(
             child: Image.asset(
               image ?? (fromAddress ? Images.address : Images.noDataFound),
+              color: image != null? Theme.of(context).textTheme.bodyMedium!.color : null,
               width: MediaQuery.of(context).size.height*0.15, height: MediaQuery.of(context).size.height*0.15,
             ),
           ),

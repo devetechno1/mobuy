@@ -321,7 +321,7 @@ class _CartScreenState extends State<CartScreen> {
           ]) : NoDataScreen(
             text: 'cart_is_empty'.tr, 
             description: "no_items_in_cart_explore_categories".tr,
-            image: Images.emptyCart,
+            image: Images.shoppingCart,
             showFooter: true,
             button: goToHomeButtonData,
           );

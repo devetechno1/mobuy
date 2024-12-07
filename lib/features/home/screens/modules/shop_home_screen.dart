@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sixam_mart/features/home/widgets/brands_view_widget.dart';
 import 'package:sixam_mart/features/home/widgets/highlight_widget.dart';
 // import 'package:sixam_mart/helper/auth_helper.dart';
-import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/features/flash_sale/widgets/flash_sale_view_widget.dart';
 import 'package:sixam_mart/features/home/widgets/bad_weather_widget.dart';
 import 'package:sixam_mart/features/home/widgets/views/product_with_categories_view.dart';
@@ -27,14 +26,8 @@ class ShopHomeScreen extends StatelessWidget {
     // bool isLoggedIn = AuthHelper.isLoggedIn();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-      Container(
+      SizedBox(
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.shopModuleBannerBg),
-            fit: BoxFit.cover,
-          ),
-        ),
         child: const Column(
           children: [
             BadWeatherWidget(),

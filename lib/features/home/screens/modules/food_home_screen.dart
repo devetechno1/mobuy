@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:sixam_mart/common/controllers/theme_controller.dart';
 import 'package:sixam_mart/features/home/widgets/highlight_widget.dart';
 import 'package:sixam_mart/features/home/widgets/views/category_view.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
-import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/features/home/widgets/bad_weather_widget.dart';
 import 'package:sixam_mart/features/home/widgets/views/best_reviewed_item_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/best_store_nearby_view.dart';
@@ -24,14 +21,8 @@ class FoodHomeScreen extends StatelessWidget {
     bool isLoggedIn = AuthHelper.isLoggedIn();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-      Container(
+      SizedBox(
         width: MediaQuery.of(context).size.width,
-        decoration: Get.find<ThemeController>().darkTheme ? null : const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.foodModuleBannerBg),
-            fit: BoxFit.cover,
-          ),
-        ),
         child: const Column(
           children: [
             BadWeatherWidget(),
