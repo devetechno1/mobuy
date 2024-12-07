@@ -51,6 +51,7 @@ class _AccessLocationScreenState extends State<AccessLocationScreen> {
     return PopScope(
       canPop: true,
       onPopInvokedWithResult: (didPop, result) async {
+        if(widget.fromHome) return;
         if (_canExit) {
           if (GetPlatform.isAndroid) {
             SystemNavigator.pop();
@@ -183,7 +184,7 @@ class BottomButton extends StatelessWidget {
       TextButton(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+            side: BorderSide(width: 1, color: Theme.of(context).textTheme.bodyLarge!.color!),
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
           ),
           minimumSize: const Size(Dimensions.webMaxWidth, 50),
@@ -206,10 +207,10 @@ class BottomButton extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
             padding: const EdgeInsets.only(right: Dimensions.paddingSizeExtraSmall),
-            child: Icon(Icons.map, color: Theme.of(context).primaryColor),
+            child: Icon(Icons.map, color: Theme.of(context).textTheme.bodyLarge?.color),
           ),
           Text('set_from_map'.tr, textAlign: TextAlign.center, style: robotoBold.copyWith(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
             fontSize: Dimensions.fontSizeLarge,
           )),
         ]),
