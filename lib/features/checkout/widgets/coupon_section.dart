@@ -142,7 +142,7 @@ class CouponSection extends StatelessWidget {
                     ),
                     child: (couponController.discount! <= 0 && !couponController.freeDelivery) ? !couponController.isLoading ? Text(
                       'apply'.tr,
-                      style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),
+                      style: robotoMedium.copyWith(color: Colors.black),
                     ) : const SizedBox(
                       height: 30, width: 30,
                       child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),

@@ -346,10 +346,10 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(index_brand == -1 ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall),
                             decoration: BoxDecoration(
-                                border: Border.all(color: index_brand == -1 ? Theme.of(context).primaryColor : const Color(0xFF000000)),
+                                border: Border.all(width: index_brand == -1 ? 2 : 1, color: context.textTheme.bodyLarge!.color!),
                                 borderRadius: const BorderRadius.all(Radius.circular(50))
                             ),
-                            width: 80, height: 80,child:  Text( "allCompanies".tr,textAlign:TextAlign.center,style: index_brand == -1 ? TextStyle(color: Theme.of(context).primaryColor,fontSize: 12 ):const TextStyle(fontSize: 10),)),
+                            width: 80, height: 80,child:  Text( "allCompanies".tr,textAlign:TextAlign.center,style: index_brand == -1 ? const TextStyle(fontWeight: FontWeight.bold,fontSize: 12) :const TextStyle(fontSize: 10))),
                       ),
                     ),
                     ...List.generate(

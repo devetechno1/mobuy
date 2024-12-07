@@ -154,11 +154,11 @@ class _PaymentMethodBottomSheetState extends State<PaymentMethodBottomSheet> {
                                   if(canSelectWallet) {
                                     checkoutController.setPaymentMethod(1);
                                   } else if(checkoutController.isPartialPay){
+                                    Get.back();
                                     showCustomSnackBar('you_can_not_user_wallet_in_partial_payment'.tr);
-                                    Get.back();
                                   } else{
-                                    showCustomSnackBar('your_wallet_have_not_sufficient_balance'.tr);
                                     Get.back();
+                                    showCustomSnackBar('your_wallet_have_not_sufficient_balance'.tr);
                                   }
                                 },
                               ),
