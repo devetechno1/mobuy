@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:app_links/app_links.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:sixam_mart/common/widgets/bouncy_widget.dart';
-import 'package:sixam_mart/common/widgets/custom_snackbar.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/location/controllers/location_controller.dart';
@@ -69,11 +67,6 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void _route() {
-      AppLinks().getInitialLink().then((value) {
-      showCustomSnackBar("link ${value}", getXSnackBar: true);
-        
-    print("----------- ----- ----- value ${value}");
-  },);
     Get.find<SplashController>().getConfigData().then((isSuccess) {
       if(isSuccess) {
         Timer(const Duration(seconds: 1), () async {

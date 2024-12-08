@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:app_links/app_links.dart';
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ import 'package:sixam_mart/features/store/controllers/store_controller.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/common/widgets/custom_dialog.dart';
@@ -87,7 +89,11 @@ class DashboardScreenState extends State<DashboardScreen> {
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {});
     });
-
+    AppLinks().getInitialLink().then((value) {
+      if(value != null && value.pathSegments.length == 2 && value.pathSegments[0] == AppConstants.product){
+        Get.toNamed(RouteHelper.getItemDetailsRoute(int.tryParse(value.pathSegments[1]), false));
+      }
+    },);
   }
 
   _showRegistrationSuccessBottomSheet() {

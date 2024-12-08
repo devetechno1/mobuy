@@ -266,6 +266,12 @@ class ItemController extends GetxController implements GetxService {
     update();
   }
 
+  Future<Item?> getProductDeepLink(int itemID) async {
+    _item = null;
+    _item = await itemServiceInterface.getItemDetails(itemID);
+    return _item;
+  }
+
   Future<void> getProductDetails(Item item) async {
     _item = null;
     if(item.name != null) {

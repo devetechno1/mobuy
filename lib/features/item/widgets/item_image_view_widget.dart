@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
+import 'package:sixam_mart/util/app_constants.dart';
+import 'package:sixam_mart/util/dimensions.dart';
 
 class ItemImageViewWidget extends StatelessWidget {
   final Item? item;
@@ -36,32 +39,29 @@ class ItemImageViewWidget extends StatelessWidget {
               }
             },
             child: Stack(children: [
-              Container(
-                color: Colors.red,
-                child: AspectRatio(
-                  aspectRatio: 200/128,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: PageView.builder(
-                      controller: _controller,
-                      itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
-                      itemBuilder: (context, index) {
-                        return Align(
-                          alignment: Alignment.bottomCenter,
-                          child: AspectRatio(
-                            aspectRatio: 200/128,
-                            child: CustomImage(
-                              image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.cover,
-                            ),
+              AspectRatio(
+                aspectRatio: 200/128,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: PageView.builder(
+                    controller: _controller,
+                    itemCount: isCampaign ? imageListForCampaign.length : imageList.length,
+                    itemBuilder: (context, index) {
+                      return Align(
+                        alignment: Alignment.bottomCenter,
+                        child: AspectRatio(
+                          aspectRatio: 200/128,
+                          child: CustomImage(
+                            image: '${isCampaign ? imageListForCampaign[index] : imageList[index]}',
+                            width: MediaQuery.of(context).size.width,
+                            fit: BoxFit.cover,
                           ),
-                        );
-                      },
-                      onPageChanged: (index) {
-                        itemController.setImageSliderIndex(index);
-                      },
-                    ),
+                        ),
+                      );
+                    },
+                    onPageChanged: (index) {
+                      itemController.setImageSliderIndex(index);
+                    },
                   ),
                 ),
               ),
@@ -84,6 +84,23 @@ class ItemImageViewWidget extends StatelessWidget {
                   ),
                 ),
               ),
+              if(item?.id != null)
+                PositionedDirectional(
+                  top: Dimensions.paddingSizeDefault,
+                  end: Dimensions.paddingSizeDefault,
+                  child: InkWell(
+                    onTap: () => Share.share("${AppConstants.productLink}/${item!.id}",subject: AppConstants.appName),
+                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                      ),
+                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                      child: const Icon(Icons.share, size: 24,color: Colors.black54),
+                    ),
+                  ) ,
+                ),
     
             ]),
           ),
