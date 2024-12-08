@@ -1,6 +1,6 @@
 {
-    "name": "MOBUY EG",
-    "short_name": "MOBUY EG",
+    "name": "MOBUY",
+    "short_name": "MOBUY",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#2A9849",

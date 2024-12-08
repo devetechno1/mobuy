@@ -25,7 +25,7 @@
     </queries>
 
     <application
-        android:label="MOBUY EG"
+        android:label="MOBUY"
         android:name="${applicationName}"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
