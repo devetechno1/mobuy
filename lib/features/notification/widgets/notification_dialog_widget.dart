@@ -50,7 +50,8 @@ class NotificationDialogWidget extends StatelessWidget {
                   notificationModel.data?.title ?? '',
                   textAlign: TextAlign.center,
                   style: robotoMedium.copyWith(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                    fontWeight: FontWeight.bold,
                     fontSize: Dimensions.fontSizeLarge,
                   ),
                 ),

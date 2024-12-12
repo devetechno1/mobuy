@@ -16,12 +16,10 @@ class AppConstants {
   static const String webHostedUrl = 'https://mobuy.org';
   static const bool useReactWebsite = false;
 
-  static const String baseUrl =
-      'https://mobuy.org'; // when change it change by replace in search .. don't forget deep linking
-
+  static const String baseUrl = 'https://mobuy.org'; // when change it change by replace in search .. don't forget deep linking
+  
   static const String product = 'product';
-  static const String productLink =
-      '$baseUrl/$product'; // after that .. the item id EX:- AppConstants.productLink/5323545
+  static const String productLink = '$baseUrl/$product'; // after that .. the item id EX:- AppConstants.productLink/5323545
 
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
@@ -287,12 +285,7 @@ class AppConstants {
   static const bool subcatimg = true;
   static const bool makeCatInGrid = true;
 
-  static BoxShadow myCustomShadow(BuildContext context) => BoxShadow(
-      color: context.isDarkMode
-          ? Theme.of(context).primaryColor.withOpacity(0.1)
-          : Colors.black12,
-      spreadRadius: 1,
-      blurRadius: 5);
+  static BoxShadow myCustomShadow(BuildContext context) => BoxShadow(color: context.isDarkMode ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.black12, spreadRadius: 1, blurRadius: 5);
 
   static List<LanguageModel> languages = [
     LanguageModel(
