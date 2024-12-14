@@ -132,10 +132,10 @@ class AddressBottomSheetWidget extends StatelessWidget {
                         ? Theme.of(context).primaryColor : Colors.transparent,
                       ),
                       icon:  Icon( Icons.my_location, color: addressController.addressList != null && addressController.addressList!.isEmpty
-                          ? Theme.of(context).cardColor : Theme.of(context).primaryColor),
+                          ? Theme.of(context).cardColor : Theme.of(context).textTheme.bodyLarge?.color),
                       label: Text('use_current_location'.tr, style: fromDialog ? robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: addressController.addressList != null && addressController.addressList!.isEmpty
-                          ? Theme.of(context).cardColor : Theme.of(context).primaryColor) : robotoMedium.copyWith(color: addressController.addressList != null && addressController.addressList!.isEmpty
-                          ? Theme.of(context).cardColor : Theme.of(context).primaryColor)),
+                          ? Theme.of(context).cardColor : Theme.of(context).textTheme.bodyLarge?.color) : robotoMedium.copyWith(color: addressController.addressList != null && addressController.addressList!.isEmpty
+                          ? Theme.of(context).cardColor : Theme.of(context).textTheme.bodyLarge?.color)),
                     ),
                   ),
                   const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -180,8 +180,8 @@ class AddressBottomSheetWidget extends StatelessWidget {
                       Get.find<SplashController>().saveWebSuggestedLocationStatus(true);
                       Get.toNamed(RouteHelper.getAddAddressRoute(false, false, 0));
                     },
-                    icon: const Icon(Icons.add_circle_outline_sharp),
-                    label: Text('add_new_address'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                    icon: Icon(Icons.add_circle_outline_sharp,color: Theme.of(context).textTheme.bodyLarge?.color,),
+                    label: Text('add_new_address'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge?.color)),
                   ) : const SizedBox(),
 
                 ]),
