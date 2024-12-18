@@ -101,14 +101,12 @@ class ItemImageViewWidget extends StatelessWidget {
                   child: InkWell(
                     onTap: () async {
                       image ??= await downloadImage();
-
-                      print("${getDescription(item!.name!)}\n${AppConstants.productLink}/${item!.id}");
                       
-                      // Share.shareXFiles(
-                      //   [image!],
-                      //   text: "${getDescription(item!.name!)}\n${AppConstants.productLink}/${item!.id}",
-                      //   subject: AppConstants.appName,
-                      // );
+                      Share.shareXFiles(
+                        [image!],
+                        text: "${getDescription(item!.name!)}\n${AppConstants.productLink}/${item!.id}",
+                        subject: AppConstants.appName,
+                      );
                     },
                     borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                     child: Container(
