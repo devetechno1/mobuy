@@ -36,6 +36,7 @@ class FilterWidget extends StatelessWidget {
                 ),
                 Text('filter'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
                 CustomButton(
+                  textColor: Theme.of(context).textTheme.bodyLarge?.color,
                   onPressed: () {
                     if(isStore) {
                       searchController.resetStoreFilter();

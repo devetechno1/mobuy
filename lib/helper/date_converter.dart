@@ -2,86 +2,94 @@ import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../features/language/controllers/language_controller.dart';
+
 class DateConverter {
 
+  static String get _locale => Get.find<LocalizationController>().locale.languageCode;
+
   static String formatDate(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd hh:mm:ss a').format(dateTime);
+    return DateFormat('yyyy-MM-dd hh:mm:ss a',_locale).format(dateTime);
   }
 
   static String dateToTimeOnly(DateTime dateTime) {
-    return DateFormat(_timeFormatter()).format(dateTime);
+    return DateFormat(_timeFormatter(),_locale).format(dateTime);
   }
 
   static String dateToDateAndTime(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+    return DateFormat('yyyy-MM-dd HH:mm',_locale).format(dateTime);
   }
 
   static String dateToDateAndTimeAm(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd ${_timeFormatter()}').format(dateTime);
+    return DateFormat('yyyy-MM-dd ${_timeFormatter()}',_locale).format(dateTime);
   }
 
   static String dateToDate(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd').format(dateTime);
+    return DateFormat('yyyy-MM-dd',_locale).format(dateTime);
   }
 
   static String dateToReadableDate(DateTime dateTime) {
-    return DateFormat('dd MMM, yyy').format(dateTime);
+    return DateFormat('dd MMM, yyy',_locale).format(dateTime);
   }
 
   static String dateTimeStringToDateTime(String dateTime) {
-    return DateFormat('dd MMM yyyy  ${_timeFormatter()}').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+    return DateFormat('dd MMM yyyy  ${_timeFormatter()}',_locale).format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+  }
+  static String dateTimeStringToDateString(String dateTime) {
+    final DateTime date = DateFormat('yyyy-MM-dd HH:mm:ss',_locale).parse(dateTime);
+    return "${date.day} / ${date.month} / ${date.year}";
   }
 
   static String dateTimeStringToDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+    return DateFormat('dd MMM yyyy',_locale).format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
   }
 
   static DateTime dateTimeStringToDate(String dateTime) {
-    return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime);
+    return DateFormat('yyyy-MM-dd HH:mm:ss',_locale).parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
-    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').parse(dateTime);
+    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS',_locale).parse(dateTime);
   }
 
   static String isoStringToLocalString(String dateTime) {
-    return DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse(dateTime).toLocal());
+    return DateFormat('yyyy-MM-dd HH:mm:ss',_locale).format(DateTime.parse(dateTime).toLocal());
   }
 
   static String isoStringToReadableString(String dateTime) {
-    return DateFormat('dd MMMM, yyyy HH:mm a').format(DateTime.parse(dateTime).toLocal());
+    return DateFormat('dd MMMM, yyyy HH:mm a',_locale).format(DateTime.parse(dateTime).toLocal());
   }
 
   static String stringToReadableString(String dateTime) {
-    return DateFormat('dd MMMM, yyyy').format(DateTime.parse(dateTime).toLocal());
+    return DateFormat('dd MMMM, yyyy',_locale).format(DateTime.parse(dateTime).toLocal());
   }
 
   static String isoStringToDateTimeString(String dateTime) {
-    return DateFormat('dd MMM yyyy  ${_timeFormatter()}').format(isoStringToLocalDate(dateTime));
+    return DateFormat('dd MMM yyyy  ${_timeFormatter()}',_locale).format(isoStringToLocalDate(dateTime));
   }
 
   static String isoStringToLocalDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy').format(isoStringToLocalDate(dateTime));
+    return DateFormat('dd MMM yyyy',_locale).format(isoStringToLocalDate(dateTime));
   }
 
   static String stringToLocalDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd').parse(dateTime));
+    return DateFormat('dd MMM yyyy',_locale).format(DateFormat('yyyy-MM-dd').parse(dateTime));
   }
 
   static String localDateToIsoString(DateTime dateTime) {
-    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(dateTime);
+    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS',_locale).format(dateTime);
   }
 
   static String convertTimeToTime(String time) {
-    return DateFormat(_timeFormatter()).format(DateFormat('HH:mm').parse(time));
+    return DateFormat(_timeFormatter(),_locale).format(DateFormat('HH:mm').parse(time));
   }
 
   static DateTime convertStringTimeToDate(String time) {
-    return DateFormat('HH:mm').parse(time);
+    return DateFormat('HH:mm',_locale).parse(time);
   }
 
   static String convertTimeToTimeDate(DateTime time) {
-    return DateFormat('HH:mm').format(time);
+    return DateFormat('HH:mm',_locale).format(time);
   }
 
   static bool isAvailable(String? start, String? end, {DateTime? time}) {
@@ -138,7 +146,7 @@ class DateConverter {
   }
 
   static String localDateToIsoStringAMPM(DateTime dateTime) {
-    return DateFormat('${_timeFormatter()} | d-MMM-yyyy ').format(dateTime.toLocal());
+    return DateFormat('${_timeFormatter()} | d-MMM-yyyy ',_locale).format(dateTime.toLocal());
   }
 
   static bool isBeforeTime(String? dateTime) {
@@ -164,7 +172,7 @@ class DateConverter {
 
   static String containTAndZToUTCFormat(String time) {
     var newTime = '${time.substring(0,10)} ${time.substring(11,23)}';
-    return DateFormat('dd MMM, yyyy').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(newTime));
+    return DateFormat('dd MMM, yyyy',_locale).format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(newTime));
 
     // return DateFormat('${_timeFormatter()} | d-MMM-yyyy ').format(dateTime.toLocal());
   }
@@ -193,14 +201,14 @@ class DateConverter {
     if (createdAtDate.year == now.year &&
         createdAtDate.month == now.month &&
         createdAtDate.day == now.day) {
-      return DateFormat('h:mm a').format(createdAtDate);
+      return DateFormat('h:mm a',_locale).format(createdAtDate);
     } else {
       return DateConverter.localDateToIsoStringAMPM(createdAtDate);
     }
   }
 
   static String convertRestaurantOpenTime(String time) {
-    return DateFormat('hh:mm a').format(DateFormat('HH:mm:ss').parse(time).toLocal());
+    return DateFormat('hh:mm a',_locale).format(DateFormat('HH:mm:ss').parse(time).toLocal());
   }
 
 }

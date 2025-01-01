@@ -63,6 +63,8 @@ dependencies:
   chewie: ^1.8.4
   location: ^7.0.0
   app_links: ^6.3.2
+  flutter_localizations:
+    sdk: flutter
 
 dependency_overrides:
   collection: ^1.19.0

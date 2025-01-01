@@ -593,31 +593,45 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   ),
                   const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                  SizedBox(height: 50, child: ListView.builder(
+                  SizedBox(height: 90, child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: locationController.addressTypeList.length,
                     itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+                      padding: const EdgeInsetsDirectional.only(end: Dimensions.paddingSizeExtraSmall),
                       child: InkWell(
                         onTap: () {
                           _otherSelect = index == 2;
                           locationController.setAddressTypeIndex(index);
                         },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeSmall),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Dimensions.radiusDefault), color: locationController.addressTypeIndex == index
-                              ? Theme.of(context).primaryColor.withOpacity(0.05) : Theme.of(context).cardColor,
-                            boxShadow: locationController.addressTypeIndex == index ? null : const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                            border: Border.all(color: locationController.addressTypeIndex == index ? Theme.of(context).primaryColor : Theme.of(context).disabledColor)
-                          ),
-                          child: SizedBox(
-                            height: 24, width: 24,
-                            child: Image.asset(
-                              index == 0 ? Images.homeIcon : index == 1 ? Images.workIcon : Images.otherIcon,
-                              color: locationController.addressTypeIndex == index ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
-                            ),
+                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        child: Padding(
+                          padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeSmall),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(Dimensions.radiusDefault), color: locationController.addressTypeIndex == index
+                                    ? Theme.of(context).primaryColor.withOpacity(0.05) : Theme.of(context).cardColor,
+                                  boxShadow: locationController.addressTypeIndex == index ? null : const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
+                                  border: Border.all(color: locationController.addressTypeIndex == index ? Theme.of(context).primaryColor : Theme.of(context).disabledColor)
+                                ),
+                                child: SizedBox(
+                                  height: 24, width: 24,
+                                  child: Image.asset(
+                                    index == 0 ? Images.homeIcon : index == 1 ? Images.workIcon : Images.otherIcon,
+                                    color: locationController.addressTypeIndex == index ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: Dimensions.paddingSizeSmall),
+                              Text(
+                                index == 0 ? 'home'.tr : index == 1 ? 'office'.tr : 'others'.tr,
+                                style: TextStyle(fontWeight: locationController.addressTypeIndex == index?FontWeight.bold:null),
+                              )
+                            ],
                           ),
                         ),
                       ),
