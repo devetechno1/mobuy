@@ -196,7 +196,7 @@ class RouteHelper {
   static String getMapRoute(AddressModel addressModel, String page, bool isFood, {String? storeName}) {
     List<int> encoded = utf8.encode(jsonEncode(addressModel.toJson()));
     String data = base64Encode(encoded);
-    return '$map?address=$data&page=$page&module=$isFood&store-name=$storeName';
+    return '$map?address=$data&page=$page&module=$isFood&store-name=${storeName?? ''}';
   }
   static String getAddressRoute() => address;
   static String getOrderSuccessRoute(String orderID, String? contactNumber, {bool? createAccount, String guestId = ''}) {
