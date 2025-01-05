@@ -23,6 +23,25 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118132498712:android:efd6253efc2b45fabbbe6d",
+        "android_client_info": {
+          "package_name": "com.mobuyeg.mobuyeg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPI1q_s1cib9Utl95OZdJl51ZYZ09Najk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
