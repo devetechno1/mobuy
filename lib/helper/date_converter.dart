@@ -85,7 +85,7 @@ class DateConverter {
   }
 
   static DateTime convertStringTimeToDate(String time) {
-    return DateFormat('HH:mm',_locale).parse(time);
+    return DateFormat('HH:mm').parse(time);
   }
 
   static String convertTimeToTimeDate(DateTime time) {
