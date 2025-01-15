@@ -3,6 +3,7 @@ import 'package:sixam_mart/features/profile/domain/models/userinfo_model.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/auth/screens/sign_in_screen.dart';
 import 'package:sixam_mart/features/verification/controllers/verification_controller.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
@@ -131,11 +132,11 @@ class _NewPassScreenState extends State<NewPassScreen> {
       }else {
         Get.find<VerificationController>().resetPassword(widget.resetToken, '+${widget.number!.trim()}', password, confirmPassword).then((value) {
           if (value.isSuccess) {
-            if(!ResponsiveHelper.isDesktop(Get.context)) {
+            if(!ResponsiveHelper.isDesktop(Get.context) || AppConstants.mustLogin) {
               Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
             }else{
               Get.offAllNamed(RouteHelper.getInitialRoute(fromSplash: false))?.then((value) {
-                Get.dialog(const SignInScreen(exitFromApp: true, backFromThis: true));
+                Get.dialog(SignInScreen(exitFromApp: true,backFromThis: !AppConstants.mustLogin));
               });
             }
           } else {

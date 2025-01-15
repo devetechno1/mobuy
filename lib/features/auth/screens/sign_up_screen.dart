@@ -12,6 +12,7 @@ import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/helper/string_helper.dart';
 import 'package:sixam_mart/helper/validate_check.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
@@ -83,7 +84,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 child: Stack(
                   children: [
 
-                    ResponsiveHelper.isDesktop(context) ? Positioned(
+                    ResponsiveHelper.isDesktop(context)  && !AppConstants.mustLogin ? Positioned(
                       top: 0,
                       right: 0,
                       child: Align(
@@ -286,7 +287,7 @@ class SignUpScreenState extends State<SignUpScreen> {
 
                             InkWell(
                               onTap: () {
-                                if(ResponsiveHelper.isDesktop(context)){
+                                if(ResponsiveHelper.isDesktop(context) && !AppConstants.mustLogin){
                                   Get.back();
                                   Get.dialog(const SignInScreen(exitFromApp: false, backFromThis: false));
                                 }else{

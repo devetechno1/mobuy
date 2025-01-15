@@ -137,7 +137,11 @@ class SplashScreenState extends State<SplashScreen> {
 
   void _forGuestUserRouteProcess() {
     if (AddressHelper.getUserAddressFromSharedPref() != null) {
-      Get.offNamed(RouteHelper.getInitialRoute(fromSplash: true));
+      if(AppConstants.mustLogin){
+        Get.offNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
+      }else{
+        Get.offNamed(RouteHelper.getInitialRoute(fromSplash: true));
+      }
     } else {
       Get.find<LocationController>().navigateToLocationScreen('splash', offNamed: true);
     }

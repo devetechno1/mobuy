@@ -287,6 +287,8 @@ class AppConstants {
   static const bool subcatimg = true;
   static const bool makeCatInGrid = true;
 
+  static bool mustLogin = true;
+
   static BoxShadow myCustomShadow(BuildContext context) => BoxShadow(
       color: context.isDarkMode
           ? Theme.of(context).primaryColor.withOpacity(0.1)

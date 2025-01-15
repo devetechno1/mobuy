@@ -2,6 +2,7 @@ import 'package:sixam_mart/features/auth/screens/sign_in_screen.dart';
 import 'package:sixam_mart/features/order/controllers/order_controller.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
 import 'package:sixam_mart/common/widgets/custom_button.dart';
@@ -45,7 +46,7 @@ class NotLoggedInScreen extends StatelessWidget {
               width: 200,
               child: CustomButton(buttonText: 'login'.tr, height: 40, onPressed: () async {
 
-                if(!ResponsiveHelper.isDesktop(context)) {
+                if(!ResponsiveHelper.isDesktop(context) || AppConstants.mustLogin) {
                   await Get.toNamed(RouteHelper.getSignInRoute(Get.currentRoute));
                 }else{
                   Get.dialog(const SignInScreen(exitFromApp: true, backFromThis: true)).then((value) => callBack(true));

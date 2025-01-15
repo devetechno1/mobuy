@@ -122,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if((Get.find<ProfileController>().userInfoModel?.isValidForDiscount??false) && Get.find<SplashController>().showReferBottomSheet) {
         _showReferBottomSheet();
       }
+      if(AppConstants.mustLogin) HomeScreen.loadData(false);
     });
 
     if(!ResponsiveHelper.isWeb()) {

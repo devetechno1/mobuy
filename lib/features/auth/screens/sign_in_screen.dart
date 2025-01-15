@@ -15,6 +15,7 @@ import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/helper/string_helper.dart';
 import 'package:sixam_mart/helper/validate_check.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
@@ -59,9 +60,9 @@ class SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: Navigator.canPop(context),
+      canPop: !AppConstants.mustLogin && Navigator.canPop(context),
       onPopInvokedWithResult: (didPop, result) async {
-        if(widget.fromNotification) {
+        if(widget.fromNotification && !AppConstants.mustLogin) {
           Navigator.pushNamed(context, RouteHelper.getInitialRoute());
         } else if(widget.exitFromApp) {
           if (_canExit) {
@@ -92,7 +93,7 @@ class SignInScreenState extends State<SignInScreen> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).cardColor,
-          appBar: (ResponsiveHelper.isDesktop(context) ? null : !widget.exitFromApp ? AppBar(leading: IconButton(
+          appBar: (ResponsiveHelper.isDesktop(context) ? null : !widget.exitFromApp ? AppBar(leading: widget.backFromThis? IconButton(
             onPressed: () {
               if(widget.fromNotification) {
                 Navigator.pushNamed(context, RouteHelper.getInitialRoute());
@@ -101,7 +102,7 @@ class SignInScreenState extends State<SignInScreen> {
               }
             },
             icon: Icon(Icons.arrow_back_ios_rounded, color: Theme.of(context).textTheme.bodyLarge!.color),
-          ), elevation: 0, backgroundColor: Colors.transparent,
+          ):const SizedBox(), elevation: 0, backgroundColor: Colors.transparent,
           actions: const [SizedBox()],
           ) : null),
           endDrawer: const MenuDrawer(),endDrawerEnableOpenDragGesture: false,
@@ -119,7 +120,7 @@ class SignInScreenState extends State<SignInScreen> {
                     child: SingleChildScrollView(
                       child: Stack(
                         children: [
-                          ResponsiveHelper.isDesktop(context) ? Positioned(
+                          ResponsiveHelper.isDesktop(context) && !AppConstants.mustLogin ? Positioned(
                             top: 0,
                             right: 0,
                             child: Align(
@@ -229,7 +230,7 @@ class SignInScreenState extends State<SignInScreen> {
 
                                   InkWell(
                                     onTap: () {
-                                      if(ResponsiveHelper.isDesktop(context)){
+                                      if(ResponsiveHelper.isDesktop(context) && !AppConstants.mustLogin){
                                         Get.back();
                                         Get.dialog(const SignUpScreen(exitFromApp: true));
                                       }else{
@@ -253,7 +254,7 @@ class SignInScreenState extends State<SignInScreen> {
 
                                   InkWell(
                                     onTap: () {
-                                      if(ResponsiveHelper.isDesktop(context)){
+                                      if(ResponsiveHelper.isDesktop(context) && !AppConstants.mustLogin){
                                         Get.back();
                                         Get.dialog(const SignUpScreen());
                                       }else{

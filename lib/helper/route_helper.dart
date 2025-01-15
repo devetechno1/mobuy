@@ -149,8 +149,9 @@ class RouteHelper {
   // static const String businessPlan = '/business-plan';
   static const String subscriptionPayment = '/subscription-payment';
 
+  static String? _loginOrHome(String page) => AppConstants.mustLogin && !AuthHelper.isLoggedIn()? getSignInRoute(page) : null ;
 
-  static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
+  static String getInitialRoute({bool fromSplash = false}) => _loginOrHome(fromSplash ? RouteHelper.splash : '') ?? '$initial?from-splash=$fromSplash';
   static String getSplashRoute(NotificationBodyModel? body) {
     String data = 'null';
     if(body != null) {
@@ -173,7 +174,7 @@ class RouteHelper {
   static String getAccessLocationRoute(String page) => '$accessLocation?page=$page';
   static String getPickMapRoute(String? page, bool canRoute) => '$pickMap?page=$page&route=${canRoute.toString()}';
   static String getInterestRoute() => interest;
-  static String getMainRoute(String page) => '$main?page=$page';
+  static String getMainRoute(String page) => _loginOrHome(page) ?? '$main?page=$page';
   static String getForgotPassRoute(bool fromSocialLogin, SocialLogInBody? socialLogInBody) {
     String? data;
     if(fromSocialLogin) {
@@ -310,8 +311,8 @@ class RouteHelper {
     GetPage(name: language, page: () => ChooseLanguageScreen(fromMenu: Get.parameters['page'] == 'menu')),
     GetPage(name: onBoarding, page: () => const OnBoardingScreen()),
     GetPage(name: signIn, page: () => SignInScreen(
-      exitFromApp: Get.parameters['page'] == signUp || Get.parameters['page'] == splash || Get.parameters['page'] == onBoarding,
-      backFromThis: Get.parameters['page'] != splash && Get.parameters['page'] != onBoarding,
+      exitFromApp: AppConstants.mustLogin || (Get.parameters['page'] == signUp || Get.parameters['page'] == splash || Get.parameters['page'] == onBoarding),
+      backFromThis: !AppConstants.mustLogin && (Get.parameters['page'] != splash && Get.parameters['page'] != onBoarding),
       fromNotification: Get.parameters['page'] == notification,
     )),
     GetPage(name: signUp, page: () => const SignUpScreen()),

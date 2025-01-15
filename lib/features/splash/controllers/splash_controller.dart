@@ -17,6 +17,7 @@ import 'package:sixam_mart/common/widgets/custom_snackbar.dart';
 import 'package:sixam_mart/features/home/screens/home_screen.dart';
 import 'package:sixam_mart/features/splash/domain/services/splash_service_interface.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 
 class SplashController extends GetxController implements GetxService {
   final SplashServiceInterface splashServiceInterface;
@@ -81,6 +82,7 @@ class SplashController extends GetxController implements GetxService {
     if(response.statusCode == 200) {
       _data = response.body;
       _configModel = ConfigModel.fromJson(response.body);
+      AppConstants.mustLogin = _configModel?.mustLogin ?? AppConstants.mustLogin;
       if(_configModel!.module != null) {
         setModule(_configModel!.module);
       }else if(GetPlatform.isWeb || (loadModuleData && _module != null)) {
