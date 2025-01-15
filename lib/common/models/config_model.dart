@@ -164,7 +164,7 @@ class ConfigModel {
   });
 
   ConfigModel.fromJson(Map<String, dynamic> json) {
-    mustLogin = (json['app_must_login'] as int?) == null ? null : (json['app_must_login'] as int == 1);
+    mustLogin = (json['app_must_login'] as bool?) == null ? null : json['app_must_login'] as bool;
     businessName = json['business_name'];
     logoFullUrl = json['logo_full_url'];
     address = json['address'];
