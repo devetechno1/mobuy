@@ -63,7 +63,7 @@ class ItemTitleViewWidget extends StatelessWidget {
                     child: Text(
                       item?.name ?? '',
                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeOverLarge),
-                      maxLines: 2, overflow: TextOverflow.ellipsis,
+                      maxLines: 6, overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   SizedBox(width: item!.isStoreHalalActive! && item!.isHalalItem! ? Dimensions.paddingSizeSmall : 0),
@@ -205,7 +205,7 @@ class ItemTitleViewWidget extends StatelessWidget {
                   Flexible(child: Text(
                     item?.name ?? '',
                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
-                    maxLines: 2, overflow: TextOverflow.ellipsis,
+                    maxLines: 6, overflow: TextOverflow.ellipsis,
                   )),
                   SizedBox(width: item!.isStoreHalalActive! && item!.isHalalItem! ? Dimensions.paddingSizeExtraSmall : 0),
 
