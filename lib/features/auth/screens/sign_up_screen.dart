@@ -377,7 +377,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               }
             }
           }else {
-            showCustomSnackBar(status.message);
+            showCustomSnackBar(status.message,isError: status.message != 'please_wait_for_approval'.tr);
           }
         });
       }

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:sixam_mart/api/api_client.dart';
@@ -30,7 +31,8 @@ class AuthRepository implements AuthRepositoryInterface{
   Future<ResponseModel> registration(SignUpBodyModel signUpBody) async {
     Response response = await apiClient.postData(AppConstants.registerUri, signUpBody.toJson(), handleError: false);
     if (response.statusCode == 200) {
-      return ResponseModel(true, response.body["token"]);
+      Get.back();
+      return ResponseModel(false, 'please_wait_for_approval'.tr);
     } else {
       return ResponseModel(false, response.statusText);
     }
