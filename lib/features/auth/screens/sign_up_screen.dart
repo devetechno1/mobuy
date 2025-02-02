@@ -112,11 +112,25 @@ class SignUpScreenState extends State<SignUpScreen> {
                           ),
                           const SizedBox(height: Dimensions.paddingSizeDefault),
 
+                          AppConstants.makeStoreName ? CustomTextField(
+                            labelText: 'name'.tr,
+                            titleText: 'enter_your_name'.tr,
+                            controller: _firstNameController,
+                            focusNode: _firstNameFocus,
+                            nextFocus: _lastNameFocus,
+                            inputType: TextInputType.name,
+                            capitalization: TextCapitalization.words,
+                            prefixIcon: Icons.person,
+                            required: true,
+                            labelTextSize: Dimensions.fontSizeDefault,
+                            validator: (value) => ValidateCheck.validateEmptyText(value, null),
+                          ) : const SizedBox(),
+                          const SizedBox(height: AppConstants.makeStoreName ? Dimensions.paddingSizeLarge : 0),
                           Row(children: [
-                            Expanded(
+                            !AppConstants.makeStoreName ? Expanded(
                               child: CustomTextField(
                                 labelText: 'first_name'.tr,
-                                titleText: 'ex_jhon'.tr,
+                                titleText: 'enter_your_first_name'.tr,
                                 controller: _firstNameController,
                                 focusNode: _firstNameFocus,
                                 nextFocus: _lastNameFocus,
@@ -127,24 +141,24 @@ class SignUpScreenState extends State<SignUpScreen> {
                                 labelTextSize: Dimensions.fontSizeDefault,
                                 validator: (value) => ValidateCheck.validateEmptyText(value, null),
                               ),
-                            ),
-                            const SizedBox(width: Dimensions.paddingSizeSmall),
+                            ) : const SizedBox(),
+                            const SizedBox(width: !AppConstants.makeStoreName ? Dimensions.paddingSizeSmall : 0),
 
                             Expanded(
                               child: CustomTextField(
-                                labelText: 'last_name'.tr,
-                                titleText: 'ex_doe'.tr,
+                                labelText: AppConstants.makeStoreName ? 'store_name'.tr : 'last_name'.tr,
+                                titleText: AppConstants.makeStoreName ? 'enter_store_name'.tr : 'enter_your_last_name'.tr,
                                 controller: _lastNameController,
                                 focusNode: _lastNameFocus,
                                 nextFocus: ResponsiveHelper.isDesktop(context) ? _emailFocus : _phoneFocus,
                                 inputType: TextInputType.name,
                                 capitalization: TextCapitalization.words,
-                                prefixIcon: Icons.person,
+                                prefixIcon: AppConstants.makeStoreName ? Icons.store : Icons.person,
                                 required: true,
                                 labelTextSize: Dimensions.fontSizeDefault,
                                 validator: (value) => ValidateCheck.validateEmptyText(value, null),
                               ),
-                            )
+                            ),
                           ]),
                           const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
@@ -335,9 +349,9 @@ class SignUpScreenState extends State<SignUpScreen> {
 
     if(_formKeySignUp!.currentState!.validate()) {
       if (firstName.isEmpty) {
-        showCustomSnackBar('enter_your_first_name'.tr);
+        showCustomSnackBar(AppConstants.makeStoreName ? 'enter_your_name'.tr : 'enter_your_first_name'.tr);
       }else if (lastName.isEmpty) {
-        showCustomSnackBar('enter_your_last_name'.tr);
+        showCustomSnackBar(AppConstants.makeStoreName ? 'enter_store_name'.tr : 'enter_your_last_name'.tr);
       }else if (email.isEmpty) {
         showCustomSnackBar('enter_email_address'.tr);
       }else if (!GetUtils.isEmail(email)) {

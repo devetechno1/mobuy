@@ -286,6 +286,7 @@ class AppConstants {
   ///settings deve
   static const bool subcatimg = true;
   static const bool makeCatInGrid = true;
+  static const bool makeStoreName = true;
 
   static bool mustLogin = true;
 

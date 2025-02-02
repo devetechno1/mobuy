@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Expanded(
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                               Text(
-                                isLoggedIn ? '${profileController.userInfoModel?.fName} ${profileController.userInfoModel?.lName ?? ''}' : 'guest_user'.tr,
+                                isLoggedIn ? (AppConstants.makeStoreName ? '${profileController.userInfoModel?.fName}' : '${profileController.userInfoModel?.fName} ${profileController.userInfoModel?.lName ?? ''}') : 'guest_user'.tr,
                                 style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
                               ),
                               const SizedBox(height: Dimensions.paddingSizeExtraSmall),

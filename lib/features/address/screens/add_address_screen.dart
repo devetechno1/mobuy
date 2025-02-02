@@ -16,6 +16,7 @@ import 'package:sixam_mart/helper/custom_validator.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/helper/string_helper.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
@@ -81,7 +82,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       _floorController.text = widget.address!.floor ?? '';
 
     }else if(Get.find<ProfileController>().userInfoModel != null && _contactPersonNameController.text.isEmpty) {
-      _contactPersonNameController.text = '${Get.find<ProfileController>().userInfoModel!.fName} ${Get.find<ProfileController>().userInfoModel!.lName}';
+      // _contactPersonNameController.text = '${Get.find<ProfileController>().userInfoModel!.fName} ${Get.find<ProfileController>().userInfoModel!.lName}';
+      _contactPersonNameController.text = AppConstants.makeStoreName ? '${Get.find<ProfileController>().userInfoModel!.fName}' :  '${Get.find<ProfileController>().userInfoModel!.fName} ${Get.find<ProfileController>().userInfoModel!.lName}';
       splitPhoneNumber(Get.find<ProfileController>().userInfoModel!.phone!);
     }
 

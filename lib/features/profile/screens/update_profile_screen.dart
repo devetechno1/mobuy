@@ -18,6 +18,8 @@ import 'package:sixam_mart/features/profile/widgets/profile_bg_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../util/app_constants.dart';
+
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
 
@@ -80,12 +82,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 child: SizedBox(width: Dimensions.webMaxWidth, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
                   Text(
-                    'first_name'.tr,
+                    AppConstants.makeStoreName ? 'name'.tr : 'first_name'.tr,
                     style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor),
                   ),
                   const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                   MyTextField(
-                    hintText: 'first_name'.tr,
+                    hintText: AppConstants.makeStoreName ? 'name'.tr : 'first_name'.tr,
                     controller: _firstNameController,
                     focusNode: _firstNameFocus,
                     nextFocus: _lastNameFocus,
@@ -95,12 +97,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   const SizedBox(height: Dimensions.paddingSizeLarge),
 
                   Text(
-                    'last_name'.tr,
+                    AppConstants.makeStoreName ? 'store_name'.tr : 'last_name'.tr,
                     style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor),
                   ),
                   const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                   MyTextField(
-                    hintText: 'last_name'.tr,
+                    hintText: AppConstants.makeStoreName ? 'store_name'.tr : 'last_name'.tr,
                     controller: _lastNameController,
                     focusNode: _lastNameFocus,
                     nextFocus: _emailFocus,
@@ -178,9 +180,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         profileController.userInfoModel!.email == _emailController.text && profileController.pickedFile == null) {
       showCustomSnackBar('change_something_to_update'.tr);
     }else if (firstName.isEmpty) {
-      showCustomSnackBar('enter_your_first_name'.tr);
+      showCustomSnackBar(AppConstants.makeStoreName ? 'enter_your_name'.tr : 'enter_your_first_name'.tr);
     }else if (lastName.isEmpty) {
-      showCustomSnackBar('enter_your_last_name'.tr);
+      showCustomSnackBar(AppConstants.makeStoreName ? 'enter_store_name'.tr : 'enter_your_last_name'.tr);
     }else if (email.isEmpty) {
       showCustomSnackBar('enter_email_address'.tr);
     }else if (!GetUtils.isEmail(email)) {
