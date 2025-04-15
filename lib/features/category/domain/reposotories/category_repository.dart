@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/category/domain/models/category_model.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
@@ -31,10 +33,15 @@ class CategoryRepository implements CategoryRepositoryInterface {
       'Content-Type': 'application/json; charset=UTF-8',
       AppConstants.localizationKey: Get.find<LocalizationController>().locale.languageCode} : null);
     if (response.statusCode == 200) {
-      categoryList = [];
-      response.body.forEach((category) {
-        categoryList!.add(CategoryModel.fromJson(category));
+      final res =response.body;
+      categoryList = await Isolate.run<List<CategoryModel>>(() {
+        final List<CategoryModel> tempCategoryList = [];
+        res.forEach((category) {
+          tempCategoryList.add(CategoryModel.fromJson(category));
+        });
+        return tempCategoryList;
       });
+      
     }
     return categoryList;
   }
@@ -53,7 +60,10 @@ class CategoryRepository implements CategoryRepositoryInterface {
     ItemModel? categoryItem;
     Response response = await apiClient.getData('${AppConstants.categoryItemUri}$categoryID?limit=10&offset=$offset&type=$type&brand_id=$brand_id_deve');
     if (response.statusCode == 200) {
-      categoryItem = ItemModel.fromJson(response.body);
+      final res = response.body;
+      categoryItem = await Isolate.run<ItemModel>(() {
+        return ItemModel.fromJson(res);
+      });
     }
     return categoryItem;
   }
