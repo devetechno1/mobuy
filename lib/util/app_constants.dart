@@ -6,7 +6,7 @@ import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
   static const String appName = 'MOBUY EG';
-  static const double appVersion = 2.12;
+  static const double appVersion = 2.13;
   // static const double appVersion = 2.10; //* This is the default
 
   ///Flutter Version: 3.24.3
@@ -198,31 +198,31 @@ class AppConstants {
   static const String removeItemCartUri = '/api/v1/customer/cart/remove-item';
 
   /// Shared Key
-  static const String theme = '6ammart_theme';
-  static const String token = '6ammart_token';
-  static const String countryCode = '6ammart_country_code';
-  static const String languageCode = '6ammart_language_code';
+  static const String theme = 'devetechno_theme';
+  static const String token = 'devetechno_token';
+  static const String countryCode = 'devetechno_country_code';
+  static const String languageCode = 'devetechno_language_code';
   static const String cacheCountryCode = 'cache_country_code';
   static const String cacheLanguageCode = 'cache_language_code';
-  static const String cartList = '6ammart_cart_list';
-  static const String userPassword = '6ammart_user_password';
-  static const String userAddress = '6ammart_user_address';
-  static const String userNumber = '6ammart_user_number';
-  static const String userCountryCode = '6ammart_user_country_code';
-  static const String notification = '6ammart_notification';
-  static const String searchHistory = '6ammart_search_history';
-  static const String intro = '6ammart_intro';
-  static const String notificationCount = '6ammart_notification_count';
-  static const String dmTipIndex = '6ammart_dm_tip_index';
-  static const String earnPoint = '6ammart_earn_point';
-  static const String acceptCookies = '6ammart_accept_cookies';
-  static const String suggestedLocation = '6ammart_suggested_location';
-  static const String walletAccessToken = '6ammart_wallet_access_token';
-  static const String guestId = '6ammart_guest_id';
-  static const String guestNumber = '6ammart_guest_number';
-  static const String referBottomSheet = '6ammart_reffer_bottomsheet_show';
-  static const String dmRegisterSuccess = '6ammart_dm_registration_success';
-  static const String isRestaurantRegister = '6ammart_store_registration';
+  static const String cartList = 'devetechno_cart_list';
+  static const String userPassword = 'devetechno_user_password';
+  static const String userAddress = 'devetechno_user_address';
+  static const String userNumber = 'devetechno_user_number';
+  static const String userCountryCode = 'devetechno_user_country_code';
+  static const String notification = 'devetechno_notification';
+  static const String searchHistory = 'devetechno_search_history';
+  static const String intro = 'devetechno_intro';
+  static const String notificationCount = 'devetechno_notification_count';
+  static const String dmTipIndex = 'devetechno_dm_tip_index';
+  static const String earnPoint = 'devetechno_earn_point';
+  static const String acceptCookies = 'devetechno_accept_cookies';
+  static const String suggestedLocation = 'devetechno_suggested_location';
+  static const String walletAccessToken = 'devetechno_wallet_access_token';
+  static const String guestId = 'devetechno_guest_id';
+  static const String guestNumber = 'devetechno_guest_number';
+  static const String referBottomSheet = 'devetechno_reffer_bottomsheet_show';
+  static const String dmRegisterSuccess = 'devetechno_dm_registration_success';
+  static const String isRestaurantRegister = 'devetechno_store_registration';
 
   static const String topic = 'all_zone_customer';
   static const String zoneId = 'zoneId';

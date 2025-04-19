@@ -83,7 +83,7 @@ class SocialLoginWidget extends StatelessWidget {
             ],
               webAuthenticationOptions: WebAuthenticationOptions(
                 clientId: Get.find<SplashController>().configModel!.appleLogin![0].clientId!,
-                redirectUri: Uri.parse('https://6ammart-web.6amtech.com/apple'),
+                redirectUri: Uri.parse('https://devetechno-web.6amtech.com/apple'),
               ),
             );
             String? deviceToken = await Get.find<AuthController>().saveDeviceToken();

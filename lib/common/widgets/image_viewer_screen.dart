@@ -24,11 +24,12 @@ class ImageViewerScreen extends StatelessWidget {
       appBar: CustomAppBar(title: 'product_images'.tr),
       body: GetBuilder<ItemController>(builder: (itemController) {
 
-        return Column(children: [
-
-          Expanded(child: Stack(children: [
-
-            PhotoViewGallery.builder(
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+        
+          Positioned.fill(
+            child: PhotoViewGallery.builder(
               scrollPhysics: const BouncingScrollPhysics(),
               backgroundDecoration: BoxDecoration(color: Theme.of(context).cardColor),
               itemCount: imageList.length,
@@ -36,7 +37,8 @@ class ImageViewerScreen extends StatelessWidget {
               builder: (BuildContext context, int index) {
                 return PhotoViewGalleryPageOptions(
                   imageProvider: NetworkImage('${imageList[index]}'),
-                  initialScale: PhotoViewComputedScale.contained,
+                  initialScale: PhotoViewComputedScale.covered*.5,
+                  
                   heroAttributes: PhotoViewHeroAttributes(tag: index.toString()),
                 );
               },
@@ -45,55 +47,54 @@ class ImageViewerScreen extends StatelessWidget {
               ))),
               onPageChanged: (int index) => itemController.setImageIndex(index, true),
             ),
-
-            itemController.imageIndex != 0 ? Positioned(
-              left: 5, top: 0, bottom: 0,
-              child: Container(
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    if(itemController.imageIndex > 0) {
-                      pageController.animateToPage(
-                        itemController.imageIndex-1,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  },
-                  child: const Icon(Icons.chevron_left_outlined, size: 40),
-                ),
+          ),
+        
+          itemController.imageIndex != 0 ? PositionedDirectional(
+            start: 5, top: 0, bottom: 0,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+                shape: BoxShape.circle,
               ),
-            ) : const SizedBox(),
-
-            itemController.imageIndex != imageList.length-1 ? Positioned(
-              right: 5, top: 0, bottom: 0,
-              child: Container(
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    if(itemController.imageIndex < imageList.length) {
-                      pageController.animateToPage(
-                        itemController.imageIndex+1,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  },
-                  child: const Icon(Icons.chevron_right_outlined, size: 40),
-                ),
+              child: InkWell(
+                onTap: () {
+                  if(itemController.imageIndex > 0) {
+                    pageController.animateToPage(
+                      itemController.imageIndex-1,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                },
+                child: const Icon(Icons.chevron_left_outlined, size: 40),
               ),
-            ) : const SizedBox(),
-
-          ])),
-
+            ),
+          ) : const SizedBox(),
+        
+          itemController.imageIndex != imageList.length-1 ? PositionedDirectional(
+            end: 5, top: 0, bottom: 0,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+                shape: BoxShape.circle,
+              ),
+              child: InkWell(
+                onTap: () {
+                  if(itemController.imageIndex < imageList.length) {
+                    pageController.animateToPage(
+                      itemController.imageIndex+1,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                },
+                child: const Icon(Icons.chevron_right_outlined, size: 40),
+              ),
+            ),
+          ) : const SizedBox(),
+        
         ]);
       }),
     );
