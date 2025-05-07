@@ -86,7 +86,7 @@ class _CartScreenState extends State<CartScreen> {
 
   void _initialBottomSheetShowHide() {
     Future.delayed(const Duration(milliseconds: 600), () {
-      key.currentState!.expand();
+      key.currentState?.expand();
       Future.delayed(const Duration(seconds: 3), () {
         setState(() {
           key.currentState!.contract();
