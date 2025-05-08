@@ -27,6 +27,8 @@ import 'package:sixam_mart/features/checkout/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../features/cart/widgets/cart_item_widget.dart';
+
 class ItemBottomSheet extends StatefulWidget {
   final Item? item;
   final bool isCampaign;
@@ -277,6 +279,8 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                         ]),
 
                         const SizedBox(height: Dimensions.paddingSizeLarge),
+                        
+                        OutOfStockTextWidget(stock: widget.cart?.stock,quantity: itemController.quantity),
 
                         (widget.item!.description != null && widget.item!.description!.isNotEmpty) ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

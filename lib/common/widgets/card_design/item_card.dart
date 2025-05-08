@@ -91,7 +91,7 @@ class ItemCard extends StatelessWidget {
 
                   OrganicTag(item: item, placeInImage: false),
 
-                  (item.stock != null && item.stock! < 0) ? Positioned(
+                  (Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && (item.stock ?? 0) <= 0) ? Positioned(
                     bottom: 10, left : 0,
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
