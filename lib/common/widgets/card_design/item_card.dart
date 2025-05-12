@@ -102,7 +102,7 @@ class ItemCard extends StatelessWidget {
                           bottomRight: Radius.circular(Dimensions.radiusLarge),
                         ),
                       ),
-                      child: Text('out_of_stock'.tr, style: robotoRegular.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall)),
+                      child: Text('out_of_stock'.tr, style: robotoRegular.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeSmall)),
                     ),
                   ) : const SizedBox(),
 

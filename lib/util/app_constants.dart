@@ -6,7 +6,7 @@ import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
   static const String appName = 'MOBUY EG';
-  static const double appVersion = 2.13;
+  static const double appVersion = 2.2;
   // static const double appVersion = 2.10; //* This is the default
 
   ///Flutter Version: 3.24.3
