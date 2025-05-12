@@ -1,26 +1,52 @@
-name: Build Flutter APK
+name: Build & Upload APK only if version changed
 
 on:
   push:
     branches:
-      - main # لما يحصل push على فرع main
-
-  workflow_dispatch: # تشغيل يدوي من GitHub Actions
+      - main
 
 jobs:
-  build:
-    name: Generate Release APK
-    runs-on: ubuntu-latest # نظام التشغيل
+  check_version:
+    name: Check if version changed
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
 
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3 # يسحب الكود من GitHub
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # عشان نجيب HEAD^ ونقارنه مع HEAD
+
+      - name: Compare version line only
+        id: check
+        run: |
+          OLD=$(git show HEAD^:pubspec.yaml | grep '^version:' || echo "")
+          NEW=$(grep '^version:' pubspec.yaml || echo "")
+          echo "Old Version: $OLD"
+          echo "New Version: $NEW"
+          if [ "$OLD" = "$NEW" ]; then
+            echo "Version did not change"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Version changed"
+            echo "changed=true" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build and Upload APK
+    needs: check_version
+    if: needs.check_version.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17.0.14'
+          java-version: '17'
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -30,7 +56,6 @@ jobs:
       - name: Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
-        # بيحول ملف keystore من base64 لملف فعلي داخل المشروع
 
       - name: Create key.properties
         run: |
@@ -38,7 +63,6 @@ jobs:
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=upload-keystore.jks" >> android/key.properties
-        # بيكتب ملف key.properties اللي Flutter بيستخدمه للتوقيع
 
       - name: Install Dependencies
         run: flutter pub get
@@ -46,9 +70,17 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-        # بيرفع الـ APK كـ artifact داخل GitHub
+      - name: Install rclone
+        run: curl https://rclone.org/install.sh | sudo bash
+
+      - name: Upload to Google Drive
+        env:
+          RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+        run: |
+          echo "$RCLONE_CONFIG" > rclone.conf
+          export RCLONE_CONFIG_PATH=$(pwd)/rclone.conf
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d+ -f1)
+          ALIAS="${{ secrets.KEY_ALIAS }}"
+          FILE_NAME="${ALIAS}_${VERSION}.apk"
+          rclone copy build/app/outputs/flutter-apk/app-release.apk mydrive:اسم_الفولدر
+          rclone moveto mydrive:اسم_الفولدر/app-release.apk mydrive:اسم_الفولدر/$FILE_NAME
