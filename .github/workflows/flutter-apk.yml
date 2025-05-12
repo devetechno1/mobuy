@@ -1,0 +1,54 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches:
+      - main # لما يحصل push على فرع main
+
+  workflow_dispatch: # تشغيل يدوي من GitHub Actions
+
+jobs:
+  build:
+    name: Generate Release APK
+    runs-on: ubuntu-latest # نظام التشغيل
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3 # يسحب الكود من GitHub
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17.0.14'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.3'
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
+        # بيحول ملف keystore من base64 لملف فعلي داخل المشروع
+
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+        # بيكتب ملف key.properties اللي Flutter بيستخدمه للتوقيع
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+        # بيرفع الـ APK كـ artifact داخل GitHub

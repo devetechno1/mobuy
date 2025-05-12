@@ -236,6 +236,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                                         else
                                           BottomNavItemWidget(
                                             title: 'my_cart'.tr ,
+                                            showBadge: true,
                                             selectedIcon: Images.shoppingCartSelected,
                                             unSelectedIcon: Images.shoppingCart,
                                             isSelected: _pageIndex == 2, 
