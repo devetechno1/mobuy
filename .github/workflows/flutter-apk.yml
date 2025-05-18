@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'make release')
+    if: contains(github.event.head_commit, 'make new release')
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
