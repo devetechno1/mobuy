@@ -51,14 +51,14 @@ jobs:
       - name: 📦 Build App Bundle (AAB)
         run: flutter build appbundle --release
 
-      - name: 📦 Build Web 
-        run: |
-            flutter build web --web-renderer html --release 
-            cd build/web
-            find . -type d -exec chmod 777 {} \;
-            sudo chmod -R 666 .
-            sudo find . -type d -exec chmod 777 {} \;
-            sudo find . -type f -exec chmod 666 {} \;
+      # - name: 📦 Build Web 
+      #   run: |
+      #       flutter build web --web-renderer html --release 
+      #       cd build/web
+      #       find . -type d -exec chmod 777 {} \;
+      #       sudo chmod -R 666 .
+      #       sudo find . -type d -exec chmod 777 {} \;
+      #       sudo find . -type f -exec chmod 666 {} \;
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
@@ -72,11 +72,11 @@ jobs:
           name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}(AAB)
           path: build/app/outputs/bundle/release/app-release.aab
 
-      - name: 📤 Upload Website
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}-Website
-          path: build/web/*
+      # - name: 📤 Upload Website
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}-Website
+      #     path: build/web/*
 
       - name: 📤 Upload Symbols
         uses: actions/upload-artifact@v4
