@@ -1,4 +1,4 @@
-name: Build Signed APK on 'make release' commit
+name: Build APK & AAB on 'make release' commit
 
 on:
   push:
@@ -25,6 +25,9 @@ jobs:
         with:
           flutter-version: '3.27.3'
 
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
       - name: 🔐 Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
@@ -36,14 +39,26 @@ jobs:
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=upload-keystore.jks" >> android/key.properties
 
-      - name: 📦 Install dependencies
-        run: flutter pub get
+      - name: 🛠️ Build APKs (split per ABI)
+        run: flutter build apk --split-per-abi
 
-      - name: 🛠️ Build signed APK
-        run: flutter build apk --release
+      - name: 📦 Build App Bundle (AAB)
+        run: flutter build appbundle
 
-      - name: 📤 Upload APK artifact
+      - name: 🏷️ Extract version from pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | tr -d '\r')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.repository.name }}.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}(APK)
+          path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+
+      - name: 📤 Upload App Bundle (AAB)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}(AAB)
+          path: build/app/outputs/bundle/release/app-release.aab
