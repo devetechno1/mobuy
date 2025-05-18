@@ -54,7 +54,12 @@ class _ProductWithCategoriesViewState extends State<ProductWithCategoriesView> {
               height: 50,
               child: Container(
                 height: 40,
-                color: widget.fromShop ? Theme.of(context).disabledColor.withOpacity(0.1) : Theme.of(context).primaryColor.withOpacity(0.1),
+                color: widget.fromShop ? null : Theme.of(context).primaryColor.withOpacity(0.1),
+                decoration: widget.fromShop ? BoxDecoration(
+                  color: Theme.of(context).disabledColor.withOpacity(0.1),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusDefault))
+                  
+                ) :null,
                 child: ListView.builder(
                   itemCount: categories.length,
                   shrinkWrap: true,
@@ -74,6 +79,7 @@ class _ProductWithCategoriesViewState extends State<ProductWithCategoriesView> {
                             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: 5),
                             decoration: BoxDecoration(
                               color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(Dimensions.radiusDefault)
                             ),
                             child: Text('${categories[index].name}', style: robotoMedium.copyWith(color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor)),
                           ),

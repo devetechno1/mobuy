@@ -89,11 +89,8 @@ class DashboardScreenState extends State<DashboardScreen> {
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {});
     });
-    AppLinks().getInitialLink().then((value) {
-      if(value != null && value.pathSegments.length == 2 && value.pathSegments[0] == AppConstants.product){
-        Get.toNamed(RouteHelper.getItemDetailsRoute(int.tryParse(value.pathSegments[1]), false));
-      }
-    },);
+    AppLinks().getInitialLink().then(handleOpenedLinks);
+    AppLinks().uriLinkStream.listen(handleOpenedLinks);
   }
 
   _showRegistrationSuccessBottomSheet() {
@@ -201,16 +198,20 @@ class DashboardScreenState extends State<DashboardScreen> {
                               isParcel ? const AddressScreen(fromDashboard: true) : const FavouriteScreen(),
                               const MenuScreen()
                             ];
-                            return Container(
-                              width: size.width, height: GetPlatform.isIOS ? 80 : 65,
+                            final bool dontShowNavBar = (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty && _isLogin) || (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active);
+                            final double height = GetPlatform.isIOS ? 80 : 65;
+                            
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              width: size.width, height: height,
+                              transform: Matrix4.translationValues(0,dontShowNavBar ? (height + 50) : 0,0),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).cardColor,
                                 borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusLarge)),
                                   boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
                               ),
                               child: Stack(children: [
-                                ResponsiveHelper.isDesktop(context) ? const SizedBox() : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? const SizedBox()
-                                : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty && _isLogin) ? const SizedBox() : Center(
+                                Center(
                                   child: SizedBox(
                                       width: size.width, height: 80,
                                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -317,3 +318,9 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
+
+FutureOr<Null> handleOpenedLinks(Uri? value) {
+  if(value != null && value.pathSegments.length == 2 && value.pathSegments[0] == AppConstants.product){
+    Get.toNamed(RouteHelper.getItemDetailsRoute(int.tryParse(value.pathSegments[1]), false));
+  }
+}

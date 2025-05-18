@@ -237,14 +237,15 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                             index_category = -1;
                             catController.setSubCategoryIndex(index_category, widget.categoryID,"");
                           },
+                          borderRadius: const BorderRadius.all(Radius.circular(50)),
                           child: Container(
                             alignment: Alignment.center,
                             padding: EdgeInsets.all(index_category == -1 ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall),
                               decoration: BoxDecoration(
-                                  border: Border.all(color: index_category == -1 ? Theme.of(context).primaryColor : const Color(0xFF000000)),
-                                  borderRadius: const BorderRadius.all(Radius.circular(50))
+                                  border: Border.all(width: index_category == -1 ? 2 : 1),
+                                  borderRadius: const BorderRadius.all(Radius.circular(50)),
                               ),
-                              width: 80, height: 80,child:  Text( "all".tr,textAlign:TextAlign.center,style: index_category == -1 ? TextStyle(color: Theme.of(context).primaryColor,fontSize: 12 ):const TextStyle(fontSize: 10),)),
+                              width: 80, height: 80,child:  Text( "all".tr,textAlign:TextAlign.center,style: index_category == -1 ? const TextStyle(fontWeight: FontWeight.bold,fontSize: 12) :const TextStyle(fontSize: 10))),
                         ),
                       ),
                       ...List.generate(
@@ -472,11 +473,23 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                   }
                   return false;
                 },
-                child: SingleChildScrollView(
+                child: ListView(
                       controller: scrollController,
-                      child: ItemsView(
-                        isStore: false, items: item, stores: null, noDataText: 'no_category_item_found'.tr,
-                      ),
+                      children: [
+                        ItemsView(
+                          isStore: false, items: item, stores: null, noDataText: 'no_category_item_found'.tr,
+                        ),
+                        Visibility(
+                          visible: catController.isLoading,
+                          maintainSize: true,
+                          maintainAnimation: true,
+                          maintainState: true,
+                          child: Center(child: Padding(
+                            padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                            child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+                          )),
+                        )
+                      ] ,
                     ),
 
                 // TabBarView(
@@ -499,11 +512,6 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                 //   ],
                 // ),
               )) ,
-
-              catController.isLoading ? Center(child: Padding(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-              )) : const SizedBox(),
 
             ]),
           )),

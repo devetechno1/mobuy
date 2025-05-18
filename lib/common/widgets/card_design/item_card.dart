@@ -96,13 +96,13 @@ class ItemCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.5),
+                        color: Theme.of(context).colorScheme.error,
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(Dimensions.radiusLarge),
                           bottomRight: Radius.circular(Dimensions.radiusLarge),
                         ),
                       ),
-                      child: Text('out_of_stock'.tr, style: robotoRegular.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeSmall)),
+                      child: Text('out_of_stock'.tr, style: robotoRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall)),
                     ),
                   ) : const SizedBox(),
 

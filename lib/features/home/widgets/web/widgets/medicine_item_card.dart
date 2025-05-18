@@ -67,6 +67,21 @@ class MedicineItemCard extends StatelessWidget {
 
                 OrganicTag(item: item, placeInImage: false),
 
+                (Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && (item.stock ?? 0) <= 0) ? Positioned(
+                  bottom: 10, left : 0,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.error,
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(Dimensions.radiusLarge),
+                        bottomRight: Radius.circular(Dimensions.radiusLarge),
+                      ),
+                    ),
+                    child: Text('out_of_stock'.tr, style: robotoRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall)),
+                  ),
+                ) : const SizedBox(),
+
                 isShop ? const SizedBox() : Positioned(
                   bottom: 10, right: 10,
                   child: CartCountView(

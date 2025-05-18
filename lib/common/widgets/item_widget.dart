@@ -266,26 +266,7 @@ class ItemWidget extends StatelessWidget {
                           ), textDirection: TextDirection.ltr,
                         ) : const SizedBox(),
                       ]),
-                      Spacer(),
-                      if(!isStore)
-                        CartCountView(
-                          item: item!,
-                          index: index,
-                          alignment: AlignmentDirectional.topEnd,
-                          bottomPadding: 6,
-                          child: Container(
-                            height: 35, width: 38,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: const BorderRadiusDirectional.only(
-                                topStart: Radius.circular(Dimensions.radiusLarge),
-                                bottomEnd: Radius.circular(Dimensions.radiusLarge),
-                              ),
-                            ),
-                            child: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.onPrimary, size: 20),
-                          ),
-                        )
-                                  
+                      const Spacer(),
                     ]),
                   ),
                 ),
@@ -327,7 +308,43 @@ class ItemWidget extends StatelessWidget {
             discount: discount, discountType: discountType,
             freeDelivery: isStore ? store!.freeDelivery : false,
         )) : const SizedBox(),
+        if(!isStore)
+          PositionedDirectional(
+            bottom: 10,
+            end: 0,
+            child: CartCountView(
+              item: item!,
+              index: index,
+              alignment: AlignmentDirectional.topEnd,
+              bottomPadding: 6,
+              child: Container(
+                height: 35, width: 38,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: const BorderRadiusDirectional.only(
+                    topStart: Radius.circular(Dimensions.radiusLarge),
+                    bottomEnd: Radius.circular(Dimensions.radiusLarge),
+                  ),
+                ),
+                child: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.onPrimary, size: 20),
+              ),
+            ),
+          ),
 
+          (Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && item != null && (item!.stock ?? 0) <= 0) ? PositionedDirectional(
+            bottom: 30, start : 0,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.error,
+                borderRadius: const BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(Dimensions.radiusLarge),
+                  bottomEnd: Radius.circular(Dimensions.radiusLarge),
+                ),
+              ),
+              child: Text('out_of_stock'.tr, style: robotoRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall)),
+            ),
+          ) : const SizedBox(),
       ],
     );
   }
