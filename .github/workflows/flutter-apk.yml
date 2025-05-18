@@ -27,6 +27,12 @@ jobs:
 
       - name: 📦 Install dependencies
         run: flutter pub get
+      
+      - name: 🏷️ Extract version from pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | tr -d '\r')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: 🔐 Decode keystore
         run: |
@@ -40,16 +46,10 @@ jobs:
           echo "storeFile=upload-keystore.jks" >> android/key.properties
 
       - name: 🛠️ Build APKs (split per ABI)
-        run: flutter build apk --split-per-abi
+        run: flutter build apk --release --split-per-abi
 
       - name: 📦 Build App Bundle (AAB)
-        run: flutter build appbundle
-
-      - name: 🏷️ Extract version from pubspec.yaml
-        id: version
-        run: |
-          VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | tr -d '\r')
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        run: flutter build appbundle --release
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
@@ -62,3 +62,9 @@ jobs:
         with:
           name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}(AAB)
           path: build/app/outputs/bundle/release/app-release.aab
+
+      - name: 📤 Upload Symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.version.outputs.VERSION }}-symbols
+          path: build/app/intermediates/merged_native_libs/debug/out/lib/*
