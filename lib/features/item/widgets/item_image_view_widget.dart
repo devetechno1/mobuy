@@ -98,25 +98,33 @@ class ItemImageViewWidget extends StatelessWidget {
                 PositionedDirectional(
                   top: Dimensions.paddingSizeDefault,
                   end: Dimensions.paddingSizeDefault,
-                  child: InkWell(
-                    onTap: () async {
-                      image ??= await downloadImage();
+                  child: Builder(
+                    builder: (context) {
+                      final GlobalKey key = GlobalKey();
+                      return InkWell(
+                        key: key,
+                        onTap: () async {
+                          final RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
+                          image ??= await downloadImage();
                       
-                      Share.shareXFiles(
-                        [image!],
+                          Share.shareXFiles(
+                            [image!],
                         text: "${getDescription(item!.name!)}\n${AppConstants.productLink}/${item!.id}",
-                        subject: AppConstants.appName,
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                    child: Container(
-                      decoration: BoxDecoration(
+                            subject: AppConstants.appName,
+                            sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        child: Container(
+                          decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor.withOpacity(0.6),
                         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                      ),
+                          ),
                       padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
                       child: const Icon(Icons.share, size: 24,color: Colors.black54),
-                    ),
+                        ),
+                      );
+                    }
                   ) ,
                 ),
     
@@ -130,6 +138,7 @@ class ItemImageViewWidget extends StatelessWidget {
   Future<XFile?> downloadImage() async{
     XFile? image;
     final Uri uri = Uri.parse(item!.imageFullUrl!);
+
     final List res = await Future.wait([http.get(uri), getTemporaryDirectory()]);
 
     final String path = '${res[1].path}/${uri.pathSegments.last}';
